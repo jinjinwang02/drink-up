@@ -18,8 +18,6 @@ import styled from "styled-components";
 import parse from "html-react-parser";
 import { theme, Theme } from "../styles/theme";
 
-type HeaderLevel = 1 | 2 | 3;
-
 export interface TypographyProps
   extends LayoutProps,
     SpaceProps,
@@ -29,7 +27,6 @@ export interface TypographyProps
     FlexboxProps {
   textStyle: keyof Theme["textStyles"];
   href?: string;
-  "aria-level"?: HeaderLevel;
 }
 
 const StyledText = styled.div<TypographyProps>(
@@ -43,7 +40,7 @@ const StyledText = styled.div<TypographyProps>(
 );
 
 const Typography = ({
-  color = "pureBlack",
+  color,
   children,
   textStyle,
   ...rest

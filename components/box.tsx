@@ -32,7 +32,7 @@ export interface BoxProps
   onClick?: React.KeyboardEventHandler<HTMLElement>;
 }
 
-const Box = styled.div<BoxProps>(
+const StyledBox = styled.div<BoxProps>(
   space,
   layout,
   color,
@@ -44,4 +44,9 @@ const Box = styled.div<BoxProps>(
   zIndex
 );
 
+const Box = ({ children, ...rest }: React.ComponentProps<typeof StyledBox>) => (
+  <StyledBox display="flex" flexDirection="row" {...rest}>
+    {children}
+  </StyledBox>
+);
 export { Box };
