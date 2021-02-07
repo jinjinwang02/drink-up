@@ -15,8 +15,7 @@ import {
   BackgroundProps,
 } from "styled-system";
 import styled from "styled-components";
-import parse from "html-react-parser";
-import { theme, Theme } from "../styles/theme";
+import { Theme } from "../styles/theme";
 
 export interface TypographyProps
   extends LayoutProps,
@@ -44,31 +43,10 @@ const Typography = ({
   children,
   textStyle,
   ...rest
-}: React.ComponentProps<typeof StyledText>) => {
-  const options = {
-    replace: () => {
-      const style = theme.textStyles[textStyle as keyof Theme["textStyles"]];
-
-      if (textStyle.match(/h1/)) {
-        return <h1 style={style}>{children}</h1>;
-      }
-      if (textStyle.match(/h2/)) {
-        return <h2 style={style}>{children}</h2>;
-      }
-      if (textStyle.match(/h3/)) {
-        return <h3 style={style}>{children}</h3>;
-      }
-      if (textStyle.match(/body/) || textStyle.match(/copy/)) {
-        return <span style={style}>{children}</span>;
-      }
-    },
-  };
-
-  return (
-    <StyledText color={color} textStyle={textStyle} {...rest}>
-      {parse(children, options)}
-    </StyledText>
-  );
-};
+}: React.ComponentProps<typeof StyledText>) => (
+  <StyledText color={color} textStyle={textStyle} {...rest}>
+    {children}
+  </StyledText>
+);
 
 export { Typography };

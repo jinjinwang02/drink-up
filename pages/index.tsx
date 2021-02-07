@@ -25,8 +25,13 @@ const Index = () => {
       <FontHead />
       <Favicon />
       <main>
-        <Box border="regularBlack" height={200} width={100} />
-        <Typography textStyle="copyXL">YOO</Typography>
+        <Box bg="pastelBlue" height={200} width={100} />
+        <Typography
+          textStyle={["copyS", "h3", "h1"]}
+          color={["pastelBlue", "lightGrey", "pureBlack"]}
+        >
+          Hello world
+        </Typography>
       </main>
       <footer></footer>
     </div>

@@ -157,7 +157,7 @@ const radii = {
   xlg: 32,
 };
 
-const breakpoints = [768, 998, 1200];
+const breakpoints = ["576px", "768px", "998px", "1200px"];
 
 const colors = {
   pureWhite: "rgba(255, 255, 255, 1)",
@@ -199,13 +199,8 @@ const theme = {
   textStyles,
   colors,
   spaces,
-  // sizes,
   breakpoints,
   radii,
-  // shadows,
-  // zIndex, // These won't get picked up by styled-system
-  // zIndices: zIndex, // These will
-  // animations,
   borders,
 };
 
