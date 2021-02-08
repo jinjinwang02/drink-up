@@ -61,12 +61,6 @@ const textStyles = {
     fontSize: 21,
     lineHeight: "32px",
   },
-  copyXLBold: {
-    fontFamily: "SaolDisplay-Regular",
-    fontSize: 21,
-    fontWeight: 700,
-    lineHeight: "32px",
-  },
   copyL: {
     fontFamily: "SaolDisplay-Regular",
     fontSize: 18,
@@ -83,32 +77,14 @@ const textStyles = {
     fontSize: 16,
     lineHeight: "24px",
   },
-  copyMBold: {
-    fontFamily: "SaolDisplay-Regular",
-    fontSize: 16,
-    fontWeight: 700,
-    lineHeight: "24px",
-  },
   copyS: {
     fontFamily: "SaolDisplay-Regular",
     fontSize: 14,
     lineHeight: "20px",
   },
-  copySBold: {
-    fontFamily: "SaolDisplay-Regular",
-    fontSize: 14,
-    fontWeight: 700,
-    lineHeight: "20px",
-  },
   copyXS: {
     fontFamily: "SaolDisplay-Regular",
     fontSize: 12,
-    lineHeight: "18px",
-  },
-  copyXSBold: {
-    fontFamily: "SaolDisplay-Regular",
-    fontSize: 12,
-    fontWeight: 700,
     lineHeight: "18px",
   },
   bodyXL: {
@@ -149,15 +125,7 @@ const textStyles = {
   },
 };
 
-const radii = {
-  none: 0,
-  sm: 4,
-  md: 8,
-  lg: 16,
-  xlg: 32,
-};
-
-const breakpoints = ["576px", "768px", "998px", "1200px"];
+const breakpoints = ["576px", "768px", "1200px"];
 
 const colors = {
   pureWhite: "rgba(255, 255, 255, 1)",
@@ -200,7 +168,6 @@ const theme = {
   colors,
   spaces,
   breakpoints,
-  radii,
   borders,
 };
 

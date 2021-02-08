@@ -4,6 +4,7 @@ import { Favicon } from "../components/favicon";
 import { Box } from "../components/box";
 import { Typography } from "../components/typography";
 import { FontHead } from "../styles/font-head";
+import { Logo } from "../components/logo";
 
 const Index = () => {
   return (
@@ -26,12 +27,12 @@ const Index = () => {
       <Favicon />
       <main>
         <Box bg="pastelBlue" height={200} width={100} />
-        <Typography
-          textStyle={["copyS", "h3", "h1"]}
-          color={["pastelBlue", "lightGrey", "pureBlack"]}
-        >
-          Hello world
-        </Typography>
+        <Box color={["pastelBlue", "lightGrey", "pureBlack"]}>
+          <Typography textStyle={["copyXS", "copyM", "h3", "h1"]}>
+            Hello world
+          </Typography>
+        </Box>
+        <Logo height={30} width={20} strokeWidth={5} />
       </main>
       <footer></footer>
     </div>
