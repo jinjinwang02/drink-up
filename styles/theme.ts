@@ -11,9 +11,6 @@ const GlobalStyle = createGlobalStyle`
 
      body {
         box-sizing: border-box;
-        font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-        color: #000;
-        font-weight: 200;
         display: flex;        
     }
 
@@ -93,37 +90,37 @@ const textStyles = {
     lineHeight: '18px',
   },
   bodyXL: {
-    fontFamily: 'Helvetica Neue Light',
+    fontFamily: 'HelveticaNeue-Light',
     fontWeight: 200,
     fontSize: 16,
     lineHeight: '20px',
   },
   bodyL: {
-    fontFamily: 'Helvetica Neue Light',
+    fontFamily: 'HelveticaNeue-Light',
     fontWeight: 200,
     fontSize: 14,
     lineHeight: '18px',
   },
   bodyM: {
-    fontFamily: 'Helvetica Neue Light',
+    fontFamily: 'HelveticaNeue-Light',
     fontWeight: 200,
     fontSize: 12,
     lineHeight: '14px',
   },
   bodyS: {
-    fontFamily: 'Helvetica Neue Light',
+    fontFamily: 'HelveticaNeue-Light',
     fontWeight: 200,
     fontSize: 11,
     lineHeight: '12px',
   },
   bodySBold: {
-    fontFamily: 'Helvetica Neue Light',
+    fontFamily: 'HelveticaNeue-Light',
     fontWeight: 700,
     fontSize: 11,
     lineHeight: '12px',
   },
   bodyXS: {
-    fontFamily: 'Helvetica Neue Light',
+    fontFamily: 'HelveticaNeue-Light',
     fontWeight: 200,
     fontSize: 8,
     lineHeight: '10px',
