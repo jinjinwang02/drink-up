@@ -26,6 +26,7 @@ export interface TypographyProps
     FlexboxProps {
   textStyle: keyof Theme['textStyles'];
   href?: string;
+  children: string;
 }
 
 const StyledText = styled.div<TypographyProps>(
@@ -44,67 +45,44 @@ const Typography = ({
   textStyle,
   ...rest
 }: React.ComponentProps<typeof StyledText>) => {
-  const [media, setMedia] = useState<string>('md');
+  const [currentIndex, setCurrentIndex] = useState<number>(2);
 
   useEffect(() => {
     if (window.matchMedia(`(max-width: ${theme.breakpoints[0]})`).matches) {
-      setMedia('xs');
+      setCurrentIndex(0);
     } else if (window.matchMedia(`(max-width: ${theme.breakpoints[1]})`).matches) {
-      setMedia('sm');
+      setCurrentIndex(1);
     } else if (window.matchMedia(`(max-width: ${theme.breakpoints[2]})`).matches) {
-      setMedia('md');
+      setCurrentIndex(2);
     } else if (window.matchMedia(`(min-width: ${theme.breakpoints[2]})`).matches) {
-      setMedia('lg');
+      setCurrentIndex(3);
     }
   }, []);
 
   const setHTMLTag = (textStyle: keyof Theme['textStyles']) => {
     if (textStyle.match(/h1/)) {
-      return <h1>{children}</h1>;
+      return <h1 style={theme.textStyles[textStyle]}>{children}</h1>;
     }
     if (textStyle.match(/h2/)) {
-      return <h2>{children}</h2>;
+      return <h2 style={theme.textStyles[textStyle]}>{children}</h2>;
     }
     if (textStyle.match(/h3/)) {
-      return <h3>{children}</h3>;
+      return <h3 style={theme.textStyles[textStyle]}>{children}</h3>;
     }
     if (textStyle.match(/body/) || textStyle.match(/copy/)) {
-      return <span>{children}</span>;
+      return <span style={theme.textStyles[textStyle]}>{children}</span>;
     }
   };
 
-  if (!Array.isArray(textStyle)) {
-    return (
-      <StyledText textStyle={textStyle} color={color} {...rest}>
-        {setHTMLTag(textStyle)}
-      </StyledText>
-    );
-  } else {
-    if (media === 'xs') {
-      return (
-        <StyledText textStyle={textStyle} color={color} {...rest}>
-          {setHTMLTag(textStyle[0])}
-        </StyledText>
-      );
-    } else if (media === 'sm') {
-      return (
-        <StyledText textStyle={textStyle} color={color} {...rest}>
-          {setHTMLTag(textStyle[1])}
-        </StyledText>
-      );
-    } else if (media === 'md') {
-      return (
-        <StyledText textStyle={textStyle} color={color} {...rest}>
-          {setHTMLTag(textStyle[2])}
-        </StyledText>
-      );
-    }
-    return (
-      <StyledText color={color} {...rest}>
-        {setHTMLTag(textStyle[textStyle.length - 1])}
-      </StyledText>
-    );
-  }
+  return !Array.isArray(textStyle) ? (
+    <StyledText color={color} {...rest}>
+      {setHTMLTag(textStyle)}
+    </StyledText>
+  ) : (
+    <StyledText color={color} {...rest}>
+      {setHTMLTag(textStyle[currentIndex])}
+    </StyledText>
+  );
 };
 
 export { Typography };
