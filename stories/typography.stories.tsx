@@ -7,10 +7,14 @@ export default {
   component: Typography,
 } as Meta;
 
-const Template: Story<TypographyProps> = (args) => <Typography {...args} />;
+const H1 = () => <Typography textStyle="h1">h1</Typography>;
+const H2 = () => <Typography textStyle="h2">h2</Typography>;
+const H3 = () => <Typography textStyle="h3">h3</Typography>;
 
-export const H1 = Template.bind({});
-H1.args = {
-  textStyle: 'h1',
-  children: 'H1',
-};
+export const Headings = () => (
+  <>
+    <H1 />
+    <H2 />
+    <H3 />
+  </>
+);

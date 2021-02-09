@@ -17,6 +17,11 @@ const GlobalStyle = createGlobalStyle`
         display: flex;        
     }
 
+    h1, h2, h3 {
+      margin: 0;
+      padding: 0;
+    }
+
     a,
     a:active,
     a:visited,
