@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "formik": "^2.2.6",
-    "html-react-parser": "^1.2.4",
     "next": "10.0.6",
     "react": "17.0.1",
     "react-dom": "17.0.1",
@@ -18,10 +19,16 @@
     "yup": "^0.32.8"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.13",
+    "@storybook/addon-actions": "^6.1.17",
+    "@storybook/addon-essentials": "^6.1.17",
+    "@storybook/addon-links": "^6.1.17",
+    "@storybook/react": "^6.1.17",
     "@types/node": "^14.14.25",
     "@types/react": "^17.0.1",
     "@types/styled-components": "^5.1.7",
     "@types/styled-system": "^5.1.10",
+    "babel-loader": "^8.2.2",
     "eslint": "^7.19.0",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.0",

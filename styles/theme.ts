@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
      *,
@@ -29,111 +29,111 @@ const GlobalStyle = createGlobalStyle`
 
 const textStyles = {
   h1Brand: {
-    fontFamily: "Altero-Regular",
+    fontFamily: 'Altero-Regular',
     fontSize: 58,
-    lineHeight: "65px",
+    lineHeight: '65px',
   },
   h1: {
-    fontFamily: "SaolDisplay-Regular",
+    fontFamily: 'SaolDisplay-Regular',
     fontSize: 64,
     fontWeight: 700,
-    lineHeight: "72px",
+    lineHeight: '72px',
   },
   h2: {
-    fontFamily: "SaolDisplay-Regular",
+    fontFamily: 'SaolDisplay-Regular',
     fontSize: 40,
     fontWeight: 700,
-    lineHeight: "60px",
+    lineHeight: '60px',
   },
   h2Brand: {
-    fontFamily: "Altero-Regular",
+    fontFamily: 'Altero-Regular',
     fontSize: 36,
-    lineHeight: "40px",
+    lineHeight: '40px',
   },
   h3: {
-    fontFamily: "SaolDisplay-Regular",
+    fontFamily: 'SaolDisplay-Regular',
     fontSize: 36,
     fontWeight: 700,
-    lineHeight: "54px",
+    lineHeight: '54px',
   },
   copyXL: {
-    fontFamily: "SaolDisplay-Regular",
+    fontFamily: 'SaolDisplay-Regular',
     fontSize: 21,
-    lineHeight: "32px",
+    lineHeight: '32px',
   },
   copyL: {
-    fontFamily: "SaolDisplay-Regular",
+    fontFamily: 'SaolDisplay-Regular',
     fontSize: 18,
-    lineHeight: "28px",
+    lineHeight: '28px',
   },
   copyLBold: {
-    fontFamily: "SaolDisplay-Regular",
+    fontFamily: 'SaolDisplay-Regular',
     fontSize: 18,
     fontWeight: 700,
-    lineHeight: "28px",
+    lineHeight: '28px',
   },
   copyM: {
-    fontFamily: "SaolDisplay-Regular",
+    fontFamily: 'SaolDisplay-Regular',
     fontSize: 16,
-    lineHeight: "24px",
+    lineHeight: '24px',
   },
   copyS: {
-    fontFamily: "SaolDisplay-Regular",
+    fontFamily: 'SaolDisplay-Regular',
     fontSize: 14,
-    lineHeight: "20px",
+    lineHeight: '20px',
   },
   copyXS: {
-    fontFamily: "SaolDisplay-Regular",
+    fontFamily: 'SaolDisplay-Regular',
     fontSize: 12,
-    lineHeight: "18px",
+    lineHeight: '18px',
   },
   bodyXL: {
-    fontFamily: "Helvetica Neue Light",
+    fontFamily: 'Helvetica Neue Light',
     fontWeight: 200,
     fontSize: 16,
-    lineHeight: "20px",
+    lineHeight: '20px',
   },
   bodyL: {
-    fontFamily: "Helvetica Neue Light",
+    fontFamily: 'Helvetica Neue Light',
     fontWeight: 200,
     fontSize: 14,
-    lineHeight: "18px",
+    lineHeight: '18px',
   },
   bodyM: {
-    fontFamily: "Helvetica Neue Light",
+    fontFamily: 'Helvetica Neue Light',
     fontWeight: 200,
     fontSize: 12,
-    lineHeight: "14px",
+    lineHeight: '14px',
   },
   bodyS: {
-    fontFamily: "Helvetica Neue Light",
+    fontFamily: 'Helvetica Neue Light',
     fontWeight: 200,
     fontSize: 11,
-    lineHeight: "12px",
+    lineHeight: '12px',
   },
   bodySBold: {
-    fontFamily: "Helvetica Neue Light",
+    fontFamily: 'Helvetica Neue Light',
     fontWeight: 700,
     fontSize: 11,
-    lineHeight: "12px",
+    lineHeight: '12px',
   },
   bodyXS: {
-    fontFamily: "Helvetica Neue Light",
+    fontFamily: 'Helvetica Neue Light',
     fontWeight: 200,
     fontSize: 8,
-    lineHeight: "10px",
+    lineHeight: '10px',
   },
 };
 
-const breakpoints = ["576px", "768px", "1200px"];
+const breakpoints = ['576px', '768px', '1200px'];
 
 const colors = {
-  pureWhite: "rgba(255, 255, 255, 1)",
-  pureBlack: "rgba(0, 0, 0, 1)",
-  mediumGrey: "rgba(190,190,190,1)",
-  lightGrey: "rgba(227,227,227,1)",
-  lightestGrey: "rgba(237,237,237,1)",
-  pastelBlue: "rgba(135,189,209,1)",
+  pureWhite: 'rgba(255, 255, 255, 1)',
+  pureBlack: 'rgba(0, 0, 0, 1)',
+  mediumGrey: 'rgba(190,190,190,1)',
+  lightGrey: 'rgba(227,227,227,1)',
+  lightestGrey: 'rgba(237,237,237,1)',
+  pastelBlue: 'rgba(135,189,209,1)',
 };
 
 const borders = {
