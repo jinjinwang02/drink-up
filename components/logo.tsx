@@ -1,5 +1,5 @@
-import React from "react";
-import { Box } from "./box";
+import React from 'react';
+import { Box } from './box/box';
 
 export interface IconProps {
   height?: number | string;
@@ -8,8 +8,8 @@ export interface IconProps {
 }
 
 const Logo = ({
-  height = "100%",
-  width = "100%",
+  height = '100%',
+  width = '100%',
   strokeWidth = 3,
 }: IconProps) => {
   return (

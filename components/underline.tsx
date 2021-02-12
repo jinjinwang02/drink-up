@@ -1,16 +1,16 @@
-import React from "react";
-import { Box } from "./box";
+import React from 'react';
+import { Box } from './box/box';
 
 export interface IconProps {
-  variant: "primary" | "secondary";
+  variant: 'primary' | 'secondary';
   height?: number | string;
   width?: number | string;
 }
 
-const Underline = ({ variant, height = "100%", width = "100%" }: IconProps) => {
+const Underline = ({ variant, height = '100%', width = '100%' }: IconProps) => {
   return (
     <Box width={width} height={height}>
-      {variant === "primary" ? (
+      {variant === 'primary' ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 169.9 15.7"

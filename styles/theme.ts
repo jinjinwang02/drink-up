@@ -133,7 +133,7 @@ const breakpoints = ['576px', '768px', '1200px'];
 
 const colors = {
   pureWhite: 'rgba(255, 255, 255, 1)',
-  pureWhiteFifty: 'rgba(255, 255, 255, 0.3)',
+  pureWhiteThirty: 'rgba(255, 255, 255, 0.30)',
   pureBlack: 'rgba(0, 0, 0, 1)',
   mediumGrey: 'rgba(190,190,190,1)',
   lightGrey: 'rgba(227,227,227,1)',
