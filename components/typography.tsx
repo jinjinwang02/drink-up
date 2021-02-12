@@ -14,7 +14,7 @@ import {
   background,
   BackgroundProps,
 } from 'styled-system';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import { theme, Theme } from '../styles/theme';
 
 export interface TypographyProps
@@ -50,27 +50,36 @@ const Typography = ({
   useEffect(() => {
     if (window.matchMedia(`(max-width: ${theme.breakpoints[0]})`).matches) {
       setCurrentIndex(0);
-    } else if (window.matchMedia(`(max-width: ${theme.breakpoints[1]})`).matches) {
+    } else if (
+      window.matchMedia(`(max-width: ${theme.breakpoints[1]})`).matches
+    ) {
       setCurrentIndex(1);
-    } else if (window.matchMedia(`(max-width: ${theme.breakpoints[2]})`).matches) {
+    } else if (
+      window.matchMedia(`(max-width: ${theme.breakpoints[2]})`).matches
+    ) {
       setCurrentIndex(2);
-    } else if (window.matchMedia(`(min-width: ${theme.breakpoints[2]})`).matches) {
+    } else if (
+      window.matchMedia(`(min-width: ${theme.breakpoints[2]})`).matches
+    ) {
       setCurrentIndex(3);
     }
   }, []);
 
-  const setHTMLTag = (textStyle: keyof Theme['textStyles']) => {
-    if (textStyle.match(/h1/)) {
-      return <h1 style={theme.textStyles[textStyle]}>{children}</h1>;
+  const setHTMLTag = (currentTextStyle: keyof Theme['textStyles']) => {
+    const currentTextStyleCSS = theme.textStyles[
+      currentTextStyle
+    ] as CSSProperties;
+    if (currentTextStyle.match(/h1/)) {
+      return <h1 style={currentTextStyleCSS}>{children}</h1>;
     }
-    if (textStyle.match(/h2/)) {
-      return <h2 style={theme.textStyles[textStyle]}>{children}</h2>;
+    if (currentTextStyle.match(/h2/)) {
+      return <h2 style={currentTextStyleCSS}>{children}</h2>;
     }
-    if (textStyle.match(/h3/)) {
-      return <h3 style={theme.textStyles[textStyle]}>{children}</h3>;
+    if (currentTextStyle.match(/h3/)) {
+      return <h3 style={currentTextStyleCSS}>{children}</h3>;
     }
-    if (textStyle.match(/body/) || textStyle.match(/copy/)) {
-      return <span style={theme.textStyles[textStyle]}>{children}</span>;
+    if (currentTextStyle.match(/body/) || currentTextStyle.match(/copy/)) {
+      return <span style={currentTextStyleCSS}>{children}</span>;
     }
   };
 

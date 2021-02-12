@@ -1,12 +1,15 @@
 import Head from 'next/head';
-import React from 'react';
+import React, { useState } from 'react';
 import { Favicon } from '../components/favicon';
-import { Box } from '../components/box';
+import { Box } from '../components/box/box';
 import { Typography } from '../components/typography';
 import { FontHead } from '../styles/font-head';
 import { Logo } from '../components/logo';
+import { BoxWithCloud } from '../components/box/box-with-cloud';
+import { SelectableBox } from '../components/box/selectable-box';
 
 const Index = () => {
+  const [selected, setSelected] = useState<boolean>(false);
   return (
     <div>
       <Head>
@@ -25,14 +28,12 @@ const Index = () => {
       </Head>
       <FontHead />
       <Favicon />
-      <main>
-        <Box bg="pastelBlue" height={200} width={100} />
-        <Box color={['pastelBlue', 'lightGrey', 'pureBlack']}>
-          <Typography textStyle="bodyL">Hello world</Typography>
-        </Box>
-        <Logo height={30} width={20} strokeWidth={5} />
-      </main>
-      <footer></footer>
+      <SelectableBox
+        imageUrl="http://placeimg.com/640/360/any"
+        bottomText="random image"
+        setSelected={setSelected}
+        selected={selected}
+      />
     </div>
   );
 };

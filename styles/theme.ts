@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
 
      body {
         box-sizing: border-box;
-        display: flex;        
+        display: flex;
     }
 
     h1, h2, h3 {
@@ -34,6 +34,7 @@ const textStyles = {
     fontFamily: 'Altero-Regular',
     fontSize: 58,
     lineHeight: '65px',
+    textTransform: 'uppercase',
   },
   h1: {
     fontFamily: 'SaolDisplay-Regular',
@@ -51,6 +52,7 @@ const textStyles = {
     fontFamily: 'Altero-Regular',
     fontSize: 36,
     lineHeight: '40px',
+    textTransform: 'uppercase',
   },
   h3: {
     fontFamily: 'SaolDisplay-Regular',
@@ -131,6 +133,7 @@ const breakpoints = ['576px', '768px', '1200px'];
 
 const colors = {
   pureWhite: 'rgba(255, 255, 255, 1)',
+  pureWhiteFifty: 'rgba(255, 255, 255, 0.3)',
   pureBlack: 'rgba(0, 0, 0, 1)',
   mediumGrey: 'rgba(190,190,190,1)',
   lightGrey: 'rgba(227,227,227,1)',

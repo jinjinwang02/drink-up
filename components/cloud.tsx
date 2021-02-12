@@ -1,12 +1,12 @@
-import React from "react";
-import { Box } from "./box";
+import React from 'react';
+import { Box } from './box/box';
 
 export interface IconProps {
   height?: number | string;
   width?: number | string;
 }
 
-const Cloud = ({ height = "100%", width = "100%" }: IconProps) => {
+const Cloud = ({ height = '100%', width = '100%' }: IconProps) => {
   return (
     <Box width={width} height={height}>
       <svg

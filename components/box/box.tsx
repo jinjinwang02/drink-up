@@ -16,8 +16,8 @@ import {
   border,
   BorderProps,
   zIndex,
-} from "styled-system";
-import styled from "styled-components";
+} from 'styled-system';
+import styled from 'styled-components';
 
 export interface BoxProps
   extends LayoutProps,
@@ -25,7 +25,7 @@ export interface BoxProps
     ColorProps,
     FlexboxProps,
     BackgroundProps,
-    Omit<PositionProps, "zIndex">,
+    Omit<PositionProps, 'zIndex'>,
     GridProps,
     BorderProps {
   zIndex?: string | number;
@@ -45,7 +45,15 @@ const StyledBox = styled.div<BoxProps>(
 );
 
 const Box = ({ children, ...rest }: React.ComponentProps<typeof StyledBox>) => (
-  <StyledBox display="flex" flexDirection="row" {...rest}>
+  <StyledBox
+    display="flex"
+    flexDirection="row"
+    justifyContent="center"
+    alignItems="center"
+    position="relative"
+    transition="all 1s"
+    {...rest}
+  >
     {children}
   </StyledBox>
 );
