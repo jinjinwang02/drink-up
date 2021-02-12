@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import { Story, Meta } from '@storybook/react/types-6-0';
-import {
-  SelectableBox,
-  SelectableBoxProps,
-} from '../components/box/selectable-box';
+import { Meta } from '@storybook/react/types-6-0';
+import { SelectableBoxWithImage } from '../components/box/selectable-box-with-image';
 import { Box } from '../components/box/box';
 
 export default {
-  title: 'Selectable Box',
-  component: SelectableBox,
+  title: 'Selectable box with image',
+  component: SelectableBoxWithImage,
 } as Meta;
 
 export const Basic = () => {
@@ -16,7 +13,7 @@ export const Basic = () => {
 
   return (
     <Box>
-      <SelectableBox
+      <SelectableBoxWithImage
         imageUrl="http://placeimg.com/640/360/any"
         bottomText="random image"
         setSelected={setSelected}

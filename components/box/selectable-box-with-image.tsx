@@ -12,20 +12,20 @@ const BOX_HEIGHT_XS = 319;
 const TOP_BOX_HEIGHT_MD = 212;
 const TOP_BOX_HEIGHT_XS = 272;
 
-export interface SelectableBoxProps {
+export interface SelectableBoxWithImageProps {
   imageUrl: string;
   alt?: string;
   selected?: boolean;
   bottomText: string;
   setSelected: (prev: boolean) => void;
 }
-const SelectableBox = ({
+const SelectableBoxWithImage = ({
   imageUrl,
   alt,
   bottomText,
   selected,
   setSelected,
-}: SelectableBoxProps) => {
+}: SelectableBoxWithImageProps) => {
   return (
     <Box
       flexDirection="column"
@@ -64,4 +64,4 @@ const SelectableBox = ({
   );
 };
 
-export { SelectableBox };
+export { SelectableBoxWithImage };

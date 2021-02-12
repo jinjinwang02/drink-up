@@ -130,6 +130,19 @@ const textStyles = {
   },
 };
 
+const space = {
+  zero: 0,
+  zeroPointFour: 4,
+  zeroPointSix: 6,
+  zeroPointEight: 8,
+  one: 10,
+  onePointTwo: 12,
+  onePointSix: 16,
+  twoPointFour: 24,
+  twoPointSix: 26,
+  five: 50,
+};
+
 const breakpoints = ['576px', '768px', '1200px'];
 
 const colors = {
@@ -151,32 +164,10 @@ const transitions = {
   basic: 'all 0.1s ease-out',
 };
 
-const spaces = {
-  zero: 0,
-  zeroPointFive: 5,
-  one: 10,
-  onePointFive: 15,
-  two: 20,
-  twoPointFive: 25,
-  three: 30,
-  threePointThree: 33,
-  threePointFive: 35,
-  four: 40,
-  fourPointFive: 45,
-  five: 50,
-  fivePointFive: 55,
-  six: 60,
-  sixPointFive: 65,
-  seven: 70,
-  eight: 80,
-  nine: 90,
-  ten: 100,
-};
-
 const theme = {
   textStyles,
   colors,
-  spaces,
+  space,
   breakpoints,
   borders,
   transitions,

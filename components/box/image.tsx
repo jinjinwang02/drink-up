@@ -1,22 +1,31 @@
 import React from 'react';
-import { Box } from './box';
+import { Box, BoxProps } from './box';
 
-interface ImageProps {
+interface ImageProps extends BoxProps {
   url: string;
   alt?: string;
 }
 
-const Image = ({ url, alt }: ImageProps) => (
-  <Box
-    style={{
-      backgroundImage: `url(${url})`,
-      backgroundSize: 'cover',
-      width: '100%',
-      height: '100%',
-      role: 'img',
-      ariaLabel: alt,
-    }}
-  />
-);
+const Image = ({
+  url,
+  alt,
+  width = '100%',
+  height = '100%',
+  ...rest
+}: ImageProps) => {
+  return (
+    <Box
+      style={{
+        backgroundImage: `url(${url})`,
+        backgroundSize: 'cover',
+        role: 'img',
+        ariaLabel: alt,
+      }}
+      height="100%"
+      width="100%"
+      {...rest}
+    />
+  );
+};
 
 export { Image };
