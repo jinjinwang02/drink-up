@@ -27,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
       text-decoration: none;
       color: inherit;
     }
+
 `;
 
 const textStyles = {
@@ -146,6 +147,10 @@ const borders = {
   inactiveGrey: `1px solid ${colors.lightGrey}`,
 };
 
+const transitions = {
+  basic: 'all 0.1s ease-out',
+};
+
 const spaces = {
   zero: 0,
   zeroPointFive: 5,
@@ -174,6 +179,7 @@ const theme = {
   spaces,
   breakpoints,
   borders,
+  transitions,
 };
 
 export type Theme = typeof theme;

@@ -16,8 +16,10 @@ import {
   border,
   BorderProps,
   zIndex,
+  system,
 } from 'styled-system';
 import styled from 'styled-components';
+import { theme } from '../../styles/theme';
 
 export interface BoxProps
   extends LayoutProps,
@@ -41,20 +43,25 @@ const StyledBox = styled.div<BoxProps>(
   position,
   grid,
   border,
-  zIndex
+  zIndex,
+  system({
+    transition: true,
+  })
 );
 
-const Box = ({ children, ...rest }: React.ComponentProps<typeof StyledBox>) => (
-  <StyledBox
-    display="flex"
-    flexDirection="row"
-    justifyContent="center"
-    alignItems="center"
-    position="relative"
-    transition="all 1s"
-    {...rest}
-  >
-    {children}
-  </StyledBox>
-);
+const Box = ({ children, ...rest }: React.ComponentProps<typeof StyledBox>) => {
+  return (
+    <StyledBox
+      display="flex"
+      flexDirection="row"
+      justifyContent="center"
+      alignItems="center"
+      position="relative"
+      transition={theme.transitions.basic}
+      {...rest}
+    >
+      {children}
+    </StyledBox>
+  );
+};
 export { Box };
