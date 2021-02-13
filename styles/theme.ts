@@ -140,6 +140,9 @@ const space = {
   onePointSix: 16,
   twoPointFour: 24,
   twoPointSix: 26,
+  twoPointEight: 28,
+  three: 30,
+  fourPointFive: 45,
   five: 50,
 };
 

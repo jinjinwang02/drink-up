@@ -1,9 +1,6 @@
 import React from 'react';
-import { Story, Meta } from '@storybook/react/types-6-0';
-import {
-  CloudButton,
-  CloudButtonProps,
-} from '../components/button/cloud-button';
+import { Meta } from '@storybook/react/types-6-0';
+import { CloudButton } from '../components/button/cloud-button';
 import { Box } from '../components/box/box';
 
 export default {
