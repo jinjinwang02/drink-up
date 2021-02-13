@@ -14,7 +14,7 @@ export interface BoxWithCloudProps {
 const BoxWithCloud = ({ topAccessory, bottomAccessory }: BoxWithCloudProps) => {
   return (
     <Box flexDirection="column" minWidth={BOX_MIN_WIDTH}>
-      <Box position="absolute" zIndex={-1} width="100%" top={CLOUD_Y_OFFSET}>
+      <Box position="absolute" zIndex={-1} width="120%" top={CLOUD_Y_OFFSET}>
         <Cloud />
       </Box>
       <Box

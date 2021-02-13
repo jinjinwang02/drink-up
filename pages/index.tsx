@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
 import { Favicon } from '../components/favicon';
-import { TitleWithUnderline } from '../components/title-with-underline';
 import { FontHead } from '../styles/font-head';
 const Index = () => {
   return (

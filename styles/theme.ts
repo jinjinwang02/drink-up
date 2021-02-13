@@ -12,9 +12,13 @@ const GlobalStyle = createGlobalStyle`
      body {
         box-sizing: border-box;
         display: flex;
+        -webkit-user-select: none; /* Safari */        
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+/Edge */
+        user-select: none; /* Standard */
     }
 
-    h1, h2, h3 {
+    h1, h2, h3, h4 {
       margin: 0;
       padding: 0;
     }
@@ -60,6 +64,12 @@ const textStyles = {
     fontSize: 36,
     fontWeight: 700,
     lineHeight: '54px',
+  },
+  h4: {
+    fontFamily: 'SaolDisplay-Regular',
+    fontSize: 32,
+    fontWeight: 700,
+    lineHeight: '48px',
   },
   copyXL: {
     fontFamily: 'SaolDisplay-Regular',
@@ -142,6 +152,7 @@ const space = {
   twoPointSix: 26,
   twoPointEight: 28,
   three: 30,
+  four: 40,
   fourPointFive: 45,
   five: 50,
 };

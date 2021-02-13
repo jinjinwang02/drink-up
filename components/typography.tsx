@@ -78,6 +78,9 @@ const Typography = ({
     if (currentTextStyle.match(/h3/)) {
       return <h3 style={currentTextStyleCSS}>{children}</h3>;
     }
+    if (currentTextStyle.match(/h4/)) {
+      return <h4 style={currentTextStyleCSS}>{children}</h4>;
+    }
     if (currentTextStyle.match(/body/) || currentTextStyle.match(/copy/)) {
       return <span style={currentTextStyleCSS}>{children}</span>;
     }
