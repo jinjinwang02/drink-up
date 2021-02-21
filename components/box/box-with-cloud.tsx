@@ -2,19 +2,22 @@ import React from 'react';
 import { Box } from './box';
 import { Cloud } from '../cloud';
 
-const BOX_MIN_WIDTH = 325;
 const TOP_BOX_HEIGHT = 50;
-const BOTTOM_BOX_MIN_HEIGHT = 235;
 const CLOUD_Y_OFFSET = -11;
 
 export interface BoxWithCloudProps {
   topAccessory: React.ReactNode;
   bottomAccessory: React.ReactNode;
+  width?: number;
 }
-const BoxWithCloud = ({ topAccessory, bottomAccessory }: BoxWithCloudProps) => {
+const BoxWithCloud = ({
+  width = 325,
+  topAccessory,
+  bottomAccessory,
+}: BoxWithCloudProps) => {
   return (
-    <Box flexDirection="column" minWidth={BOX_MIN_WIDTH}>
-      <Box position="absolute" zIndex={-1} width="120%" top={CLOUD_Y_OFFSET}>
+    <Box flexDirection="column" width={width}>
+      <Box position="absolute" zIndex={-1} top={CLOUD_Y_OFFSET}>
         <Cloud />
       </Box>
       <Box
@@ -25,7 +28,7 @@ const BoxWithCloud = ({ topAccessory, bottomAccessory }: BoxWithCloudProps) => {
       >
         {topAccessory}
       </Box>
-      <Box width="95%" minHeight={BOTTOM_BOX_MIN_HEIGHT} border="regularBlack">
+      <Box width="95%" border="regularBlack">
         {bottomAccessory}
       </Box>
     </Box>

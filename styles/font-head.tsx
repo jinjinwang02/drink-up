@@ -9,15 +9,15 @@ const FontHead = () => (
         html {
           margin: 0;
           padding: 0;
-          font: 14px 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica,
-            Arial, 'Lucida Grande', sans-serif;
+          font: 14px 'HelveticaNeue-Light', 'Helvetica Neue Light',
+            'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
           -webkit-font-smoothing: antialiased;
           font-weight: 200;
         }
         ::placeholder,
-        input[type='text'] {
-          font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica,
-            Arial, 'Lucida Grande', sans-serif;
+        input {
+          font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light',
+            'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
           font-weight: 200;
         }
         @font-face {

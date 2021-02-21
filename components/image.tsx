@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, BoxProps } from './box';
+import { Box, BoxProps } from './box/box';
 
 interface ImageProps extends BoxProps {
   url: string;

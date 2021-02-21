@@ -148,6 +148,8 @@ const space = {
   one: 10,
   onePointTwo: 12,
   onePointSix: 16,
+  two: 20,
+  twoPointTwo: 22,
   twoPointFour: 24,
   twoPointSix: 26,
   twoPointEight: 28,
@@ -155,6 +157,11 @@ const space = {
   four: 40,
   fourPointFive: 45,
   five: 50,
+  six: 60,
+  seven: 70,
+  eight: 80,
+  nine: 90,
+  ten: 100,
 };
 
 const breakpoints = ['576px', '768px', '1200px'];
@@ -163,6 +170,7 @@ const colors = {
   pureWhite: 'rgba(255, 255, 255, 1)',
   pureWhiteThirty: 'rgba(255, 255, 255, 0.30)',
   pureBlack: 'rgba(0, 0, 0, 1)',
+  darkGrey: 'rgba(121,121,121,1)',
   mediumGrey: 'rgba(190,190,190,1)',
   lightGrey: 'rgba(227,227,227,1)',
   lightestGrey: 'rgba(237,237,237,1)',
@@ -176,6 +184,7 @@ const borders = {
 
 const transitions = {
   basic: 'all 0.1s ease-out',
+  slow: 'all 0.3s ease-out',
 };
 
 const theme = {

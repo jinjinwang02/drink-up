@@ -13,6 +13,8 @@ import {
   color as styledSystemColor,
   background,
   BackgroundProps,
+  system,
+  zIndex,
 } from 'styled-system';
 import styled, { CSSProperties } from 'styled-components';
 import { theme, Theme } from '../styles/theme';
@@ -26,6 +28,7 @@ export interface TypographyProps
     FlexboxProps {
   textStyle: keyof Theme['textStyles'];
   href?: string;
+  zIndex?: string | number;
   children: string;
 }
 
@@ -36,7 +39,11 @@ const StyledText = styled.div<TypographyProps>(
   background,
   styledSystemColor,
   flexbox,
-  typography
+  typography,
+  zIndex,
+  system({
+    transition: true,
+  })
 );
 
 const Typography = ({

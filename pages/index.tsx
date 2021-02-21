@@ -1,5 +1,7 @@
-import Head from 'next/head';
 import React from 'react';
+import Head from 'next/head';
+import { Authentication } from '../components/authentication';
+import { Box } from '../components/box/box';
 import { Favicon } from '../components/favicon';
 import { FontHead } from '../styles/font-head';
 const Index = () => {
@@ -20,6 +22,9 @@ const Index = () => {
         />
       </Head>
       <FontHead />
+      <Box m={100}>
+        <Authentication />
+      </Box>
       <Favicon />
     </div>
   );

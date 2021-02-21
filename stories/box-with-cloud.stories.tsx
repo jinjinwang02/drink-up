@@ -21,11 +21,15 @@ const Template: Story<BoxWithCloudProps> = (args) => (
 export const Basic = Template.bind({});
 Basic.args = {
   topAccessory: '',
-  bottomAccessory: '',
+  bottomAccessory: <Box height={225} width="100%" />,
 };
 
 export const WithAccessories = Template.bind({});
 WithAccessories.args = {
   topAccessory: <Typography textStyle="copyL">Hello</Typography>,
-  bottomAccessory: <Typography textStyle="copyL">Hello</Typography>,
+  bottomAccessory: (
+    <Typography textStyle="copyL" py="ten">
+      Hello
+    </Typography>
+  ),
 };
