@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Arrow, ArrowProps } from './arrow';
 import { Box } from './box/box';
 import { Cloud } from './cloud';
 import { Typography } from './typography';
@@ -46,4 +47,16 @@ const Button = ({ children, borderless, onClick }: ButtonProps) => {
   );
 };
 
-export { Button };
+const ArrowButton = ({ direction, size }: ArrowProps) => (
+  <Box
+    as="button"
+    type="submit"
+    background="transparent"
+    border="none"
+    style={{ outline: 'none' }}
+  >
+    <Arrow direction={direction} size={size} />
+  </Box>
+);
+
+export { Button, ArrowButton };

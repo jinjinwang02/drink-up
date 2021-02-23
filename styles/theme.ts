@@ -154,6 +154,7 @@ const space = {
   twoPointSix: 26,
   twoPointEight: 28,
   three: 30,
+  threePointFive: 35,
   four: 40,
   fourPointFive: 45,
   five: 50,
@@ -175,6 +176,7 @@ const colors = {
   lightGrey: 'rgba(227,227,227,1)',
   lightestGrey: 'rgba(237,237,237,1)',
   pastelBlue: 'rgba(135,189,209,1)',
+  warningRed: 'rgba(201, 10, 16, 1)',
 };
 
 const borders = {
@@ -183,8 +185,9 @@ const borders = {
 };
 
 const transitions = {
-  basic: 'all 0.1s ease-out',
-  slow: 'all 0.3s ease-out',
+  quick: 'all 0.1s ease-out',
+  medium: 'all 0.3s ease-out',
+  slow: 'all 0.5s ease-out',
 };
 
 const theme = {

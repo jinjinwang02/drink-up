@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import { Authentication } from '../components/authentication';
+import { Authentication } from '../components/authentication/container';
 import { Box } from '../components/box/box';
 import { Favicon } from '../components/favicon';
 import { FontHead } from '../styles/font-head';
@@ -22,7 +22,7 @@ const Index = () => {
         />
       </Head>
       <FontHead />
-      <Box m={100}>
+      <Box ml={400} mt={200}>
         <Authentication />
       </Box>
       <Favicon />

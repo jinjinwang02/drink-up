@@ -2,23 +2,35 @@ import React, { useState } from 'react';
 import { theme } from '../styles/theme';
 import { Box } from './box/box';
 
-interface ArrowProps {
+export interface ArrowProps {
   direction?: 'left' | 'right';
-  size?: 'big' | 'small';
+  size?: 'large' | 'medium' | 'small';
 }
 
-const Arrow = ({ direction = 'right', size = 'small' }: ArrowProps) => {
+const Arrow = ({ direction = 'right', size = 'medium' }: ArrowProps) => {
   const [isHovered, setHovered] = useState<boolean>(false);
   const getTranslate = () => {
     if (isHovered) {
       if (size === 'small') {
+        return direction === 'right' ? 'translateX(20%)' : 'translateX(-20%)';
+      } else if (size === 'medium') {
         return direction === 'right' ? 'translateX(25%)' : 'translateX(-25%)';
-      } else {
+      } else if (size === 'large') {
         return direction === 'right' ? 'translateX(15%)' : 'translateX(-15%)';
       }
     }
     return 'translateX(0)';
   };
+  const getHeight = () => {
+    if (size === 'medium') {
+      return 15;
+    } else if (size === 'small') {
+      return 12;
+    } else if (size === 'large') {
+      return 28;
+    }
+  };
+
   return (
     <Box
       style={{
@@ -27,17 +39,17 @@ const Arrow = ({ direction = 'right', size = 'small' }: ArrowProps) => {
       }}
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}
-      transition={theme.transitions.slow}
+      transition={theme.transitions.medium}
     >
       <svg
         version="1.1"
         id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 75.66 52.81"
-        height={size === 'small' ? 15 : 28}
+        height={getHeight()}
         fill="none"
         stroke="#000"
-        strokeWidth={size === 'small' ? 3 : 2}
+        strokeWidth={size === 'small' || size === 'medium' ? 3 : 2}
         style={{
           transform: direction === 'left' ? 'rotate(180deg)' : 'rotate(0)',
         }}

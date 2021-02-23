@@ -7,32 +7,34 @@ import { Typography } from './typography';
 
 const Input = styled(Field)``;
 
-const InputLabel = styled(Typography)`
+const InputLabel = styled(Box)`
   transform: ${(props) =>
     props.hasInput
-      ? 'scale(0.8) translateY(-60%)'
-      : 'scale(1) translateY(-230%)'};
+      ? 'scale(0.8) translateY(35px)'
+      : 'scale(1) translateY(-5px)'};
   ${Input}:focus + & {
-    transform: scale(0.8) translateY(-60%);
+    transform: scale(0.8) translateY(35px);
   }
 `;
 
 export interface InputWithLabelProps {
   formik: any;
   name: string;
+  type?: string;
   label: string;
 }
 
-const InputWithLabel = ({ formik, name, label }: InputWithLabelProps) => {
+const InputWithLabel = ({ formik, name, type, label }: InputWithLabelProps) => {
+  const error = formik.errors[name];
   return (
-    <Box flexDirection="column" width="100%">
+    <Box flexDirection="column" width="100%" position="relative">
       <Input
         name={name}
-        autoComplete="off"
+        autocomplete="off"
+        type={type}
         style={{
           width: '100%',
-          padding: theme.space.zeroPointSix,
-          marginBottom: theme.space.onePointSix,
+          paddingBottom: theme.space.zeroPointSix,
           textAlign: 'center',
           outline: 'none',
           border: 'none',
@@ -42,13 +44,18 @@ const InputWithLabel = ({ formik, name, label }: InputWithLabelProps) => {
       />
       <InputLabel
         position="absolute"
-        textStyle="bodyL"
-        color="darkGrey"
         zIndex={-1}
-        transition={theme.transitions.slow}
+        error={error}
+        transition={theme.transitions.medium}
         hasInput={formik.values[name].length}
       >
-        {label}
+        <Typography
+          textStyle="bodyL"
+          textAlign="center"
+          color={error ? 'red' : 'darkGrey'}
+        >
+          {error ? error : label}
+        </Typography>
       </InputLabel>
     </Box>
   );

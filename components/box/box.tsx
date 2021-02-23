@@ -57,7 +57,7 @@ const Box = ({ children, ...rest }: React.ComponentProps<typeof StyledBox>) => {
       justifyContent="center"
       alignItems="center"
       position="relative"
-      transition={theme.transitions.basic}
+      transition={theme.transitions.quick}
       {...rest}
     >
       {children}

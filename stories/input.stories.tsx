@@ -15,10 +15,10 @@ export default {
 const Template: Story<InputWithLabelProps> = ({ name, label }) => {
   const formik = useFormik({
     initialValues: {
-      email: '',
+      [name]: '',
     },
     onSubmit: () => {
-      console.log(formik.values.email);
+      console.log(formik.values[name]);
     },
   });
   return (

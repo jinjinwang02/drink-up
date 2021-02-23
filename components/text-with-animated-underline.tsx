@@ -38,7 +38,7 @@ const TextWithAnimatedUnderline = ({
           transform: isHovered || focused ? 'scaleX(1)' : 'scaleX(0)',
           transformOrigin: isHovered ? 'right' : 'left',
         }}
-        transition={theme.transitions.slow}
+        transition={theme.transitions.medium}
       />
     </Box>
   );
