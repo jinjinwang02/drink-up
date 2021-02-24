@@ -4,18 +4,30 @@ const GlobalStyle = createGlobalStyle`
      *,
      *::after,
      *::before {
-     margin: 0;
-     padding: 0;
-     box-sizing: inherit;
+      margin: 0;
+      padding: 0;
+      box-sizing: inherit;
      }
 
-     body {
-        box-sizing: border-box;
-        display: flex;
-        -webkit-user-select: none; /* Safari */        
-        -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* IE10+/Edge */
-        user-select: none; /* Standard */
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      display: flex;
+      -webkit-user-select: none; /* Safari */        
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+/Edge */
+      user-select: none; /* Standard */
+    }
+     
+    html,
+    body,
+    input
+    ::placeholder {
+      font: 14px 'HelveticaNeue-Light', 'Helvetica Neue Light',
+        'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      font-weight: 200;
     }
 
     h1, h2, h3, h4 {

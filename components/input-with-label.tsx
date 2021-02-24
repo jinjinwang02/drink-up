@@ -30,8 +30,9 @@ const InputWithLabel = ({ formik, name, type, label }: InputWithLabelProps) => {
     <Box flexDirection="column" width="100%" position="relative">
       <Input
         name={name}
-        autocomplete="off"
+        autoComplete="off"
         type={type}
+        textStyle="bodyXL"
         style={{
           width: '100%',
           paddingBottom: theme.space.zeroPointSix,
