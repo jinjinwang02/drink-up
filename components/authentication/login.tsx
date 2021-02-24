@@ -1,5 +1,5 @@
 import { FormikContextType, FormikProvider, useFormik } from 'formik';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Content } from './content';
 import * as Yup from 'yup';
 import { Box } from '../box/box';
@@ -63,21 +63,6 @@ const LogIn = ({
     },
   });
 
-  const getEmailPosition = (step: number) => {
-    if (step === 1) {
-      return 'translateX(50%)';
-    } else if (step >= 1) {
-      'translateX(150px)';
-    }
-  };
-  const getPasswordPosition = (step: number) => {
-    if (step >= 2) {
-      return 'translateX(-50%)';
-    } else if (step < 2) {
-      return 'translateX(100%)';
-    }
-  };
-
   const getCurrentFormik = () => {
     if (step === 1) {
       return emailFormik;
@@ -97,7 +82,7 @@ const LogIn = ({
   return (
     <FormikProvider value={getCurrentFormik() as FormikContextType<any>}>
       <form onSubmit={getSubmit()}>
-        <Box overflow="hidden" position="relative" height="100%" width="100%">
+        <Box position="relative" height="100%" width="100%">
           {step !== 1 ? (
             <Box
               zIndex={1}
@@ -114,8 +99,9 @@ const LogIn = ({
             name="email"
             label="Email"
             formik={emailFormik}
+            step={step}
+            isLogin
             isCurrentStep={step === 1}
-            translateXPosition={getEmailPosition(step)}
             zIndex={step === 1 ? 1 : 0}
           />
           <Content
@@ -124,8 +110,9 @@ const LogIn = ({
             label="Password"
             type="password"
             formik={passwordFormik}
+            step={step}
+            isLogin
             isCurrentStep={step === 2}
-            translateXPosition={getPasswordPosition(step)}
             zIndex={step === 2 ? 1 : 0}
           />
           <Box position="absolute" bottom="twoPointEight" zIndex={10}>

@@ -1,10 +1,9 @@
 import { FormikContextType, FormikProvider, useFormik } from 'formik';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Content } from './content';
 import * as Yup from 'yup';
 import { EmailSchema, LogInCredentials } from './login';
 import { Box } from '../box/box';
-import { theme } from '../../styles/theme';
 import { Arrow } from '../arrow';
 import { ArrowButton } from '../button';
 
@@ -96,39 +95,6 @@ const SignUp = ({
         passwordConfirmationFormik.values.passwordConfirmation,
     });
   };
-
-  const getEmailPosition = (step: number) => {
-    if (step === 1) {
-      return 'translateX(150%)';
-    } else {
-      'translateX(-50%)';
-    }
-  };
-  const getDisplayNamePosition = (step: number) => {
-    if (step === 2) {
-      return 'translateX(50%)';
-    } else if (step >= 3) {
-      return 'translateX(-100%)';
-    } else {
-      return 'translateX(200%)';
-    }
-  };
-  const getPasswordPosition = (step: number) => {
-    if (step === 3) {
-      return 'translateX(-50%)';
-    } else if (step >= 4) {
-      return 'translateX(-200%)';
-    } else {
-      return 'translateX(100%)';
-    }
-  };
-  const getPasswordConfirmationPosition = (step: number) => {
-    if (step >= 4) {
-      return 'translateX(-150%)';
-    } else if (step < 4) {
-      return 'translateX(0)';
-    }
-  };
   const getCurrentFormik = () => {
     if (step === 1) {
       return emailFormik;
@@ -156,7 +122,7 @@ const SignUp = ({
   return (
     <FormikProvider value={getCurrentFormik() as FormikContextType<any>}>
       <form onSubmit={getSubmit()} autoComplete="off">
-        <Box overflow="hidden" position="relative" height="100%" width="100%">
+        <Box position="relative" height="100%" width="100%">
           {step !== 1 ? (
             <Box
               zIndex={1}
@@ -173,16 +139,18 @@ const SignUp = ({
             name="email"
             label="Email"
             formik={emailFormik}
+            step={step}
             isCurrentStep={step === 1}
-            translateXPosition={getEmailPosition(step)}
+            isLogin={false}
           />
           <Content
             text="How would you like to called?"
             name="displayName"
             label="Display Name"
             formik={displayNameFormik}
+            step={step}
             isCurrentStep={step === 2}
-            translateXPosition={getDisplayNamePosition(step)}
+            isLogin={false}
           />
           <Content
             text="Make it nice and secure"
@@ -190,8 +158,9 @@ const SignUp = ({
             label="Password"
             type="password"
             formik={passwordFormik}
+            step={step}
             isCurrentStep={step === 3}
-            translateXPosition={getPasswordPosition(step)}
+            isLogin={false}
           />
           <Content
             text="And again..."
@@ -199,8 +168,9 @@ const SignUp = ({
             label="Confirm Password"
             type="password"
             formik={passwordConfirmationFormik}
+            step={step}
             isCurrentStep={step === 4}
-            translateXPosition={getPasswordConfirmationPosition(step)}
+            isLogin={false}
           />
           <Box position="absolute" bottom="twoPointEight">
             <ArrowButton />

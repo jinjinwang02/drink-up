@@ -187,7 +187,7 @@ const borders = {
 const transitions = {
   quick: 'all 0.1s ease-out',
   medium: 'all 0.3s ease-out',
-  slow: 'all 0.5s ease-out',
+  slow: 'opacity 0.3s ease-out, transform 0.5s ease-out',
 };
 
 const theme = {

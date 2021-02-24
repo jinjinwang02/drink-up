@@ -16,7 +16,7 @@ const BoxWithCloud = ({
   bottomAccessory,
 }: BoxWithCloudProps) => {
   return (
-    <Box flexDirection="column" width={width} overflow="hidden">
+    <Box flexDirection="column" width={width}>
       <Box position="absolute" zIndex={-1} top={CLOUD_Y_OFFSET}>
         <Cloud />
       </Box>

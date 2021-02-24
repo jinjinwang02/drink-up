@@ -6,25 +6,32 @@ import { Typography } from '../typography';
 
 interface ContentProps {
   isCurrentStep: boolean;
+  isLogin: boolean;
+  step: number;
   text: string;
   name: string;
   label: string;
   formik: any;
   type?: string;
   zIndex?: number;
-  translateXPosition?: string;
 }
 
 const Content = ({
   isCurrentStep,
+  isLogin,
+  step,
   text,
   name,
   label,
   type,
   zIndex,
   formik,
-  translateXPosition,
 }: ContentProps) => {
+  const totalSteps = isLogin ? 2 : 4;
+  // login starts at position translateX(50%) and step 2 translateX(-50%)
+  // signup starts at position translateX(150%) and step 2 translateX(50%)
+  const translateX = `${(0.5 * (totalSteps - 1) - 1 * (step - 1)) * 100}%`;
+
   return (
     <Box
       flexDirection="column"
@@ -43,7 +50,7 @@ const Content = ({
         justifyContent="center"
         alignItems="center"
         style={{
-          transform: translateXPosition,
+          transform: `translateX(${translateX})`,
           opacity: isCurrentStep ? 1 : 0,
         }}
         transition={theme.transitions.slow}
