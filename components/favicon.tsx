@@ -1,8 +1,7 @@
-import Head from "next/head";
-import React from "react";
+import React from 'react';
 
 const Favicon: React.FunctionComponent = () => (
-  <Head>
+  <>
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -28,7 +27,7 @@ const Favicon: React.FunctionComponent = () => (
     />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
-  </Head>
+  </>
 );
 
 export { Favicon };

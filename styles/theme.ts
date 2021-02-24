@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
      
     html,
     body,
-    input
+    input,
     ::placeholder {
       font: 14px 'HelveticaNeue-Light', 'Helvetica Neue Light',
         'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;

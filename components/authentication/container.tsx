@@ -46,25 +46,21 @@ const Authentication = () => {
       }
       bottomAccessory={
         isLogIn ? (
-          <Box>
-            <LogIn
-              step={logInStep}
-              values={logInCredentials}
-              setValues={setLogIncredentials}
-              onPressNext={() => setLogInStep((prev) => prev + 1)}
-              onPressBack={() => setLogInStep((prev) => prev - 1)}
-            />
-          </Box>
+          <LogIn
+            step={logInStep}
+            values={logInCredentials}
+            setValues={setLogIncredentials}
+            onPressNext={() => setLogInStep((prev) => prev + 1)}
+            onPressBack={() => setLogInStep((prev) => prev - 1)}
+          />
         ) : (
-          <Box>
-            <SignUp
-              step={signUpStep}
-              values={signUpCredentials}
-              setValues={setSignUpcredentials}
-              onPressNext={() => setSignUpStep((prev) => prev + 1)}
-              onPressBack={() => setSignUpStep((prev) => prev - 1)}
-            />
-          </Box>
+          <SignUp
+            step={signUpStep}
+            values={signUpCredentials}
+            setValues={setSignUpcredentials}
+            onPressNext={() => setSignUpStep((prev) => prev + 1)}
+            onPressBack={() => setSignUpStep((prev) => prev - 1)}
+          />
         )
       }
     />

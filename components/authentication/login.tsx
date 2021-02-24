@@ -63,25 +63,13 @@ const LogIn = ({
     },
   });
 
-  const getCurrentFormik = () => {
-    if (step === 1) {
-      return emailFormik;
-    } else if (step === 2) {
-      return passwordFormik;
-    }
-  };
-
-  const getSubmit = () => {
-    if (step === 1) {
-      return emailFormik.handleSubmit;
-    } else if (step === 2) {
-      return passwordFormik.handleSubmit;
-    }
-  };
-
   return (
-    <FormikProvider value={getCurrentFormik() as FormikContextType<any>}>
-      <form onSubmit={getSubmit()}>
+    <FormikProvider value={step === 1 ? emailFormik : passwordFormik}>
+      <form
+        onSubmit={
+          step === 1 ? emailFormik.handleSubmit : passwordFormik.handleSubmit
+        }
+      >
         <Box position="relative" height="100%" width="100%">
           {step !== 1 ? (
             <Box

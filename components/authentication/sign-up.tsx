@@ -121,7 +121,7 @@ const SignUp = ({
 
   return (
     <FormikProvider value={getCurrentFormik() as FormikContextType<any>}>
-      <form onSubmit={getSubmit()} autoComplete="off">
+      <form onSubmit={getSubmit()}>
         <Box position="relative" height="100%" width="100%">
           {step !== 1 ? (
             <Box

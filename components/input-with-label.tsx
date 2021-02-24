@@ -32,7 +32,6 @@ const InputWithLabel = ({ formik, name, type, label }: InputWithLabelProps) => {
         name={name}
         autoComplete="off"
         type={type}
-        textStyle="bodyXL"
         style={{
           width: '100%',
           paddingBottom: theme.space.zeroPointSix,
