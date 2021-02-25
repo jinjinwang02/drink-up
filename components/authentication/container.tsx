@@ -4,7 +4,6 @@ import { Typography } from '../typography';
 import { TextWithAnimatedUnderline } from '../text-with-animated-underline';
 import { LogIn, LogInCredentials } from './login';
 import { SignUp, SignUpCredentials } from './sign-up';
-import { Box } from '../box/box';
 
 const Authentication = () => {
   const [logInStep, setLogInStep] = useState<number>(1);

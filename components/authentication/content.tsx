@@ -67,7 +67,6 @@ const Content = ({
             {text}
           </Typography>
         </Box>
-        <Typography color="warningRed" textStyle="bodyM"></Typography>
         <InputWithLabel name={name} label={label} type={type} formik={formik} />
       </Box>
     </Box>

@@ -1,4 +1,4 @@
-import { FormikContextType, FormikProvider, useFormik } from 'formik';
+import { FormikProvider, useFormik } from 'formik';
 import React from 'react';
 import { Content } from './content';
 import * as Yup from 'yup';
