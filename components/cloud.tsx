@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { theme } from '../styles/theme';
 
-const Cloud = () => {
+interface CloudProps {
+  allowXS?: boolean;
+}
+
+const Cloud = ({ allowXS = true }: CloudProps) => {
   const [isXS, setXS] = useState<boolean>(false);
   useEffect(() => {
     if (window.matchMedia(`(max-width: ${theme.breakpoints[0]})`).matches) {
@@ -14,7 +18,7 @@ const Cloud = () => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 324.11 75.97"
-      height={isXS ? 60 : 76}
+      height={isXS && allowXS ? 60 : 76}
       fill="#EDEDED" // lightest grey
       preserveAspectRatio="none"
     >

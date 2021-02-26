@@ -12,7 +12,7 @@ const Index = () => {
         <Favicon />
         <FontHead />
       </Head>
-      <Box ml={400} mt={200}>
+      <Box m={10}>
         <Authentication />
       </Box>
     </div>

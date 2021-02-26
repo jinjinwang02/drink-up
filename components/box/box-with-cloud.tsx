@@ -18,7 +18,7 @@ const BoxWithCloud = ({
   return (
     <Box flexDirection="column" width={width}>
       <Box position="absolute" zIndex={-1} top={CLOUD_Y_OFFSET}>
-        <Cloud />
+        <Cloud allowXS={false} />
       </Box>
       <Box
         width="95%"
