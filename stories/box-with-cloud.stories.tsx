@@ -23,13 +23,3 @@ Basic.args = {
   topAccessory: '',
   bottomAccessory: <Box height={225} width="100%" />,
 };
-
-export const WithAccessories = Template.bind({});
-WithAccessories.args = {
-  topAccessory: <Typography textStyle="copyL">Hello</Typography>,
-  bottomAccessory: (
-    <Typography textStyle="copyL" py="ten">
-      Hello
-    </Typography>
-  ),
-};

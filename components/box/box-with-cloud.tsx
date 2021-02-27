@@ -8,7 +8,7 @@ const CLOUD_Y_OFFSET = -11;
 export interface BoxWithCloudProps {
   topAccessory: React.ReactNode;
   bottomAccessory: React.ReactNode;
-  width?: number;
+  width?: number | number[];
 }
 const BoxWithCloud = ({
   width = 325,
@@ -18,7 +18,7 @@ const BoxWithCloud = ({
   return (
     <Box flexDirection="column" width={width}>
       <Box position="absolute" zIndex={-1} top={CLOUD_Y_OFFSET}>
-        <Cloud allowXS={false} />
+        <Cloud width={width} allowXS={false} />
       </Box>
       <Box
         width="95%"

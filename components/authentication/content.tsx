@@ -1,7 +1,7 @@
 import React from 'react';
 import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
-import { InputWithLabel } from '../input-with-label';
+import { Input } from '../input';
 import { Typography } from '../typography';
 
 interface ContentProps {
@@ -67,7 +67,7 @@ const Content = ({
             {text}
           </Typography>
         </Box>
-        <InputWithLabel name={name} label={label} type={type} formik={formik} />
+        <Input name={name} label={label} type={type} formik={formik} />
       </Box>
     </Box>
   );

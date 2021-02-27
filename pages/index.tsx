@@ -1,9 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
-import { Authentication } from '../components/authentication/container';
 import { Box } from '../components/box/box';
 import { Favicon } from '../components/favicon';
 import { FontHead } from '../styles/font-head';
+import { AddPlantBox } from '../components/add-plant-box';
 const Index = () => {
   return (
     <div>
@@ -12,8 +12,9 @@ const Index = () => {
         <Favicon />
         <FontHead />
       </Head>
+
       <Box m={10}>
-        <Authentication />
+        <AddPlantBox />
       </Box>
     </div>
   );
