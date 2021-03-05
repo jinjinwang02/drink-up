@@ -18,6 +18,7 @@ const Template: Story<InputProps> = ({ name, label }) => {
       console.log(formik.values[name]);
     },
   });
+
   return (
     <Box width={300}>
       <FormikProvider value={formik}>

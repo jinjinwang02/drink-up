@@ -20,44 +20,36 @@ const BoxWithImage = ({
   imageText,
   bottomAccessory,
   invertible,
-}: BoxWithImageProps) => {
-  return (
+}: BoxWithImageProps) => (
+  <Box flexDirection={[invertible ? 'row' : 'column', 'column']} width={width}>
     <Box
-      flexDirection={[invertible ? 'row' : 'column', 'column']}
-      width={width}
+      flexDirection="column"
+      width="100%"
+      height={topBoxHeight}
+      border={[invertible ? undefined : 'regularBlack', 'regularBlack']}
+      pt={[invertible ? 'zero' : 'onePointTwo', 'onePointSix']}
+      pb={invertible ? ['zero', 'onePointSix'] : 'zeroPointSix'}
+      px={[invertible ? 'zero' : 'onePointTwo', 'onePointSix']}
     >
-      <Box
-        flexDirection="column"
-        width="100%"
-        height={topBoxHeight}
-        border={[invertible ? undefined : 'regularBlack', 'regularBlack']}
-        pt={[invertible ? 'zero' : 'onePointTwo', 'onePointSix']}
-        pb={invertible ? ['zero', 'onePointSix'] : ['zeroPointEight', 'one']}
-        px={[invertible ? 'zero' : 'onePointTwo', 'onePointSix']}
-      >
-        <Image url={imageUrl} alt={alt} />
-        {imageText ? (
-          <Typography
-            textStyle={['copyS', 'copyL', 'copyL', 'copyL']}
-            pt={['one', 'zeroPointSix']}
-          >
-            {imageText}
-          </Typography>
-        ) : null}
-      </Box>
-      <Box
-        width="100%"
-        height={[invertible ? topBoxHeight[0] : '100%', '100%']}
-        border="regularBlack"
-        borderTopWidth={[invertible ? 1 : 0, 0]}
-        pt={['onePointTwo', 'onePointSix']}
-        pb={['one', 'twoPointFour']}
-        px={['onePointTwo', 'onePointSix']}
-      >
-        {bottomAccessory}
-      </Box>
+      <Image url={imageUrl} alt={alt} />
+      {imageText ? (
+        <Typography
+          textStyle={['copyS', 'copyL', 'copyL', 'copyL']}
+          pt={['one', 'zeroPointEight']}
+        >
+          {imageText}
+        </Typography>
+      ) : null}
     </Box>
-  );
-};
+    <Box
+      width="100%"
+      height={[invertible ? topBoxHeight[0] : '100%', '100%']}
+      border="regularBlack"
+      borderTopWidth={[invertible ? 1 : 0, 0]}
+    >
+      {bottomAccessory}
+    </Box>
+  </Box>
+);
 
 export { BoxWithImage };

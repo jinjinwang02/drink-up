@@ -5,7 +5,11 @@ import { theme } from '../styles/theme';
 import { Box } from './box/box';
 import { Typography } from './typography';
 
-const InputField = styled(Field)``;
+const InputField = styled(Field)`
+  ::placeholder {
+    font-size: ${(props) => props.placeholderSize}px;
+  }
+`;
 
 const InputLabel = styled(Box)`
   transform: ${(props) =>
@@ -22,8 +26,10 @@ export interface InputProps {
   name: string;
   type?: string;
   label?: string;
-  textAlign?: 'left' | 'center';
+  inputTextStyle?: string | string[];
+  inputTextAlign?: 'left' | 'center';
   placeholder?: string;
+  placeholderSize?: number;
 }
 
 const Input = ({
@@ -31,10 +37,13 @@ const Input = ({
   name,
   type,
   label,
-  textAlign = 'center',
+  inputTextAlign = 'center',
+  inputTextStyle,
   placeholder,
+  placeholderSize,
 }: InputProps) => {
   const error = formik.errors[name];
+
   return (
     <Box flexDirection="column" width="100%" position="relative">
       <InputField
@@ -42,15 +51,17 @@ const Input = ({
         autoComplete="off"
         type={type}
         placeholder={placeholder}
+        placeholdersize={placeholderSize}
         style={{
           width: '100%',
           padding: theme.space.zeroPointFour,
           paddingTop: theme.space.zero,
-          textAlign,
+          textAlign: inputTextAlign,
           outline: 'none',
           border: 'none',
           borderBottom: theme.borders.regularBlack,
           background: 'transparent',
+          textStyle: inputTextStyle,
         }}
       />
       <InputLabel

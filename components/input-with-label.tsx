@@ -1,5 +1,4 @@
 import React from 'react';
-import { Theme } from '../styles/theme';
 import { Box } from './box/box';
 import { Input } from './input';
 import { PlantInfoProps } from './plant-info';
@@ -10,6 +9,7 @@ export interface InputWithLabelProps extends PlantInfoProps {
   name: string;
   label: string;
   placeholder?: string;
+  placeholderSize?: number;
 }
 
 const InputWithLabel = ({
@@ -17,18 +17,21 @@ const InputWithLabel = ({
   name,
   label,
   placeholder,
-  textStyle = ['copyS', 'copyM', 'copyM', 'copyM'],
+  labelTextStyle = ['copyS', 'copyM', 'copyM', 'copyM'],
+  placeholderSize,
 }: InputWithLabelProps) => (
   <Box my={['zeroPointEight', 'one']} width="100%">
     <Box flex={3} flexDirection="column" alignItems="flex-start">
-      <Typography textStyle={textStyle}>{label}</Typography>
+      <Typography textStyle={labelTextStyle}>{label}</Typography>
     </Box>
     <Box flex={5}>
       <Input
         name={name}
         formik={formik}
-        textAlign="left"
+        inputTextAlign="left"
         placeholder={placeholder}
+        placeholderSize={placeholderSize}
+        inputTextStyle={labelTextStyle}
       />
     </Box>
   </Box>

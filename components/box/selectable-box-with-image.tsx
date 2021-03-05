@@ -25,43 +25,41 @@ const SelectableBoxWithImage = ({
   bottomText,
   selected,
   setSelected,
-}: SelectableBoxWithImageProps) => {
-  return (
+}: SelectableBoxWithImageProps) => (
+  <Box
+    flexDirection="column"
+    height={[BOX_HEIGHT_XS, BOX_HEIGHT_MD]}
+    width={[BOX_WIDTH_XS, BOX_WIDTH_MD]}
+    onClick={() => setSelected(!selected)}
+    style={{ cursor: 'pointer' }}
+  >
     <Box
-      flexDirection="column"
-      height={[BOX_HEIGHT_XS, BOX_HEIGHT_MD]}
-      width={[BOX_WIDTH_XS, BOX_WIDTH_MD]}
-      onClick={() => setSelected(!selected)}
-      style={{ cursor: 'pointer' }}
+      width="100%"
+      height={[TOP_BOX_HEIGHT_XS, TOP_BOX_HEIGHT_MD]}
+      border={selected ? 'regularBlack' : 'inactiveGrey'}
+      borderBottomWidth={0}
+      p={[16, 12]}
     >
+      <Image url={imageUrl} alt={alt} />
       <Box
-        width="100%"
-        height={[TOP_BOX_HEIGHT_XS, TOP_BOX_HEIGHT_MD]}
-        border={selected ? 'regularBlack' : 'inactiveGrey'}
-        borderBottomWidth={0}
-        p={[16, 12]}
-      >
-        <Image url={imageUrl} alt={alt} />
-        <Box
-          height="100%"
-          width="100%"
-          backgroundColor={selected ? 'none' : 'pureWhiteThirty'}
-          position="absolute"
-          top={0}
-          left={0}
-        />
-      </Box>
-      <Box
-        width="100%"
-        border={selected ? 'regularBlack' : 'inactiveGrey'}
         height="100%"
-      >
-        <Typography textStyle={['copyXL', 'copyM', 'copyM', 'copyM']}>
-          {bottomText}
-        </Typography>
-      </Box>
+        width="100%"
+        backgroundColor={selected ? 'none' : 'pureWhiteThirty'}
+        position="absolute"
+        top={0}
+        left={0}
+      />
     </Box>
-  );
-};
+    <Box
+      width="100%"
+      border={selected ? 'regularBlack' : 'inactiveGrey'}
+      height="100%"
+    >
+      <Typography textStyle={['copyXL', 'copyM', 'copyM', 'copyM']}>
+        {bottomText}
+      </Typography>
+    </Box>
+  </Box>
+);
 
 export { SelectableBoxWithImage };

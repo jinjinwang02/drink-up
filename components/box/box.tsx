@@ -49,19 +49,18 @@ const StyledBox = styled.div<BoxProps>(
   })
 );
 
-const Box = ({ children, ...rest }: React.ComponentProps<typeof StyledBox>) => {
-  return (
-    <StyledBox
-      display="flex"
-      flexDirection="row"
-      justifyContent="center"
-      alignItems="center"
-      position="relative"
-      transition={theme.transitions.quick}
-      {...rest}
-    >
-      {children}
-    </StyledBox>
-  );
-};
+const Box = ({ children, ...rest }: React.ComponentProps<typeof StyledBox>) => (
+  <StyledBox
+    display="flex"
+    flexDirection="row"
+    justifyContent="center"
+    alignItems="center"
+    position="relative"
+    transition={theme.transitions.quick}
+    {...rest}
+  >
+    {children}
+  </StyledBox>
+);
+
 export { Box };

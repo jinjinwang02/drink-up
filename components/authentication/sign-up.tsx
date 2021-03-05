@@ -4,7 +4,7 @@ import { Content } from './content';
 import * as Yup from 'yup';
 import { EmailSchema, LogInCredentials } from './login';
 import { Box } from '../box/box';
-import { Arrow } from '../arrow';
+import { Arrow } from '../icon/arrow';
 import { ArrowButton } from '../button';
 
 export interface SignUpCredentials extends LogInCredentials {

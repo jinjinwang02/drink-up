@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Arrow, ArrowProps } from './arrow';
+import { Arrow, ArrowProps } from './icon/arrow';
 import { Box } from './box/box';
-import { Cloud } from './cloud';
+import { Cloud } from './icon/cloud';
 import { Typography } from './typography';
 
 export interface ButtonProps {
@@ -12,6 +12,7 @@ export interface ButtonProps {
 
 const Button = ({ children, borderless, onClick }: ButtonProps) => {
   const [isHovered, setHovered] = useState<boolean>(false);
+
   return (
     <Box
       flexDirection="column"

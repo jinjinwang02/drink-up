@@ -12,20 +12,18 @@ const Image = ({
   width = '100%',
   height = '100%',
   ...rest
-}: ImageProps) => {
-  return (
-    <Box
-      style={{
-        backgroundImage: `url(${url})`,
-        backgroundSize: 'cover',
-        role: 'img',
-        ariaLabel: alt,
-      }}
-      height="100%"
-      width="100%"
-      {...rest}
-    />
-  );
-};
+}: ImageProps) => (
+  <Box
+    style={{
+      backgroundImage: `url(${url})`,
+      backgroundSize: 'cover',
+      role: 'img',
+      ariaLabel: alt,
+    }}
+    height="100%"
+    width="100%"
+    {...rest}
+  />
+);
 
 export { Image };

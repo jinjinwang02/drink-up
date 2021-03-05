@@ -7,7 +7,7 @@ import {
 import { Box } from '../components/box/box';
 
 export default {
-  title: 'TextWithAnimatedUnderline',
+  title: 'Text with animated underline',
   component: TextWithAnimatedUnderline,
 } as Meta;
 

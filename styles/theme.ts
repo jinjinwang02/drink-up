@@ -154,6 +154,7 @@ const textStyles = {
 
 const space = {
   zero: 0,
+  zeroPointOne: 1,
   zeroPointFour: 4,
   zeroPointSix: 6,
   zeroPointEight: 8,
@@ -197,9 +198,9 @@ const borders = {
 };
 
 const transitions = {
-  quick: 'all 0.1s ease-out',
-  medium: 'all 0.3s ease-out',
-  slow: 'opacity 0.3s ease-out, transform 0.5s ease-out',
+  quick: 'all 0.1s ease-in-out',
+  medium: 'all 0.3s ease-in-out',
+  slow: 'opacity 0.3s ease-in-out, transform 0.5s ease-in-out',
 };
 
 const theme = {

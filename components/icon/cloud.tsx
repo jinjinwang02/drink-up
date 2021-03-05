@@ -1,7 +1,6 @@
-import { unwatchFile } from 'fs';
 import React, { useEffect, useState } from 'react';
-import { theme } from '../styles/theme';
-import { Box } from './box/box';
+import { theme } from '../../styles/theme';
+import { Box } from '../box/box';
 
 interface CloudProps {
   allowXS?: boolean;
@@ -17,6 +16,7 @@ const Cloud = ({ width, allowXS = true }: CloudProps) => {
       setXS(false);
     }
   }, []);
+
   return (
     <Box width={width}>
       <svg
