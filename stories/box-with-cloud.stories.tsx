@@ -4,7 +4,6 @@ import {
   BoxWithCloud,
   BoxWithCloudProps,
 } from '../components/box/box-with-cloud';
-import { Typography } from '../components/typography';
 import { Box } from '../components/box/box';
 
 export default {
