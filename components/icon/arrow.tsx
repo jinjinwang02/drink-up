@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { theme } from '../../styles/theme';
+import { useMediaQuery } from '../../utils/useMediaQuery';
 import { Box } from '../box/box';
 
 export interface ArrowProps {
@@ -22,6 +23,7 @@ export const getHeight = (
 };
 
 const Arrow = ({ direction = 'right', size = 'medium' }: ArrowProps) => {
+  const isXS = useMediaQuery();
   const [isHovered, setHovered] = useState<boolean>(false);
   const getTranslate = () => {
     if (isHovered) {
@@ -50,10 +52,10 @@ const Arrow = ({ direction = 'right', size = 'medium' }: ArrowProps) => {
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 75.66 52.81"
-        height={getHeight(size)}
+        height={getHeight(isXS ? 'medium' : size)}
         fill="none"
         stroke="#000"
-        strokeWidth={size === 'small' || size === 'medium' ? 3 : 2}
+        strokeWidth={2.5}
         style={{
           transform: direction === 'left' ? 'rotate(180deg)' : 'rotate(0)',
         }}

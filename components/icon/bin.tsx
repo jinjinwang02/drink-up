@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { theme } from '../../styles/theme';
-import { ArrowProps, getHeight } from './arrow';
+import { useMediaQuery } from '../../utils/useMediaQuery';
 import { Box } from '../box/box';
 
-interface BinProps {
-  size?: 'large' | 'small';
-}
-
-const Bin = ({ size = 'large' }: BinProps) => {
+const Bin = () => {
+  const isXS = useMediaQuery();
   const [isHovered, setHovered] = useState<boolean>(false);
   return (
     <Box
@@ -27,10 +24,10 @@ const Bin = ({ size = 'large' }: BinProps) => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 51.05 11.53"
-          height={size === 'large' ? 5 : 3}
+          width={isXS ? 15 : 22}
           fill="none"
           stroke="#000"
-          strokeWidth={2.5}
+          strokeWidth={isXS ? 3 : 2.5}
           strokeMiterlimit={10}
         >
           <path d="M.38,4H13L16.54.38h18L38.1,4H50.67v7.18H.38Z" />
@@ -40,10 +37,10 @@ const Bin = ({ size = 'large' }: BinProps) => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 43.86 51.99"
-          height={size === 'large' ? 22 : 16}
+          height={isXS ? 16 : 21}
           fill="none"
           stroke="#000"
-          strokeWidth={2.5}
+          strokeWidth={isXS ? 3 : 2.5}
           strokeMiterlimit={10}
         >
           <path d="M43.49,45.93V.38H.38V45.94a5.67,5.67,0,0,0,5.67,5.67H37.81A5.68,5.68,0,0,0,43.49,45.93ZM21.93,7V44.21M8.7,7V44.21M35.4,7V44.21" />

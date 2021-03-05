@@ -7,7 +7,10 @@ import { Typography } from './typography';
 
 const InputField = styled(Field)`
   ::placeholder {
-    font-size: ${(props) => props.placeholderSize}px;
+    font-size: ${(props) => props.placeholdersize}px;
+  }
+  @media ${theme.device.mobile} {
+    font-style: ${theme.textStyles.bodyM};
   }
 `;
 
@@ -52,6 +55,7 @@ const Input = ({
         type={type}
         placeholder={placeholder}
         placeholdersize={placeholderSize}
+        textstyle={inputTextStyle}
         style={{
           width: '100%',
           padding: theme.space.zeroPointFour,
@@ -61,7 +65,6 @@ const Input = ({
           border: 'none',
           borderBottom: theme.borders.regularBlack,
           background: 'transparent',
-          textStyle: inputTextStyle,
         }}
       />
       <InputLabel

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { theme } from '../../styles/theme';
-import { ArrowProps, getHeight } from './arrow';
 import { Box } from '../box/box';
+import { useMediaQuery } from '../../utils/useMediaQuery';
 
-type CrossProps = Pick<ArrowProps, 'size'>;
-
-const Cross = ({ size = 'large' }: CrossProps) => {
+const Cross = () => {
+  const isXS = useMediaQuery();
   const [isHovered, setHovered] = useState<boolean>(false);
   return (
     <Box
@@ -21,7 +20,7 @@ const Cross = ({ size = 'large' }: CrossProps) => {
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 51.82 51.3"
-        height={getHeight(size)}
+        height={isXS ? 14 : 18}
         fill="none"
         stroke="#000"
         strokeWidth={3}

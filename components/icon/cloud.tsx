@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { theme } from '../../styles/theme';
+import { useMediaQuery } from '../../utils/useMediaQuery';
 import { Box } from '../box/box';
 
 interface CloudProps {
@@ -8,15 +8,7 @@ interface CloudProps {
 }
 
 const Cloud = ({ width, allowXS = true }: CloudProps) => {
-  const [isXS, setXS] = useState<boolean>(false);
-  useEffect(() => {
-    if (window.matchMedia(`(max-width: ${theme.breakpoints[0]})`).matches) {
-      setXS(true);
-    } else {
-      setXS(false);
-    }
-  }, []);
-
+  const isXS = useMediaQuery();
   return (
     <Box width={width}>
       <svg

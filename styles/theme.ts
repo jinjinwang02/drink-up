@@ -180,6 +180,14 @@ const space = {
 
 const breakpoints = ['576px', '768px', '1200px'];
 
+const device = {
+  mobile: `(max-width: ${breakpoints[0]})`,
+  tablet: `(max-width: ${breakpoints[1]})`,
+  landscape: `(max-width: ${breakpoints[2]})`,
+  desktop: `(max-width: ${breakpoints[3]})`,
+  desktopL: `(min-width: ${breakpoints[3]})`,
+};
+
 const colors = {
   pureWhite: 'rgba(255, 255, 255, 1)',
   pureWhiteThirty: 'rgba(255, 255, 255, 0.30)',
@@ -207,6 +215,7 @@ const theme = {
   textStyles,
   colors,
   space,
+  device,
   breakpoints,
   borders,
   transitions,

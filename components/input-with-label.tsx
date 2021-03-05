@@ -17,6 +17,7 @@ const InputWithLabel = ({
   name,
   label,
   placeholder,
+  inputTextStyle,
   labelTextStyle = ['copyS', 'copyM', 'copyM', 'copyM'],
   placeholderSize,
 }: InputWithLabelProps) => (
@@ -31,7 +32,7 @@ const InputWithLabel = ({
         inputTextAlign="left"
         placeholder={placeholder}
         placeholderSize={placeholderSize}
-        inputTextStyle={labelTextStyle}
+        inputTextStyle={inputTextStyle}
       />
     </Box>
   </Box>

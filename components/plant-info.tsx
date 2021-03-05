@@ -6,11 +6,13 @@ import { InputWithLabel } from './input-with-label';
 
 export interface PlantInfoProps {
   labelTextStyle?: string | string[];
+  inputTextStyle?: string | string[];
   placeholderSize?: number;
   plantInfo?: EditPlantBoxProps;
 }
 
 const PlantInfo = ({
+  inputTextStyle,
   labelTextStyle,
   plantInfo,
   placeholderSize,
@@ -32,13 +34,20 @@ const PlantInfo = ({
   });
 
   return (
-    <Box width="100%" height="100%" p="onePointSix" flexDirection="column">
+    <Box
+      width="100%"
+      height="100%"
+      px="onePointSix"
+      py="one"
+      flexDirection="column"
+    >
       <FormikProvider value={formik}>
         <InputWithLabel
           name="imageUrl"
           label="Image url:"
           placeholder="https://"
           formik={formik}
+          inputTextStyle={inputTextStyle}
           labelTextStyle={labelTextStyle}
           placeholderSize={placeholderSize}
         />
@@ -47,6 +56,7 @@ const PlantInfo = ({
           label="Common name:"
           placeholder="e.g. Devils ivy"
           formik={formik}
+          inputTextStyle={inputTextStyle}
           labelTextStyle={labelTextStyle}
           placeholderSize={placeholderSize}
         />
@@ -55,6 +65,7 @@ const PlantInfo = ({
           label="Scientific name:"
           placeholder="e.g. Epipremnum aureum"
           formik={formik}
+          inputTextStyle={inputTextStyle}
           labelTextStyle={labelTextStyle}
           placeholderSize={placeholderSize}
         />
@@ -63,6 +74,7 @@ const PlantInfo = ({
           label="Watering habit:"
           placeholder="e.g. once a week"
           formik={formik}
+          inputTextStyle={inputTextStyle}
           labelTextStyle={labelTextStyle}
           placeholderSize={placeholderSize}
         />
@@ -71,6 +83,7 @@ const PlantInfo = ({
           label="You notes:"
           placeholder="e.g. likes soil to be gently moist"
           formik={formik}
+          inputTextStyle={inputTextStyle}
           labelTextStyle={labelTextStyle}
           placeholderSize={placeholderSize}
         />
@@ -79,6 +92,7 @@ const PlantInfo = ({
           label="Last watered on:"
           placeholder="e.g. 27/02/2020"
           formik={formik}
+          inputTextStyle={inputTextStyle}
           labelTextStyle={labelTextStyle}
           placeholderSize={placeholderSize}
         />

@@ -37,14 +37,24 @@ const EditPlantBox = ({
       imageUrl={imageUrl}
       imageText={`About the ${commonName}...`}
       bottomAccessory={
-        <PlantInfo
-          plantInfo={{ commonName, scientificName, habit, notes, date }}
-          labelTextStyle="copyS"
-          placeholderSize={theme.textStyles.copyS.fontSize - 1}
-        />
+        <Box width="100%" mb={['fourPointFive', 'zero']}>
+          <PlantInfo
+            plantInfo={{ commonName, scientificName, habit, notes, date }}
+            inputTextStyle={['bodyXS', 'bodyS', 'bodyS', 'bodyS']}
+            labelTextStyle={['copyXS', 'copyS', 'copyS', 'copyS']}
+            placeholderSize={theme.textStyles.copyS.fontSize - 1}
+          />
+        </Box>
       }
     />
-    <Box mt="five" width="100%" justifyContent="space-between">
+    <Box
+      position={['absolute', 'relative']}
+      px={['two', 'zero']}
+      width="100%"
+      mt={['zero', 'five']}
+      bottom={['twoPointTwo', 'zero']}
+      justifyContent="space-between"
+    >
       <Cross /> <Bin /> <Arrow size="large" />
     </Box>
   </Box>
