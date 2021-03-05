@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { theme } from '../../styles/theme';
 import { useMediaQuery } from '../../utils/useMediaQuery';
 import { Box } from '../box/box';
