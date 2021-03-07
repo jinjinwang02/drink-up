@@ -4,8 +4,8 @@ import Head from 'next/head';
 import { Box } from '../components/box/box';
 import { Favicon } from '../components/favicon';
 import { FontHead } from '../styles/font-head';
-import { Authentication } from '../components/authentication';
 import { verifyIdToken } from '../utils/firebase/firebase-admin';
+import { Logo } from '../components/icon/logo';
 
 const Index = () => {
   return (
@@ -17,7 +17,7 @@ const Index = () => {
       </Head>
 
       <Box m={10}>
-        <Authentication />
+        <Logo width={20} height={20} />
       </Box>
     </>
   );
