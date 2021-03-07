@@ -6,25 +6,23 @@ import { Typography } from '../typography';
 
 interface ContentProps {
   isCurrentStep: boolean;
-  isLogin: boolean;
   step: number;
   text: string;
   name: string;
   label: string;
   formik: any;
   type?: string;
-  zIndex?: number;
+  isLogin?: boolean;
 }
 
 const Content = ({
   isCurrentStep,
-  isLogin,
+  isLogin = false,
   step,
   text,
   name,
   label,
   type,
-  zIndex,
   formik,
 }: ContentProps) => {
   const totalSteps = isLogin ? 2 : 4;
@@ -42,7 +40,6 @@ const Content = ({
       pt="three"
       pb="threePointFive"
       position="relative"
-      zIndex={zIndex}
     >
       <Box
         flexDirection="column"

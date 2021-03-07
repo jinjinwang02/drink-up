@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
-import { useMediaQuery } from '../../utils/useMediaQuery';
+import { useMediaQuery } from '../../utils/hooks/useMediaQuery';
 
 const Cross = () => {
   const isXS = useMediaQuery();

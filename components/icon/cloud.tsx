@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMediaQuery } from '../../utils/useMediaQuery';
+import { useMediaQuery } from '../../utils/hooks/useMediaQuery';
 import { Box } from '../box/box';
 
 interface CloudProps {

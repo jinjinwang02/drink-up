@@ -38,7 +38,7 @@ export interface InputProps {
 const Input = ({
   formik,
   name,
-  type,
+  type = 'text',
   label,
   inputTextAlign = 'center',
   inputTextStyle,

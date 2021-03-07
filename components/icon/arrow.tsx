@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { theme } from '../../styles/theme';
-import { useMediaQuery } from '../../utils/useMediaQuery';
+import { useMediaQuery } from '../../utils/hooks/useMediaQuery';
 import { Box } from '../box/box';
 
 export interface ArrowProps {

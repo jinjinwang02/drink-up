@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { theme } from '../styles/theme';
+import { theme } from '../../styles/theme';
 
 const useMediaQuery = () => {
   const [isXS, setXS] = useState<boolean>(false);

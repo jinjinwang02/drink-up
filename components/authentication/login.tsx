@@ -1,20 +1,17 @@
-import { FormikProvider, useFormik } from 'formik';
 import React from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import { useRouter } from 'next/router';
+import { firebaseClient } from '../../utils/firebase/firebase-client';
+import { FormikProvider, useFormik } from 'formik';
 import { Content } from './content';
 import * as Yup from 'yup';
 import { Box } from '../box/box';
 import { Arrow } from '../icon/arrow';
 import { ArrowButton } from '../button';
 
-export interface LogInCredentials {
-  email: string;
-  password: string;
-}
-
 interface LogInProps {
   step: number;
-  values: LogInCredentials;
-  setValues: (values: LogInCredentials) => void;
   onPressNext: () => void;
   onPressBack?: () => void;
 }
@@ -26,40 +23,47 @@ const PasswordSchema = Yup.object().shape({
   password: Yup.string().required('Required field :)'),
 });
 
-const LogIn = ({
-  step,
-  values,
-  setValues,
-  onPressBack,
-  onPressNext,
-}: LogInProps) => {
+const LogIn = ({ step, onPressBack, onPressNext }: LogInProps) => {
+  firebaseClient();
+  const router = useRouter();
+  const initialValues = {
+    email: '',
+    password: '',
+  };
   const emailFormik = useFormik({
-    initialValues: {
-      email: values.email,
-    },
+    initialValues: initialValues,
     validateOnChange: false,
     validateOnBlur: false,
     validationSchema: EmailSchema,
-    onSubmit: () => {
-      setValues({
-        email: emailFormik.values.email,
-        password: passwordFormik.values.password,
-      });
-      onPressNext();
+    onSubmit: async () => {
+      await firebase
+        .auth()
+        .fetchSignInMethodsForEmail(emailFormik.values.email)
+        .then((res) => {
+          if (!res.length) {
+            emailFormik.setFieldError('email', 'This email is not registered.');
+          } else {
+            onPressNext();
+          }
+        });
     },
   });
   const passwordFormik = useFormik({
-    initialValues: {
-      password: values.password,
-    },
+    initialValues: initialValues,
     validateOnChange: false,
     validateOnBlur: false,
     validationSchema: PasswordSchema,
-    onSubmit: () => {
-      setValues({
-        email: emailFormik.values.email,
-        password: passwordFormik.values.password,
-      });
+    onSubmit: async () => {
+      await firebase
+        .auth()
+        .signInWithEmailAndPassword(
+          emailFormik.values.email,
+          passwordFormik.values.password
+        )
+        .then(() => router.push('/authenticated'))
+        .catch((error) => {
+          passwordFormik.setFieldError('password', error.message);
+        });
     },
   });
 
@@ -90,7 +94,6 @@ const LogIn = ({
             step={step}
             isLogin
             isCurrentStep={step === 1}
-            zIndex={step === 1 ? 1 : 0}
           />
           <Content
             text="Password?"
@@ -101,7 +104,6 @@ const LogIn = ({
             step={step}
             isLogin
             isCurrentStep={step === 2}
-            zIndex={step === 2 ? 1 : 0}
           />
           <Box position="absolute" bottom="twoPointEight" zIndex={10}>
             <ArrowButton />

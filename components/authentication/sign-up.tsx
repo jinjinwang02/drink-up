@@ -1,21 +1,18 @@
-import { FormikContextType, FormikProvider, useFormik } from 'formik';
 import React from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import { useRouter } from 'next/router';
+import { firebaseClient } from '../../utils/firebase/firebase-client';
+import { FormikContextType, FormikProvider, useFormik } from 'formik';
 import { Content } from './content';
 import * as Yup from 'yup';
-import { EmailSchema, LogInCredentials } from './login';
+import { EmailSchema } from './login';
 import { Box } from '../box/box';
 import { Arrow } from '../icon/arrow';
 import { ArrowButton } from '../button';
 
-export interface SignUpCredentials extends LogInCredentials {
-  displayName: string;
-  passwordConfirmation: string;
-}
-
 interface SignUpProps {
   step: number;
-  values: SignUpCredentials;
-  setValues: (values: SignUpCredentials) => void;
   onPressNext: () => void;
   onPressBack?: () => void;
 }
@@ -29,55 +26,70 @@ const PasswordSchema = Yup.object().shape({
     .min(8, PASSWORD_MIN_MESSAGE)
     .max(16, PASSWORD_MAX_MESSAGE),
 });
-const SignUp = ({
-  step,
-  values,
-  setValues,
-  onPressBack,
-  onPressNext,
-}: SignUpProps) => {
+const SignUp = ({ step, onPressBack, onPressNext }: SignUpProps) => {
+  firebaseClient();
+  const router = useRouter();
+  const initialValues = {
+    email: '',
+    displayName: '',
+    password: '',
+    passwordConfirmation: '',
+  };
   const emailFormik = useFormik({
-    initialValues: {
-      email: values.email,
-    },
+    initialValues: initialValues,
     validateOnChange: false,
     validateOnBlur: false,
     validationSchema: EmailSchema,
-    onSubmit: () => {
-      handleSubmit();
-      onPressNext();
+    onSubmit: async () => {
+      await firebase
+        .auth()
+        .fetchSignInMethodsForEmail(emailFormik.values.email)
+        .then((res) => {
+          if (res.length) {
+            emailFormik.setFieldError(
+              'email',
+              'This Email has already registered.'
+            );
+          } else {
+            onPressNext();
+          }
+        });
     },
   });
   const displayNameFormik = useFormik({
-    initialValues: {
-      displayName: values.displayName,
-    },
+    initialValues: initialValues,
     onSubmit: () => {
-      handleSubmit();
       onPressNext();
     },
   });
   const passwordFormik = useFormik({
-    initialValues: {
-      password: values.password,
-    },
+    initialValues: initialValues,
     validateOnChange: false,
     validateOnBlur: false,
     validationSchema: PasswordSchema,
     onSubmit: () => {
-      handleSubmit();
       onPressNext();
     },
   });
   const passwordConfirmationFormik = useFormik({
-    initialValues: {
-      passwordConfirmation: values.passwordConfirmation,
-    },
+    initialValues: initialValues,
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: (value) => {
+    onSubmit: async (value) => {
       if (value.passwordConfirmation === passwordFormik.values.password) {
-        handleSubmit();
+        await firebase
+          .auth()
+          .createUserWithEmailAndPassword(
+            emailFormik.values.email,
+            passwordConfirmationFormik.values.passwordConfirmation
+          )
+          .then(() => router.push('/authenticated'))
+          .catch((error) => {
+            passwordConfirmationFormik.setFieldError(
+              'passwordConfirmation',
+              error.message
+            );
+          });
       } else {
         passwordConfirmationFormik.setFieldError(
           'passwordConfirmation',
@@ -86,42 +98,36 @@ const SignUp = ({
       }
     },
   });
-  const handleSubmit = () => {
-    setValues({
-      email: emailFormik.values.email,
-      displayName: displayNameFormik.values.displayName,
-      password: passwordFormik.values.password,
-      passwordConfirmation:
-        passwordConfirmationFormik.values.passwordConfirmation,
-    });
-  };
-  const getCurrentFormik = () => {
-    if (step === 1) {
-      return emailFormik;
-    } else if (step === 2) {
-      return displayNameFormik;
-    } else if (step === 3) {
-      return passwordFormik;
-    } else if (step === 4) {
-      return passwordConfirmationFormik;
+
+  const getCurrentFormik = (step: number) => {
+    switch (step) {
+      case 1:
+        return emailFormik;
+      case 2:
+        return displayNameFormik;
+      case 3:
+        return passwordFormik;
+      case 4:
+        passwordConfirmationFormik;
     }
   };
 
-  const getSubmit = () => {
-    if (step === 1) {
-      return emailFormik.handleSubmit;
-    } else if (step === 2) {
-      return displayNameFormik.handleSubmit;
-    } else if (step === 3) {
-      return passwordFormik.handleSubmit;
-    } else if (step === 4) {
-      return passwordConfirmationFormik.handleSubmit;
+  const getSubmit = (step: number) => {
+    switch (step) {
+      case 1:
+        return emailFormik.handleSubmit;
+      case 2:
+        return displayNameFormik.handleSubmit;
+      case 3:
+        return passwordFormik.handleSubmit;
+      case 4:
+        passwordConfirmationFormik.handleSubmit;
     }
   };
 
   return (
-    <FormikProvider value={getCurrentFormik() as FormikContextType<any>}>
-      <form onSubmit={getSubmit()}>
+    <FormikProvider value={getCurrentFormik(step) as FormikContextType<any>}>
+      <form onSubmit={getSubmit(step)}>
         <Box position="relative" height="100%" width="100%">
           {step !== 1 ? (
             <Box
@@ -141,7 +147,6 @@ const SignUp = ({
             formik={emailFormik}
             step={step}
             isCurrentStep={step === 1}
-            isLogin={false}
           />
           <Content
             text="How would you like to called?"
@@ -150,7 +155,6 @@ const SignUp = ({
             formik={displayNameFormik}
             step={step}
             isCurrentStep={step === 2}
-            isLogin={false}
           />
           <Content
             text="Make it nice and secure"
@@ -160,7 +164,6 @@ const SignUp = ({
             formik={passwordFormik}
             step={step}
             isCurrentStep={step === 3}
-            isLogin={false}
           />
           <Content
             text="And again..."
@@ -170,7 +173,6 @@ const SignUp = ({
             formik={passwordConfirmationFormik}
             step={step}
             isCurrentStep={step === 4}
-            isLogin={false}
           />
           <Box position="absolute" bottom="twoPointEight">
             <ArrowButton />
