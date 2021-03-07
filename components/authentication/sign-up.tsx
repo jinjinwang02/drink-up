@@ -1,5 +1,4 @@
 import React from 'react';
-import firebase from 'firebase/app';
 import 'firebase/auth';
 import { useRouter } from 'next/router';
 import { firebaseClient } from '../../utils/firebase/firebase-client';
@@ -27,7 +26,7 @@ const PasswordSchema = Yup.object().shape({
     .max(16, PASSWORD_MAX_MESSAGE),
 });
 const SignUp = ({ step, onPressBack, onPressNext }: SignUpProps) => {
-  firebaseClient();
+  const { auth } = firebaseClient();
   const router = useRouter();
   const initialValues = {
     email: '',
@@ -41,8 +40,7 @@ const SignUp = ({ step, onPressBack, onPressNext }: SignUpProps) => {
     validateOnBlur: false,
     validationSchema: EmailSchema,
     onSubmit: async () => {
-      await firebase
-        .auth()
+      await auth
         .fetchSignInMethodsForEmail(emailFormik.values.email)
         .then((res) => {
           if (res.length) {
@@ -77,8 +75,7 @@ const SignUp = ({ step, onPressBack, onPressNext }: SignUpProps) => {
     validateOnBlur: false,
     onSubmit: async (value) => {
       if (value.passwordConfirmation === passwordFormik.values.password) {
-        await firebase
-          .auth()
+        await auth
           .createUserWithEmailAndPassword(
             emailFormik.values.email,
             passwordConfirmationFormik.values.passwordConfirmation

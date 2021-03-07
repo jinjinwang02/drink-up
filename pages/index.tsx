@@ -1,20 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import nookies from 'nookies';
 import Head from 'next/head';
 import { Box } from '../components/box/box';
 import { Favicon } from '../components/favicon';
 import { FontHead } from '../styles/font-head';
 import { Authentication } from '../components/authentication';
-import { useAuth } from '../utils/context/auth';
-import { useRouter } from 'next/router';
+import { verifyIdToken } from '../utils/firebase/firebase-admin';
 
 const Index = () => {
-  const { user } = useAuth();
-  const router = useRouter();
-  useEffect(() => {
-    if (user) {
-      router.push('/authenticated');
-    }
-  });
   return (
     <>
       <Head>
@@ -28,6 +21,24 @@ const Index = () => {
       </Box>
     </>
   );
+};
+
+export const getServerSideProps = async (context: any) => {
+  try {
+    const cookies = nookies.get(context);
+    const token = await verifyIdToken(cookies.token);
+    if (token) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/authenticated',
+        },
+      };
+    }
+    return { props: {} };
+  } catch (error) {
+    return { props: {} };
+  }
 };
 
 export default Index;

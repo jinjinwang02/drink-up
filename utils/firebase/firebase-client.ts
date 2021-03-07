@@ -18,4 +18,7 @@ export const firebaseClient = () => {
   } else {
     firebase.app();
   }
+  const firestore = firebase.firestore();
+  const auth = firebase.auth();
+  return { auth, firestore };
 };

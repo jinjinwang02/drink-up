@@ -1,10 +1,10 @@
 import React from 'react';
 import nookies from 'nookies';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { auth } from 'firebase-admin';
 import { verifyIdToken } from '../utils/firebase/firebase-admin';
 import { firebaseClient } from '../utils/firebase/firebase-client';
-import firebase from 'firebase/app';
 import { Box } from '../components/box/box';
 import { Button } from '../components/button';
 
@@ -13,14 +13,15 @@ interface Props {
 }
 
 const Index = ({ session }: Props) => {
-  firebaseClient();
+  const { auth } = firebaseClient();
   const router = useRouter();
   if (session) {
     return (
-      <Box width="100vw" height="100vh">
+      <Box justifyContent="space-around" width="100vw" height="100vh">
+        <Link href="/">Home</Link>
         <Button
           onClick={async () => {
-            await firebase.auth().signOut();
+            await auth.signOut();
             router.push('/');
           }}
         >
@@ -38,16 +39,12 @@ export const getServerSideProps = async (context: any) => {
     const cookies = nookies.get(context);
     const token = await verifyIdToken(cookies.token);
     return {
-      props: {
-        session: token,
-      },
+      props: { session: token },
     };
   } catch (error) {
     context.res.writeHead(302, { location: '/' });
     context.res.end();
-    return {
-      props: {},
-    };
+    return { props: {} };
   }
 };
 
