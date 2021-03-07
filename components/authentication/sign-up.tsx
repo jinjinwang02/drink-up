@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import 'firebase/auth';
 import { useRouter } from 'next/router';
 import { firebaseClient } from '../../utils/firebase/firebase-client';
@@ -26,32 +26,66 @@ const PasswordSchema = Yup.object().shape({
     .max(16, PASSWORD_MAX_MESSAGE),
 });
 const SignUp = ({ step, onPressBack, onPressNext }: SignUpProps) => {
-  const { auth } = firebaseClient();
+  const { auth, firestore } = firebaseClient();
   const router = useRouter();
+  const [isLoading, setLoading] = useState<boolean>(false);
+
+  const handleCheckEmail = useCallback(async (email: string) => {
+    await auth.fetchSignInMethodsForEmail(email).then((res) => {
+      if (res.length) {
+        emailFormik.setFieldError(
+          'email',
+          'This Email has already registered.'
+        );
+      } else {
+        onPressNext();
+      }
+    });
+  }, []);
+
+  const handleSignUp = useCallback(
+    async (email: string, password: string, displayName?: string) => {
+      try {
+        setLoading(true);
+        const { user } = await auth.createUserWithEmailAndPassword(
+          email,
+          password
+        );
+        const userRef = await firestore.doc(`users/${user?.uid}`).get();
+        if (!userRef.exists) {
+          await firestore.collection('users').doc().set({
+            email,
+            displayName,
+            createdAt: new Date(),
+          });
+        }
+      } catch (error) {
+        passwordConfirmationFormik.setFieldError(
+          'passwordConfirmation',
+          error.message
+        );
+      } finally {
+        setLoading(false);
+        router.push('/authenticated');
+      }
+    },
+    []
+  );
+
   const initialValues = {
     email: '',
     displayName: '',
     password: '',
     passwordConfirmation: '',
   };
+
   const emailFormik = useFormik({
     initialValues: initialValues,
     validateOnChange: false,
     validateOnBlur: false,
     validationSchema: EmailSchema,
     onSubmit: async () => {
-      await auth
-        .fetchSignInMethodsForEmail(emailFormik.values.email)
-        .then((res) => {
-          if (res.length) {
-            emailFormik.setFieldError(
-              'email',
-              'This Email has already registered.'
-            );
-          } else {
-            onPressNext();
-          }
-        });
+      handleCheckEmail(emailFormik.values.email);
     },
   });
   const displayNameFormik = useFormik({
@@ -75,18 +109,11 @@ const SignUp = ({ step, onPressBack, onPressNext }: SignUpProps) => {
     validateOnBlur: false,
     onSubmit: async (value) => {
       if (value.passwordConfirmation === passwordFormik.values.password) {
-        await auth
-          .createUserWithEmailAndPassword(
-            emailFormik.values.email,
-            passwordConfirmationFormik.values.passwordConfirmation
-          )
-          .then(() => router.push('/authenticated'))
-          .catch((error) => {
-            passwordConfirmationFormik.setFieldError(
-              'passwordConfirmation',
-              error.message
-            );
-          });
+        handleSignUp(
+          emailFormik.values.email,
+          passwordConfirmationFormik.values.passwordConfirmation,
+          displayNameFormik.values.displayName
+        );
       } else {
         passwordConfirmationFormik.setFieldError(
           'passwordConfirmation',
@@ -105,28 +132,15 @@ const SignUp = ({ step, onPressBack, onPressNext }: SignUpProps) => {
       case 3:
         return passwordFormik;
       case 4:
-        passwordConfirmationFormik;
-    }
-  };
-
-  const getSubmit = (step: number) => {
-    switch (step) {
-      case 1:
-        return emailFormik.handleSubmit;
-      case 2:
-        return displayNameFormik.handleSubmit;
-      case 3:
-        return passwordFormik.handleSubmit;
-      case 4:
-        passwordConfirmationFormik.handleSubmit;
+        return passwordConfirmationFormik;
     }
   };
 
   return (
     <FormikProvider value={getCurrentFormik(step) as FormikContextType<any>}>
-      <form onSubmit={getSubmit(step)}>
+      <form onSubmit={getCurrentFormik(step)?.handleSubmit}>
         <Box position="relative" height="100%" width="100%">
-          {step !== 1 ? (
+          {step !== 1 && !isLoading ? (
             <Box
               zIndex={1}
               onClick={onPressBack}
@@ -170,9 +184,11 @@ const SignUp = ({ step, onPressBack, onPressNext }: SignUpProps) => {
             formik={passwordConfirmationFormik}
             step={step}
             isCurrentStep={step === 4}
+            isLoading={isLoading}
           />
+          )
           <Box position="absolute" bottom="twoPointEight">
-            <ArrowButton />
+            {!isLoading ? <ArrowButton /> : null}
           </Box>
         </Box>
       </form>

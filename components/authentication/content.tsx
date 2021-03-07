@@ -1,6 +1,7 @@
 import React from 'react';
 import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
+import { Logo } from '../icon/logo';
 import { Input } from '../input';
 import { Typography } from '../typography';
 
@@ -13,10 +14,12 @@ interface ContentProps {
   formik: any;
   type?: string;
   isLogin?: boolean;
+  isLoading?: boolean;
 }
 
 const Content = ({
   isCurrentStep,
+  isLoading,
   isLogin = false,
   step,
   text,
@@ -33,39 +36,47 @@ const Content = ({
   return (
     <Box
       flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
       height="100%"
       width={225}
       pt="three"
       pb="threePointFive"
       position="relative"
     >
-      <Box
-        flexDirection="column"
-        width="100%"
-        justifyContent="center"
-        alignItems="center"
-        style={{
-          transform: `translateX(${translateX})`,
-          opacity: isCurrentStep ? 1 : 0,
-        }}
-        transition={theme.transitions.slow}
-        mb="five"
-        zIndex={2}
-      >
-        <Box height={75}>
-          <Typography
-            textStyle="copyM"
-            textAlign="center"
-            px="onePointFour"
-            pb="two"
-          >
-            {text}
-          </Typography>
+      {isLoading ? (
+        <Box
+          width="100%"
+          style={{
+            transform: `translateX(${translateX})`,
+          }}
+        >
+          <Logo animated />
         </Box>
-        <Input name={name} label={label} type={type} formik={formik} />
-      </Box>
+      ) : (
+        <Box
+          flexDirection="column"
+          width="100%"
+          style={{
+            transform: `translateX(${translateX})`,
+            opacity: isCurrentStep ? 1 : 0,
+          }}
+          transition={theme.transitions.slow}
+          mb="five"
+          zIndex={2}
+        >
+          <Box height={75}>
+            <Typography
+              textStyle="copyM"
+              textAlign="center"
+              px="onePointFour"
+              pb="two"
+            >
+              {text}
+            </Typography>
+          </Box>
+
+          <Input name={name} label={label} type={type} formik={formik} />
+        </Box>
+      )}
     </Box>
   );
 };

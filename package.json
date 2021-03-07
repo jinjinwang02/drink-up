@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "git rm -f .eslintcache && next dev",
+    "dev": "next dev",
     "type-check": "tsc",
     "build": "next build",
     "start": "next start",

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import 'firebase/auth';
 import { useRouter } from 'next/router';
 import { firebaseClient } from '../../utils/firebase/firebase-client';
-import { FormikProvider, useFormik } from 'formik';
+import { FormikContextType, FormikProvider, useFormik } from 'formik';
 import { Content } from './content';
 import * as Yup from 'yup';
 import { Box } from '../box/box';
@@ -25,6 +25,32 @@ const PasswordSchema = Yup.object().shape({
 const LogIn = ({ step, onPressBack, onPressNext }: LogInProps) => {
   const { auth } = firebaseClient();
   const router = useRouter();
+  const [isLoading, setLoading] = useState<boolean>(false);
+
+  const handleCheckEmail = useCallback(async (email: string) => {
+    await auth.fetchSignInMethodsForEmail(email).then((res) => {
+      if (!res.length) {
+        emailFormik.setFieldError('email', 'This email is not registered.');
+      } else {
+        onPressNext();
+      }
+    });
+  }, []);
+
+  const handleLogIn = useCallback(async (email: string, password: string) => {
+    try {
+      setLoading(true);
+      await auth
+        .signInWithEmailAndPassword(email, password)
+        .then(() => router.push('/authenticated'));
+    } catch (error) {
+      passwordFormik.setFieldError('password', error.message);
+    } finally {
+      setLoading(false);
+      router.push('/authenticated');
+    }
+  }, []);
+
   const initialValues = {
     email: '',
     password: '',
@@ -35,15 +61,7 @@ const LogIn = ({ step, onPressBack, onPressNext }: LogInProps) => {
     validateOnBlur: false,
     validationSchema: EmailSchema,
     onSubmit: async () => {
-      await auth
-        .fetchSignInMethodsForEmail(emailFormik.values.email)
-        .then((res) => {
-          if (!res.length) {
-            emailFormik.setFieldError('email', 'This email is not registered.');
-          } else {
-            onPressNext();
-          }
-        });
+      handleCheckEmail(emailFormik.values.email);
     },
   });
   const passwordFormik = useFormik({
@@ -52,27 +70,24 @@ const LogIn = ({ step, onPressBack, onPressNext }: LogInProps) => {
     validateOnBlur: false,
     validationSchema: PasswordSchema,
     onSubmit: async () => {
-      await auth
-        .signInWithEmailAndPassword(
-          emailFormik.values.email,
-          passwordFormik.values.password
-        )
-        .then(() => router.push('/authenticated'))
-        .catch((error) => {
-          passwordFormik.setFieldError('password', error.message);
-        });
+      handleLogIn(emailFormik.values.email, passwordFormik.values.password);
     },
   });
 
+  const getCurrentFormik = (step: number) => {
+    switch (step) {
+      case 1:
+        return emailFormik;
+      case 2:
+        return passwordFormik;
+    }
+  };
+
   return (
-    <FormikProvider value={step === 1 ? emailFormik : passwordFormik}>
-      <form
-        onSubmit={
-          step === 1 ? emailFormik.handleSubmit : passwordFormik.handleSubmit
-        }
-      >
+    <FormikProvider value={getCurrentFormik(step) as FormikContextType<any>}>
+      <form onSubmit={getCurrentFormik(step)?.handleSubmit}>
         <Box position="relative" height="100%" width="100%">
-          {step !== 1 ? (
+          {step !== 1 && !isLoading ? (
             <Box
               zIndex={1}
               onClick={onPressBack}
@@ -101,9 +116,10 @@ const LogIn = ({ step, onPressBack, onPressNext }: LogInProps) => {
             step={step}
             isLogin
             isCurrentStep={step === 2}
+            isLoading={isLoading}
           />
           <Box position="absolute" bottom="twoPointEight" zIndex={10}>
-            <ArrowButton />
+            {!isLoading ? <ArrowButton /> : null}
           </Box>
         </Box>
       </form>

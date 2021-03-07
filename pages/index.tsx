@@ -5,23 +5,21 @@ import { Box } from '../components/box/box';
 import { Favicon } from '../components/favicon';
 import { FontHead } from '../styles/font-head';
 import { verifyIdToken } from '../utils/firebase/firebase-admin';
-import { Logo } from '../components/icon/logo';
+import { Authentication } from '../components/authentication';
 
-const Index = () => {
-  return (
-    <>
-      <Head>
-        <title>Drink up | A water reminder for your plants</title>
-        <Favicon />
-        <FontHead />
-      </Head>
+const Index = () => (
+  <>
+    <Head>
+      <title>Drink up | A water reminder for your plants</title>
+      <Favicon />
+      <FontHead />
+    </Head>
 
-      <Box m={10}>
-        <Logo width={20} height={20} />
-      </Box>
-    </>
-  );
-};
+    <Box m={10}>
+      <Authentication />
+    </Box>
+  </>
+);
 
 export const getServerSideProps = async (context: any) => {
   try {

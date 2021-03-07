@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box } from '../box/box';
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const firstPath = 'M57.71,81.58s-37.55-15.71-53.26,0';
 const secondPath =
@@ -33,40 +32,32 @@ const StyledThirdLine = styled.path`
 `;
 
 export interface IconProps {
-  height?: number | string;
-  width?: number | string;
   strokeWidth?: number;
   animated?: boolean;
 }
 
-const Logo = ({
-  height = '100%',
-  width = '100%',
-  strokeWidth = 3,
-  animated = false,
-}: IconProps) => (
-  <Box width={width} height={height}>
-    <svg
-      viewBox="0 0 66.14 89.96"
-      fill="none"
-      stroke="#000"
-      strokeMiterlimit={10}
-    >
-      {animated ? (
-        <>
-          <StyledFirstLine strokeWidth={strokeWidth + 3} d={firstPath} />
-          <StyledSecondLine strokeWidth={strokeWidth} d={secondPath} />
-          <StyledThirdLine strokeWidth={strokeWidth} d={thirdPath} />
-        </>
-      ) : (
-        <>
-          <path strokeWidth={strokeWidth + 3} d={firstPath} />
-          <path strokeWidth={strokeWidth} d={secondPath} />
-          <path strokeWidth={strokeWidth} d={thirdPath} />
-        </>
-      )}
-    </svg>
-  </Box>
+const Logo = ({ strokeWidth = 3, animated = false }: IconProps) => (
+  <svg
+    width={20}
+    viewBox="0 0 66.14 89.96"
+    fill="none"
+    stroke="#000"
+    strokeMiterlimit={10}
+  >
+    {animated ? (
+      <>
+        <StyledFirstLine strokeWidth={strokeWidth + 3} d={firstPath} />
+        <StyledSecondLine strokeWidth={strokeWidth} d={secondPath} />
+        <StyledThirdLine strokeWidth={strokeWidth} d={thirdPath} />
+      </>
+    ) : (
+      <>
+        <path strokeWidth={strokeWidth + 3} d={firstPath} />
+        <path strokeWidth={strokeWidth} d={secondPath} />
+        <path strokeWidth={strokeWidth} d={thirdPath} />
+      </>
+    )}
+  </svg>
 );
 
 export { Logo };
