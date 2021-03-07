@@ -1,11 +1,13 @@
 import * as admin from 'firebase-admin';
-import { ServiceAccount } from 'firebase-admin';
-import serviceAccount from './secrets.json';
 
 export const verifyIdToken = async (token: string) => {
   if (!admin.apps.length) {
     admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount as ServiceAccount),
+      credential: admin.credential.cert({
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        privateKey: process.env.FIREBASE_PRIVATE_KEY,
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      }),
       databaseURL: process.env.FIREBASE_DATABASE_URL,
     });
   }
