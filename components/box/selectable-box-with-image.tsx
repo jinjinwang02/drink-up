@@ -19,7 +19,7 @@ export interface SelectableBoxWithImageProps {
   bottomText: string;
   setSelected: (prev: boolean) => void;
 }
-const SelectableBoxWithImage = ({
+const SelectableBoxWithImage: React.FunctionComponent<SelectableBoxWithImageProps> = ({
   imageUrl,
   alt,
   bottomText,

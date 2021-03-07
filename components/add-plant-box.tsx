@@ -3,7 +3,7 @@ import { BoxWithCloud } from './box/box-with-cloud';
 import { PlantInfo } from './plant-info';
 import { Typography } from './typography';
 
-const AddPlantBox = () => (
+const AddPlantBox: React.FunctionComponent = () => (
   <BoxWithCloud
     width={[350, 400]}
     topAccessory={

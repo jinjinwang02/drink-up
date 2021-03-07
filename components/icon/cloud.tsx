@@ -7,7 +7,10 @@ interface CloudProps {
   width?: number | number[];
 }
 
-const Cloud = ({ width, allowXS = true }: CloudProps) => {
+const Cloud: React.FunctionComponent<CloudProps> = ({
+  width,
+  allowXS = true,
+}: CloudProps) => {
   const isXS = useMediaQuery();
   return (
     <Box width={width}>

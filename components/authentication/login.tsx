@@ -22,7 +22,11 @@ const PasswordSchema = Yup.object().shape({
   password: Yup.string().required('Required field :)'),
 });
 
-const LogIn = ({ step, onPressBack, onPressNext }: LogInProps) => {
+const LogIn: React.FunctionComponent<LogInProps> = ({
+  step,
+  onPressBack,
+  onPressNext,
+}: LogInProps) => {
   const { auth } = firebaseClient();
   const router = useRouter();
   const [isLoading, setLoading] = useState<boolean>(false);

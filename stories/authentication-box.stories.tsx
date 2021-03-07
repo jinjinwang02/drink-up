@@ -8,7 +8,7 @@ export default {
   component: Container,
 } as Meta;
 
-export const Basic = () => (
+export const Basic: React.FunctionComponent = () => (
   <Box>
     <Container />
   </Box>

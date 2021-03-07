@@ -8,7 +8,7 @@ export default {
   component: BoxWithImage,
 } as Meta;
 
-export const Basic = () => {
+export const Basic: React.FunctionComponent = () => {
   const BOX_WIDTH_MD = 342;
   const BOX_WIDTH_XS = 275;
 
@@ -27,7 +27,7 @@ export const Basic = () => {
   );
 };
 
-export const Invertible = () => {
+export const Invertible: React.FunctionComponent = () => {
   const BOX_WIDTH_MD = 272;
   const BOX_WIDTH_XS = 322;
 

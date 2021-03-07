@@ -3,7 +3,7 @@ import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
 import { useMediaQuery } from '../../utils/hooks/useMediaQuery';
 
-const Cross = () => {
+const Cross: React.FunctionComponent = () => {
   const isXS = useMediaQuery();
   const [isHovered, setHovered] = useState<boolean>(false);
   return (

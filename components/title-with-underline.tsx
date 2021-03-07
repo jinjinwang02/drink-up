@@ -8,7 +8,7 @@ export interface TitleWithUnderlineProps {
   variant?: 'primary' | 'secondary';
 }
 
-const TitleWithUnderline = ({
+const TitleWithUnderline: React.FunctionComponent<TitleWithUnderlineProps> = ({
   children,
   variant = 'secondary',
 }: TitleWithUnderlineProps) => (

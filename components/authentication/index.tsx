@@ -1,5 +1,6 @@
+import React from 'react';
 import { Container } from './container';
 
-const Authentication = () => <Container />;
+const Authentication: React.FunctionComponent = () => <Container />;
 
 export { Authentication };

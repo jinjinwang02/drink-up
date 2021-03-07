@@ -4,7 +4,10 @@ import { ThemeProvider } from 'styled-components';
 import { theme, GlobalStyle } from '../styles/theme';
 import { AuthProvider } from '../utils/context/auth';
 
-const App = ({ Component, pageProps }: AppProps) => (
+const App: React.FunctionComponent<AppProps> = ({
+  Component,
+  pageProps,
+}: AppProps) => (
   <>
     <GlobalStyle />
     <ThemeProvider theme={theme}>

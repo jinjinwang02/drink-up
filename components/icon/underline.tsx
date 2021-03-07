@@ -1,13 +1,17 @@
 import React from 'react';
 import { Box } from '../box/box';
 
-export interface IconProps {
+export interface UnderlineProps {
   variant: 'primary' | 'secondary';
   height?: number | string;
   width?: number | string;
 }
 
-const Underline = ({ variant, height = '100%', width = '100%' }: IconProps) => (
+const Underline: React.FunctionComponent<UnderlineProps> = ({
+  variant,
+  height = '100%',
+  width = '100%',
+}: UnderlineProps) => (
   <Box width={width} height={height}>
     {variant === 'primary' ? (
       <svg

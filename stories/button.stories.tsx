@@ -25,7 +25,7 @@ WithoutBorder.args = {
   children: 'Log in',
 };
 
-export const Arrow = () => (
+export const Arrow: React.FunctionComponent = () => (
   <Box flexDirection="column" height={200} justifyContent="space-around">
     <ArrowButton size="small" />
     <ArrowButton size="small" direction="left" />

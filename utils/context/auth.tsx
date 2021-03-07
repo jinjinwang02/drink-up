@@ -10,7 +10,9 @@ interface AuthContextProviderProps {
 
 const AuthContext = createContext<any>({});
 
-export const AuthProvider = ({ children }: AuthContextProviderProps) => {
+export const AuthProvider: React.FunctionComponent<AuthContextProviderProps> = ({
+  children,
+}: AuthContextProviderProps) => {
   const { auth } = firebaseClient();
 
   const [user, setUser] = useState<firebase.User | null>(null);
@@ -32,4 +34,4 @@ export const AuthProvider = ({ children }: AuthContextProviderProps) => {
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth: () => any = () => useContext(AuthContext);

@@ -35,7 +35,7 @@ export interface InputProps {
   placeholderSize?: number;
 }
 
-const Input = ({
+const Input: React.FunctionComponent<InputProps> = ({
   formik,
   name,
   type = 'text',

@@ -12,7 +12,10 @@ const firebaseConfig = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
-export const firebaseClient = () => {
+export const firebaseClient: () => {
+  auth: firebase.auth.Auth;
+  firestore: firebase.firestore.Firestore;
+} = () => {
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   } else {

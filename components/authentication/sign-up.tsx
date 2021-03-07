@@ -25,7 +25,11 @@ const PasswordSchema = Yup.object().shape({
     .min(8, PASSWORD_MIN_MESSAGE)
     .max(16, PASSWORD_MAX_MESSAGE),
 });
-const SignUp = ({ step, onPressBack, onPressNext }: SignUpProps) => {
+const SignUp: React.FunctionComponent<SignUpProps> = ({
+  step,
+  onPressBack,
+  onPressNext,
+}: SignUpProps) => {
   const { auth, firestore } = firebaseClient();
   const router = useRouter();
   const [isLoading, setLoading] = useState<boolean>(false);

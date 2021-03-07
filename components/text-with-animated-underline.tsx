@@ -10,7 +10,7 @@ export interface TextWithAnimatedUnderlineProps {
   onClick?: () => void;
 }
 
-const TextWithAnimatedUnderline = ({
+const TextWithAnimatedUnderline: React.FunctionComponent<TextWithAnimatedUnderlineProps> = ({
   children,
   focused,
   backgroundColor = 'pureWhite',

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   LayoutProps,
   layout,
@@ -49,7 +50,10 @@ const StyledBox = styled.div<BoxProps>(
   })
 );
 
-const Box = ({ children, ...rest }: React.ComponentProps<typeof StyledBox>) => (
+const Box: React.FunctionComponent<React.ComponentProps<typeof StyledBox>> = ({
+  children,
+  ...rest
+}: React.ComponentProps<typeof StyledBox>) => (
   <StyledBox
     display="flex"
     flexDirection="row"

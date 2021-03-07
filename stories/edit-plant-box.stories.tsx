@@ -8,7 +8,7 @@ export default {
   component: EditPlantBox,
 } as Meta;
 
-export const Basic = () => (
+export const Basic: React.FunctionComponent = () => (
   <Box>
     <EditPlantBox
       commonName="Fiddle-leaf Fig"

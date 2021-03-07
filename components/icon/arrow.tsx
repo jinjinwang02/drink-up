@@ -3,13 +3,14 @@ import { theme } from '../../styles/theme';
 import { useMediaQuery } from '../../utils/hooks/useMediaQuery';
 import { Box } from '../box/box';
 
+type Size = 'extraLarge' | 'large' | 'medium' | 'small';
 export interface ArrowProps {
   direction?: 'left' | 'right';
-  size?: 'extraLarge' | 'large' | 'medium' | 'small';
+  size?: Size;
 }
 
-export const getHeight = (
-  size: 'extraLarge' | 'large' | 'medium' | 'small'
+export const getHeight: (size: Size) => 18 | 12 | 28 | 15 | undefined = (
+  size: Size
 ) => {
   if (size === 'medium') {
     return 15;
@@ -22,7 +23,10 @@ export const getHeight = (
   }
 };
 
-const Arrow = ({ direction = 'right', size = 'medium' }: ArrowProps) => {
+const Arrow: React.FunctionComponent<ArrowProps> = ({
+  direction = 'right',
+  size = 'medium',
+}: ArrowProps) => {
   const isXS = useMediaQuery();
   const [isHovered, setHovered] = useState<boolean>(false);
   const getTranslate = () => {

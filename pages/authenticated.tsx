@@ -12,7 +12,7 @@ interface Props {
   session?: auth.DecodedIdToken;
 }
 
-const Index = ({ session }: Props) => {
+const Index: React.FunctionComponent<Props> = ({ session }: Props) => {
   const { auth } = firebaseClient();
   const router = useRouter();
   if (session) {
@@ -34,7 +34,13 @@ const Index = ({ session }: Props) => {
   }
 };
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps: (
+  context: any
+) => Promise<{
+  props: {
+    session?: auth.DecodedIdToken;
+  };
+}> = async (context: any) => {
   try {
     const cookies = nookies.get(context);
     const token = await verifyIdToken(cookies.token);

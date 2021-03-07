@@ -7,7 +7,7 @@ import { FontHead } from '../styles/font-head';
 import { verifyIdToken } from '../utils/firebase/firebase-admin';
 import { Authentication } from '../components/authentication';
 
-const Index = () => (
+const Index: React.FunctionComponent = () => (
   <>
     <Head>
       <title>Drink up | A water reminder for your plants</title>
@@ -21,7 +21,15 @@ const Index = () => (
   </>
 );
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps: (
+  context: any
+) => Promise<{
+  redirect?: {
+    permanent: boolean;
+    destination: string;
+  };
+  props?: any;
+}> = async (context: any) => {
   try {
     const cookies = nookies.get(context);
     const token = await verifyIdToken(cookies.token);

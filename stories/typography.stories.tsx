@@ -24,7 +24,9 @@ const H2Brand = () => <Typography textStyle="h2Brand">h2 Brand</Typography>;
 
 const CopyXL = () => <Typography textStyle="copyXL">copyXL</Typography>;
 const CopyL = () => <Typography textStyle="copyL">copyL</Typography>;
-const CopyLBold = () => <Typography textStyle="copyLBold">copyLBold</Typography>;
+const CopyLBold = () => (
+  <Typography textStyle="copyLBold">copyLBold</Typography>
+);
 const CopyM = () => <Typography textStyle="copyM">copyM</Typography>;
 const CopyS = () => <Typography textStyle="copyS">copyS</Typography>;
 const CopyXS = () => <Typography textStyle="copyXS">copyXS</Typography>;
@@ -33,10 +35,12 @@ const BodyXL = () => <Typography textStyle="bodyXL">bodyXL</Typography>;
 const BodyL = () => <Typography textStyle="bodyL">bodyL</Typography>;
 const BodyM = () => <Typography textStyle="bodyM">bodyM</Typography>;
 const BodyS = () => <Typography textStyle="bodyS">bodyS</Typography>;
-const BodySBold = () => <Typography textStyle="bodySBold">bodySBold</Typography>;
+const BodySBold = () => (
+  <Typography textStyle="bodySBold">bodySBold</Typography>
+);
 const BodyXS = () => <Typography textStyle="bodyXS">bodyXS</Typography>;
 
-export const Heading = () => (
+export const Heading: React.FunctionComponent = () => (
   <>
     <H1 />
     <H2 />
@@ -46,7 +50,7 @@ export const Heading = () => (
   </>
 );
 
-export const Copy = () => (
+export const Copy: React.FunctionComponent = () => (
   <>
     <CopyXL />
     <CopyL />
@@ -57,7 +61,7 @@ export const Copy = () => (
   </>
 );
 
-export const Body = () => (
+export const Body: React.FunctionComponent = () => (
   <>
     <BodyXL />
     <BodyL />

@@ -11,7 +11,7 @@ export interface PlantInfoProps {
   plantInfo?: EditPlantBoxProps;
 }
 
-const PlantInfo = ({
+const PlantInfo: React.FunctionComponent<PlantInfoProps> = ({
   inputTextStyle,
   labelTextStyle,
   plantInfo,

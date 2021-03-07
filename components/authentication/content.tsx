@@ -1,3 +1,4 @@
+import { FormikContextType } from 'formik';
 import React from 'react';
 import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
@@ -11,13 +12,13 @@ interface ContentProps {
   text: string;
   name: string;
   label: string;
-  formik: any;
+  formik: FormikContextType<any>;
   type?: string;
   isLogin?: boolean;
   isLoading?: boolean;
 }
 
-const Content = ({
+const Content: React.FunctionComponent<ContentProps> = ({
   isCurrentStep,
   isLoading,
   isLogin = false,

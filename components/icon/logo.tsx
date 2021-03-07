@@ -31,12 +31,15 @@ const StyledThirdLine = styled.path`
   animation: ${line} 2.2s ease forwards 1s;
 `;
 
-export interface IconProps {
+export interface LogoProps {
   strokeWidth?: number;
   animated?: boolean;
 }
 
-const Logo = ({ strokeWidth = 3, animated = false }: IconProps) => (
+const Logo: React.FunctionComponent<LogoProps> = ({
+  strokeWidth = 3,
+  animated = false,
+}: LogoProps) => (
   <svg
     width={20}
     viewBox="0 0 66.14 89.96"

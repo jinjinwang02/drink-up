@@ -22,7 +22,7 @@ export interface EditPlantBoxProps {
   date: string;
 }
 
-const EditPlantBox = ({
+const EditPlantBox: React.FunctionComponent<EditPlantBoxProps> = ({
   commonName,
   imageUrl = 'http://placeimg.com/640/360/any',
   scientificName,

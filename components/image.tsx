@@ -6,11 +6,9 @@ interface ImageProps extends BoxProps {
   alt?: string;
 }
 
-const Image = ({
+const Image: React.FunctionComponent<ImageProps> = ({
   url,
   alt,
-  width = '100%',
-  height = '100%',
   ...rest
 }: ImageProps) => (
   <Box

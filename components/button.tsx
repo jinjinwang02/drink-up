@@ -10,7 +10,11 @@ export interface ButtonProps {
   onClick?: () => void;
 }
 
-const Button = ({ children, borderless, onClick }: ButtonProps) => {
+const Button: React.FunctionComponent<ButtonProps> = ({
+  children,
+  borderless,
+  onClick,
+}: ButtonProps) => {
   const [isHovered, setHovered] = useState<boolean>(false);
 
   return (
@@ -48,7 +52,10 @@ const Button = ({ children, borderless, onClick }: ButtonProps) => {
   );
 };
 
-const ArrowButton = ({ direction, size }: ArrowProps) => (
+const ArrowButton: React.FunctionComponent<ArrowProps> = ({
+  direction,
+  size,
+}: ArrowProps) => (
   <Box
     as="button"
     type="submit"

@@ -8,7 +8,7 @@ export default {
   component: SelectableBoxWithImage,
 } as Meta;
 
-export const Basic = () => {
+export const Basic: React.FunctionComponent = () => {
   const [selected, setSelected] = useState<boolean>(false);
 
   return (

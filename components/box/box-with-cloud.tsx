@@ -10,7 +10,7 @@ export interface BoxWithCloudProps {
   bottomAccessory: React.ReactNode;
   width?: number | number[];
 }
-const BoxWithCloud = ({
+const BoxWithCloud: React.FunctionComponent<BoxWithCloudProps> = ({
   width = 325,
   topAccessory,
   bottomAccessory,
