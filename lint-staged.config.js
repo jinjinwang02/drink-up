@@ -1,3 +1,3 @@
 module.exports = {
-    '**/*.ts?(x)': () => 'tsc -p tsconfig.json --noEmit'
-}
+  '**/*.ts?(x)': () => 'yarn type-check',
+};

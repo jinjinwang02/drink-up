@@ -74,7 +74,6 @@ const Content: React.FunctionComponent<ContentProps> = ({
               {text}
             </Typography>
           </Box>
-
           <Input name={name} label={label} type={type} formik={formik} />
         </Box>
       )}

@@ -190,7 +190,6 @@ const SignUp: React.FunctionComponent<SignUpProps> = ({
             isCurrentStep={step === 4}
             isLoading={isLoading}
           />
-          )
           <Box position="absolute" bottom="twoPointEight">
             {!isLoading ? <ArrowButton /> : null}
           </Box>
