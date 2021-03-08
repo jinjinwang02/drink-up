@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "type-check": "tsc",
     "build": "next build",
     "start": "next start",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "lint": "eslint . --ext=.ts,.tsx",
+    "type-check": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
