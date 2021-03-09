@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "start": "next",
     "build": "next build",
-    "start": "next start",
+    "script:add-documents": "ts-node ./utils/firebase/add-documents.ts",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint": "eslint . --ext=.ts,.tsx",

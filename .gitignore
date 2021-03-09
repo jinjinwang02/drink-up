@@ -31,7 +31,11 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-secrets.json
-
 # vercel
 .vercel
+
+
+# firebase
+add-documents.ts
+secrets.json
+data.json

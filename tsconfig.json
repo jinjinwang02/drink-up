@@ -4,7 +4,7 @@
     "alwaysStrict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "jsx": "preserve",
     "lib": ["dom", "es2017", "es2018", "es2019", "es2020"],
     "module": "esnext",
@@ -17,6 +17,13 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext"
+  },
+  "ts-node": {
+    // these options are overrides used only by ts-node
+    // same as our --compilerOptions flag and our TS_NODE_COMPILER_OPTIONS environment variable
+    "compilerOptions": {
+      "module": "commonjs"
+    }
   },
   "exclude": ["node_modules", "bin", "lib"],
   "include": ["**/*.ts", "**/*.tsx", "pages/index.js"]
