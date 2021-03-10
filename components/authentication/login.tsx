@@ -31,30 +31,6 @@ const LogIn: React.FunctionComponent<LogInProps> = ({
   const router = useRouter();
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  const handleCheckEmail = useCallback(async (email: string) => {
-    await auth.fetchSignInMethodsForEmail(email).then((res) => {
-      if (!res.length) {
-        emailFormik.setFieldError('email', 'This email is not registered.');
-      } else {
-        onPressNext();
-      }
-    });
-  }, []);
-
-  const handleLogIn = useCallback(async (email: string, password: string) => {
-    try {
-      setLoading(true);
-      await auth
-        .signInWithEmailAndPassword(email, password)
-        .then(() => router.push('/authenticated'));
-    } catch (error) {
-      passwordFormik.setFieldError('password', error.message);
-    } finally {
-      setLoading(false);
-      router.push('/authenticated');
-    }
-  }, []);
-
   const initialValues = {
     email: '',
     password: '',
@@ -77,6 +53,36 @@ const LogIn: React.FunctionComponent<LogInProps> = ({
       handleLogIn(emailFormik.values.email, passwordFormik.values.password);
     },
   });
+
+  const handleCheckEmail = useCallback(
+    async (email: string) => {
+      await auth.fetchSignInMethodsForEmail(email).then((res) => {
+        if (!res.length) {
+          emailFormik.setFieldError('email', 'This email is not registered.');
+        } else {
+          onPressNext();
+        }
+      });
+    },
+    [auth, emailFormik, onPressNext]
+  );
+
+  const handleLogIn = useCallback(
+    async (email: string, password: string) => {
+      try {
+        setLoading(true);
+        await auth
+          .signInWithEmailAndPassword(email, password)
+          .then(() => router.push('/dashboard'));
+      } catch (error) {
+        passwordFormik.setFieldError('password', error.message);
+      } finally {
+        setLoading(false);
+        router.push('/dashboard');
+      }
+    },
+    [auth, passwordFormik, router]
+  );
 
   const getCurrentFormik = (step: number) => {
     switch (step) {

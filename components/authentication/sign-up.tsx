@@ -34,48 +34,6 @@ const SignUp: React.FunctionComponent<SignUpProps> = ({
   const router = useRouter();
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  const handleCheckEmail = useCallback(async (email: string) => {
-    await auth.fetchSignInMethodsForEmail(email).then((res) => {
-      if (res.length) {
-        emailFormik.setFieldError(
-          'email',
-          'This Email has already registered.'
-        );
-      } else {
-        onPressNext();
-      }
-    });
-  }, []);
-
-  const handleSignUp = useCallback(
-    async (email: string, password: string, displayName?: string) => {
-      try {
-        setLoading(true);
-        const { user } = await auth.createUserWithEmailAndPassword(
-          email,
-          password
-        );
-        const userRef = await firestore.doc(`users/${user?.uid}`).get();
-        if (!userRef.exists) {
-          await firestore.collection('users').doc().set({
-            email,
-            displayName,
-            createdAt: new Date(),
-          });
-        }
-      } catch (error) {
-        passwordConfirmationFormik.setFieldError(
-          'passwordConfirmation',
-          error.message
-        );
-      } finally {
-        setLoading(false);
-        router.push('/authenticated');
-      }
-    },
-    []
-  );
-
   const initialValues = {
     email: '',
     displayName: '',
@@ -126,6 +84,51 @@ const SignUp: React.FunctionComponent<SignUpProps> = ({
       }
     },
   });
+
+  const handleCheckEmail = useCallback(
+    async (email: string) => {
+      await auth.fetchSignInMethodsForEmail(email).then((res) => {
+        if (res.length) {
+          emailFormik.setFieldError(
+            'email',
+            'This Email has already registered.'
+          );
+        } else {
+          onPressNext();
+        }
+      });
+    },
+    [auth, emailFormik, onPressNext]
+  );
+
+  const handleSignUp = useCallback(
+    async (email: string, password: string, displayName?: string) => {
+      try {
+        setLoading(true);
+        const { user } = await auth.createUserWithEmailAndPassword(
+          email,
+          password
+        );
+        const userRef = await firestore.doc(`users/${user?.uid}`).get();
+        if (!userRef.exists) {
+          await firestore.collection('users').doc(user?.uid).set({
+            email,
+            displayName,
+            createdAt: new Date(),
+          });
+        }
+      } catch (error) {
+        passwordConfirmationFormik.setFieldError(
+          'passwordConfirmation',
+          error.message
+        );
+      } finally {
+        setLoading(false);
+        router.push('/find-your-plants');
+      }
+    },
+    [auth, firestore, passwordConfirmationFormik, router]
+  );
 
   const getCurrentFormik = (step: number) => {
     switch (step) {

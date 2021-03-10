@@ -17,20 +17,17 @@ export interface SelectableBoxWithImageProps {
   alt?: string;
   selected?: boolean;
   bottomText: string;
-  setSelected: (prev: boolean) => void;
 }
 const SelectableBoxWithImage: React.FunctionComponent<SelectableBoxWithImageProps> = ({
   imageUrl,
   alt,
   bottomText,
   selected,
-  setSelected,
 }: SelectableBoxWithImageProps) => (
   <Box
     flexDirection="column"
     height={[BOX_HEIGHT_XS, BOX_HEIGHT_MD]}
     width={[BOX_WIDTH_XS, BOX_WIDTH_MD]}
-    onClick={() => setSelected(!selected)}
     style={{ cursor: 'pointer' }}
   >
     <Box

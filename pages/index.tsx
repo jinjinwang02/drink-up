@@ -34,12 +34,8 @@ export const getServerSideProps: (
     const cookies = nookies.get(context);
     const token = await verifyIdToken(cookies.token);
     if (token) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: '/authenticated',
-        },
-      };
+      context.res.writeHead(302, { location: '/dashboard' });
+      context.res.end();
     }
     return { props: {} };
   } catch (error) {

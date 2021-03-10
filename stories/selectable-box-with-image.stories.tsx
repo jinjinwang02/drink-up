@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
 import { SelectableBoxWithImage } from '../components/box/selectable-box-with-image';
 import { Box } from '../components/box/box';
@@ -9,15 +9,12 @@ export default {
 } as Meta;
 
 export const Basic: React.FunctionComponent = () => {
-  const [selected, setSelected] = useState<boolean>(false);
-
   return (
     <Box>
       <SelectableBoxWithImage
         imageUrl="http://placeimg.com/640/360/any"
         bottomText="random image"
-        setSelected={setSelected}
-        selected={selected}
+        selected
       />
     </Box>
   );

@@ -27,11 +27,12 @@ export const AuthProvider: React.FunctionComponent<AuthContextProviderProps> = (
       setUser(user);
       nookies.set(undefined, 'token', token, { maxAge: 2 * 60 * 60 });
     });
-  }, []);
+  }, [auth]);
 
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );
 };
 
-export const useAuth: () => any = () => useContext(AuthContext);
+export const useAuth: () => { user: firebase.User | null } = () =>
+  useContext(AuthContext);

@@ -1,24 +1,24 @@
 import React from 'react';
 import nookies from 'nookies';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { auth } from 'firebase-admin';
 import { verifyIdToken } from '../utils/firebase/firebase-admin';
 import { firebaseClient } from '../utils/firebase/firebase-client';
 import { Box } from '../components/box/box';
 import { Button } from '../components/button';
+import { GetServerSideProps, NextPage } from 'next';
 
 interface Props {
   session?: auth.DecodedIdToken;
 }
 
-const Index: React.FunctionComponent<Props> = ({ session }: Props) => {
+const Index: NextPage<Props> = ({ session }: Props) => {
   const { auth } = firebaseClient();
   const router = useRouter();
+
   if (session) {
     return (
-      <Box justifyContent="space-around" width="100vw" height="100vh">
-        <Link href="/">Home</Link>
+      <Box width="100vw" height="100vh">
         <Button
           onClick={async () => {
             await auth.signOut();
@@ -34,13 +34,7 @@ const Index: React.FunctionComponent<Props> = ({ session }: Props) => {
   }
 };
 
-export const getServerSideProps: (
-  context: any
-) => Promise<{
-  props: {
-    session?: auth.DecodedIdToken;
-  };
-}> = async (context: any) => {
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
   try {
     const cookies = nookies.get(context);
     const token = await verifyIdToken(cookies.token);
