@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { GetStaticProps, NextPage } from 'next';
-import { useRouter } from 'next/router';
 import { firebaseClient } from '../utils/firebase/firebase-client';
 import { Box } from '../components/box/box';
 import { SelectableBoxWithImage } from '../components/box/selectable-box-with-image';
@@ -14,13 +13,6 @@ interface Props {
 
 const Index: NextPage<Props> = ({ collection }: Props) => {
   const { user } = useAuth();
-  const router = useRouter();
-  // Todo: use HOC for this logic
-  useEffect(() => {
-    if (!user) {
-      router.push('/');
-    }
-  }, [router, user]);
   const { firestore, firestoreFieldValue } = firebaseClient();
   const [selectedPlants, setSelctedPlants] = useState<string[]>([]);
 
@@ -45,6 +37,7 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
             .get()
             .then((data) => ({
               id: plant,
+              createdAt: new Date(),
               ...data.data(),
             }))
       )
@@ -53,6 +46,8 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
       .collection('users')
       .doc(user?.uid)
       .update({
+        // add new plants to the array
+        // without creating duplicates
         plants: firestoreFieldValue.arrayUnion(...plants),
       });
   }, [firestore, firestoreFieldValue, selectedPlants, user?.uid]);

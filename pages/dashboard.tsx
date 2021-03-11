@@ -18,7 +18,19 @@ const Index: NextPage<Props> = ({ session }: Props) => {
 
   if (session) {
     return (
-      <Box width="100vw" height="100vh">
+      <Box
+        width="100vw"
+        height="100vh"
+        flexDirection="column"
+        justifyContent="space-evenly"
+      >
+        <Button
+          onClick={async () => {
+            router.push('/find-your-plants');
+          }}
+        >
+          Find your plants
+        </Button>
         <Button
           onClick={async () => {
             await auth.signOut();
