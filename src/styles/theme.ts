@@ -56,13 +56,12 @@ const textStyles = {
   h1: {
     fontFamily: 'SaolDisplay-Regular',
     fontSize: 64,
-    fontWeight: 700,
     lineHeight: '72px',
   },
   h2: {
     fontFamily: 'SaolDisplay-Regular',
     fontSize: 40,
-    fontWeight: 700,
+
     lineHeight: '60px',
   },
   h2Brand: {
@@ -74,13 +73,11 @@ const textStyles = {
   h3: {
     fontFamily: 'SaolDisplay-Regular',
     fontSize: 36,
-    fontWeight: 700,
     lineHeight: '54px',
   },
   h4: {
     fontFamily: 'SaolDisplay-Regular',
     fontSize: 32,
-    fontWeight: 700,
     lineHeight: '48px',
   },
   copyXL: {
@@ -102,6 +99,7 @@ const textStyles = {
   copyM: {
     fontFamily: 'SaolDisplay-Regular',
     fontSize: 16,
+    wordSpacing: 1,
     lineHeight: '24px',
   },
   copyS: {
@@ -176,6 +174,7 @@ const space = {
   eight: 80,
   nine: 90,
   ten: 100,
+  twelve: 120,
 };
 
 const breakpoints = ['576px', '768px', '1200px'];

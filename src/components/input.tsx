@@ -38,7 +38,7 @@ export interface InputProps {
   onChange?: () => void;
 }
 
-const Input: React.FunctionComponent<InputProps> = ({
+const Input: React.FC<InputProps> = ({
   formik,
   id,
   name,

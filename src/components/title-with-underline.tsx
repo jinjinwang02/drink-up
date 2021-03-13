@@ -8,11 +8,11 @@ export interface TitleWithUnderlineProps {
   variant?: 'primary' | 'secondary';
 }
 
-const TitleWithUnderline: React.FunctionComponent<TitleWithUnderlineProps> = ({
+const TitleWithUnderline: React.FC<TitleWithUnderlineProps> = ({
   children,
   variant = 'secondary',
 }: TitleWithUnderlineProps) => (
-  <Box ml={50} flexDirection="column">
+  <Box flexDirection="column">
     <Typography
       textStyle={
         variant === 'primary'

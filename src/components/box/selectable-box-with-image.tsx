@@ -3,7 +3,7 @@ import { Typography } from '../typography';
 import { Box } from './box';
 import { Image } from '../image';
 
-const BOX_WIDTH_MD = 213;
+const BOX_WIDTH_MD = 220;
 const BOX_HEIGHT_MD = 246;
 
 const BOX_WIDTH_XS = 275;
@@ -18,7 +18,7 @@ export interface SelectableBoxWithImageProps {
   selected?: boolean;
   bottomText: string;
 }
-const SelectableBoxWithImage: React.FunctionComponent<SelectableBoxWithImageProps> = ({
+const SelectableBoxWithImage: React.FC<SelectableBoxWithImageProps> = ({
   imageUrl,
   alt,
   bottomText,
@@ -50,7 +50,7 @@ const SelectableBoxWithImage: React.FunctionComponent<SelectableBoxWithImageProp
     <Box
       width="100%"
       border={selected ? 'regularBlack' : 'inactiveGrey'}
-      height="100%"
+      py="zeroPointFour"
     >
       <Typography textStyle={['copyXL', 'copyM', 'copyM', 'copyM']}>
         {bottomText}

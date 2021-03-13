@@ -23,7 +23,7 @@ export interface EditPlantBoxProps {
   showControl?: boolean;
 }
 
-const EditPlantBox: React.FunctionComponent<EditPlantBoxProps> = ({
+const EditPlantBox: React.FC<EditPlantBoxProps> = ({
   id,
   commonName,
   imageUrl = 'http://placeimg.com/640/360/any',

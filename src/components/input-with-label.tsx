@@ -13,7 +13,7 @@ export interface InputWithLabelProps extends Omit<PlantInfoProps, 'plantInfo'> {
   placeholderSize?: number;
 }
 
-const InputWithLabel: React.FunctionComponent<InputWithLabelProps> = ({
+const InputWithLabel: React.FC<InputWithLabelProps> = ({
   formik,
   id,
   name,

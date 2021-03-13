@@ -23,7 +23,7 @@ export const getHeight: (size: Size) => 18 | 12 | 28 | 15 | undefined = (
   }
 };
 
-const Arrow: React.FunctionComponent<ArrowProps> = ({
+const Arrow: React.FC<ArrowProps> = ({
   direction = 'right',
   size = 'medium',
 }: ArrowProps) => {
@@ -53,13 +53,11 @@ const Arrow: React.FunctionComponent<ArrowProps> = ({
       transition={theme.transitions.medium}
     >
       <svg
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 75.66 52.81"
         height={getHeight(isXS ? 'medium' : size)}
         fill="none"
         stroke="#000"
-        strokeWidth={2.5}
+        strokeWidth={size === 'extraLarge' ? 2 : 2.5}
         style={{
           transform: direction === 'left' ? 'rotate(180deg)' : 'rotate(0)',
         }}

@@ -18,7 +18,7 @@ interface ContentProps {
   isLoading?: boolean;
 }
 
-const Content: React.FunctionComponent<ContentProps> = ({
+const Content: React.FC<ContentProps> = ({
   isCurrentStep,
   isLoading,
   isLogin = false,

@@ -46,9 +46,7 @@ const StyledText = styled.div<TypographyProps>(
   })
 );
 
-const Typography: React.FunctionComponent<
-  React.ComponentProps<typeof StyledText>
-> = ({
+const Typography: React.FC<React.ComponentProps<typeof StyledText>> = ({
   color,
   children,
   textStyle,

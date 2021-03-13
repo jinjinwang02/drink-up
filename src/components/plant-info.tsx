@@ -12,7 +12,7 @@ export interface PlantInfoProps {
   plantInfo?: Omit<EditPlantBoxProps, 'id'>;
 }
 
-const PlantInfo: React.FunctionComponent<PlantInfoProps> = ({
+const PlantInfo: React.FC<PlantInfoProps> = ({
   id,
   inputTextStyle,
   labelTextStyle,

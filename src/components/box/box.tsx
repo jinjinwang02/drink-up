@@ -50,7 +50,7 @@ const StyledBox = styled.div<BoxProps>(
   })
 );
 
-const Box: React.FunctionComponent<React.ComponentProps<typeof StyledBox>> = ({
+const Box: React.FC<React.ComponentProps<typeof StyledBox>> = ({
   children,
   ...rest
 }: React.ComponentProps<typeof StyledBox>) => (

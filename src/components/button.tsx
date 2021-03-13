@@ -10,7 +10,7 @@ export interface ButtonProps {
   onClick?: () => void;
 }
 
-const Button: React.FunctionComponent<ButtonProps> = ({
+const Button: React.FC<ButtonProps> = ({
   children,
   borderless,
   onClick,
@@ -52,10 +52,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   );
 };
 
-const ArrowButton: React.FunctionComponent<ArrowProps> = ({
-  direction,
-  size,
-}: ArrowProps) => (
+const ArrowButton: React.FC<ArrowProps> = ({ direction, size }: ArrowProps) => (
   <Box
     as="button"
     type="submit"

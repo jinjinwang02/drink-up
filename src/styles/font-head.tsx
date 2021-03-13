@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FontHead: React.FunctionComponent = () => (
+const FontHead: React.FC = () => (
   <style jsx global type="text/css">
     {`
       @font-face {

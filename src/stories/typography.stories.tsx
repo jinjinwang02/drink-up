@@ -40,7 +40,7 @@ const BodySBold = () => (
 );
 const BodyXS = () => <Typography textStyle="bodyXS">bodyXS</Typography>;
 
-export const Heading: React.FunctionComponent = () => (
+export const Heading: React.FC = () => (
   <>
     <H1 />
     <H2 />
@@ -50,7 +50,7 @@ export const Heading: React.FunctionComponent = () => (
   </>
 );
 
-export const Copy: React.FunctionComponent = () => (
+export const Copy: React.FC = () => (
   <>
     <CopyXL />
     <CopyL />
@@ -61,7 +61,7 @@ export const Copy: React.FunctionComponent = () => (
   </>
 );
 
-export const Body: React.FunctionComponent = () => (
+export const Body: React.FC = () => (
   <>
     <BodyXL />
     <BodyL />

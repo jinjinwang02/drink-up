@@ -10,7 +10,7 @@ interface AuthContextProviderProps {
 
 const AuthContext = createContext<any>({});
 
-export const AuthProvider: React.FunctionComponent<AuthContextProviderProps> = ({
+export const AuthProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }: AuthContextProviderProps) => {
   const { auth } = firebaseClient();

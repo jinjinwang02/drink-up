@@ -1,7 +1,8 @@
 import React from 'react';
 
-const Favicon: React.FunctionComponent = () => (
+const Favicon: React.FC = () => (
   <>
+    <link rel="icon" href="/favicon/favicon.ico" type="image/x-icon" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"

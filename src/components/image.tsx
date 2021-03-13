@@ -6,11 +6,7 @@ interface ImageProps extends BoxProps {
   alt?: string;
 }
 
-const Image: React.FunctionComponent<ImageProps> = ({
-  url,
-  alt,
-  ...rest
-}: ImageProps) => (
+const Image: React.FC<ImageProps> = ({ url, alt, ...rest }: ImageProps) => (
   <Box
     style={{
       backgroundImage: `url(${url})`,

@@ -1,23 +1,16 @@
 import React from 'react';
 import nookies from 'nookies';
-import Head from 'next/head';
-import { Box } from '../components/box/box';
-import { Favicon } from '../components/favicon';
-import { FontHead } from '../styles/font-head';
+import { NextSeo } from 'next-seo';
 import { verifyIdToken } from '../firebase/firebase-admin';
 import { Authentication } from '../components/authentication';
+import { Layout } from '../components/layout';
 
-const Index: React.FunctionComponent = () => (
+const Index: React.FC = () => (
   <>
-    <Head>
-      <title>Drink up | A water reminder for your plants</title>
-      <Favicon />
-      <FontHead />
-    </Head>
-
-    <Box m={10}>
+    <Layout>
+      <NextSeo title="Drink up | Homepage" description="" canonical="" />
       <Authentication />
-    </Box>
+    </Layout>
   </>
 );
 

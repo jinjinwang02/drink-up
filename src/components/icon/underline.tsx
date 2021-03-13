@@ -7,7 +7,7 @@ export interface UnderlineProps {
   width?: number | string;
 }
 
-const Underline: React.FunctionComponent<UnderlineProps> = ({
+const Underline: React.FC<UnderlineProps> = ({
   variant,
   height = '100%',
   width = '100%',

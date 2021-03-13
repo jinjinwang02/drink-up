@@ -8,7 +8,7 @@ export default {
   component: SelectableBoxWithImage,
 } as Meta;
 
-export const Basic: React.FunctionComponent = () => {
+export const Basic: React.FC = () => {
   return (
     <Box>
       <SelectableBoxWithImage

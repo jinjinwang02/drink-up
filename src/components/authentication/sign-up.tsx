@@ -25,7 +25,7 @@ const PasswordSchema = Yup.object().shape({
     .min(8, PASSWORD_MIN_MESSAGE)
     .max(16, PASSWORD_MAX_MESSAGE),
 });
-const SignUp: React.FunctionComponent<SignUpProps> = ({
+const SignUp: React.FC<SignUpProps> = ({
   step,
   onPressBack,
   onPressNext,

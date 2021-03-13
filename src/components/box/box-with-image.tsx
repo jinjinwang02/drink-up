@@ -12,7 +12,7 @@ export interface BoxWithImageProps {
   bottomAccessory?: React.ReactNode;
   invertible?: boolean;
 }
-const BoxWithImage: React.FunctionComponent<BoxWithImageProps> = ({
+const BoxWithImage: React.FC<BoxWithImageProps> = ({
   imageUrl,
   width,
   topBoxHeight,

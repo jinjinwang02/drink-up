@@ -8,7 +8,7 @@ interface PlantContextProviderProps {
 
 const PlantContext = createContext<any>({});
 
-export const PlantProvider: React.FunctionComponent<PlantContextProviderProps> = ({
+export const PlantProvider: React.FC<PlantContextProviderProps> = ({
   children,
 }: PlantContextProviderProps) => {
   const [plantCollection, setPlantCollection] = useState<Collection[]>([]);

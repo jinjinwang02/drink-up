@@ -3,7 +3,7 @@ import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 
-const Cross: React.FunctionComponent = () => {
+const Cross: React.FC = () => {
   const isXS = useMediaQuery();
   const [isHovered, setHovered] = useState<boolean>(false);
   return (
@@ -17,8 +17,6 @@ const Cross: React.FunctionComponent = () => {
       transition={theme.transitions.medium}
     >
       <svg
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 51.82 51.3"
         height={isXS ? 14 : 18}
         fill="none"

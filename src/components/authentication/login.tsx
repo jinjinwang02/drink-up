@@ -22,7 +22,7 @@ const PasswordSchema = Yup.object().shape({
   password: Yup.string().required('Required field :)'),
 });
 
-const LogIn: React.FunctionComponent<LogInProps> = ({
+const LogIn: React.FC<LogInProps> = ({
   step,
   onPressBack,
   onPressNext,
@@ -71,9 +71,8 @@ const LogIn: React.FunctionComponent<LogInProps> = ({
     async (email: string, password: string) => {
       try {
         setLoading(true);
-        await auth
-          .signInWithEmailAndPassword(email, password)
-          .then(() => router.push('/dashboard'));
+        await auth.signInWithEmailAndPassword(email, password);
+        router.push('/dashboard');
       } catch (error) {
         passwordFormik.setFieldError('password', error.message);
       } finally {

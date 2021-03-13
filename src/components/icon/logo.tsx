@@ -36,12 +36,12 @@ export interface LogoProps {
   animated?: boolean;
 }
 
-const Logo: React.FunctionComponent<LogoProps> = ({
+const Logo: React.FC<LogoProps> = ({
   strokeWidth = 3,
   animated = false,
 }: LogoProps) => (
   <svg
-    width={20}
+    height={28}
     viewBox="0 0 66.14 89.96"
     fill="none"
     stroke="#000"
@@ -56,8 +56,8 @@ const Logo: React.FunctionComponent<LogoProps> = ({
     ) : (
       <>
         <path strokeWidth={strokeWidth + 3} d={firstPath} />
-        <path strokeWidth={strokeWidth} d={secondPath} />
-        <path strokeWidth={strokeWidth} d={thirdPath} />
+        <path fill="#000" strokeWidth={strokeWidth} d={secondPath} />
+        <path fill="#000" strokeWidth={strokeWidth} d={thirdPath} />
       </>
     )}
   </svg>

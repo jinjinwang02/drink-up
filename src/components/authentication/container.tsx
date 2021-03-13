@@ -5,7 +5,7 @@ import { TextWithAnimatedUnderline } from '../text-with-animated-underline';
 import { LogIn } from './login';
 import { SignUp } from './sign-up';
 
-const Container: React.FunctionComponent = () => {
+const Container: React.FC = () => {
   const [logInStep, setLogInStep] = useState<number>(1);
   const [signUpStep, setSignUpStep] = useState<number>(1);
   const [isLogIn, setLogIn] = useState<boolean>(true);
