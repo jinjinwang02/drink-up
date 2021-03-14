@@ -52,7 +52,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
         opacity: showDropdown ? 1 : 0,
         cursor: showDropdown ? 'pointer' : 'auto',
       }}
-      transition={isXS ? theme.transitions.slow : theme.transitions.medium}
+      transition={theme.transitions.medium}
       zIndex={showDropdown ? 1 : 0}
     >
       {showDropdown && isXS ? (
@@ -107,7 +107,7 @@ const Navbar: React.FC<NavbarProps> = ({ isUserLoggedIn }: NavbarProps) => {
     <Box
       width="100%"
       mt={[NAVBAR_HEIGHT_XS, NAVBAR_HEIGHT_MD]}
-      mb={-`${NAV_DROPDOWN_HEIGHT_MD}`}
+      mb={['zero', -`${NAV_DROPDOWN_HEIGHT_MD}`]}
       justifyContent="flex-end"
       alignItems="flex-start"
     >
@@ -129,7 +129,11 @@ const Navbar: React.FC<NavbarProps> = ({ isUserLoggedIn }: NavbarProps) => {
               isXS={isXS}
             />
           </Box>
-          <Box position="absolute" top={-`${theme.space.zeroPointThree}`}>
+          <Box
+            position="absolute"
+            right="zero"
+            top={-`${theme.space.zeroPointThree}`}
+          >
             <Logo strokeWidth={2} />
           </Box>
         </>

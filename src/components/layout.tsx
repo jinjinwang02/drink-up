@@ -16,7 +16,7 @@ const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps) => {
       alignItems="flex-start"
       overflow="hidden"
       flexWrap="wrap"
-      px={['two', 'four', 'six', 'twelve']}
+      px={['two', 'four', 'eight', 'twelve']}
     >
       <Navbar isUserLoggedIn={!!user} />
       {children}
