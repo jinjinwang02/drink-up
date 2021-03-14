@@ -17,6 +17,8 @@ const Cross: React.FC = () => {
       transition={theme.transitions.medium}
     >
       <svg
+        version="1.0"
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 51.82 51.3"
         height={isXS ? 14 : 18}
         fill="none"

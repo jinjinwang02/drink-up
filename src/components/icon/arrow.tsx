@@ -53,6 +53,8 @@ const Arrow: React.FC<ArrowProps> = ({
       transition={theme.transitions.medium}
     >
       <svg
+        version="1.0"
+        xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 75.66 52.81"
         height={getHeight(isXS ? 'medium' : size)}
         fill="none"

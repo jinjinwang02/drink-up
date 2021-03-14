@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
-import { Arrow, ArrowProps } from './icon/arrow';
-import { Box } from './box/box';
-import { Cloud } from './icon/cloud';
-import { Typography } from './typography';
+import { Box } from '../box/box';
+import { Cloud } from '../icon/cloud';
+import { Typography } from '../typography';
 
-export interface ButtonProps {
+export interface CloudButtonProps {
   children: string;
   borderless?: boolean;
   onClick?: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({
+const CloudButton: React.FC<CloudButtonProps> = ({
   children,
   borderless,
   onClick,
-}: ButtonProps) => {
+}: CloudButtonProps) => {
   const [isHovered, setHovered] = useState<boolean>(false);
-
   return (
     <Box
       flexDirection="column"
@@ -52,16 +50,4 @@ const Button: React.FC<ButtonProps> = ({
   );
 };
 
-const ArrowButton: React.FC<ArrowProps> = ({ direction, size }: ArrowProps) => (
-  <Box
-    as="button"
-    type="submit"
-    background="transparent"
-    border="none"
-    style={{ outline: 'none' }}
-  >
-    <Arrow direction={direction} size={size} />
-  </Box>
-);
-
-export { Button, ArrowButton };
+export { CloudButton };

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Typography } from '../typography';
 import { Box } from './box';
 import { Image } from '../image';
+import { theme } from '../../styles/theme';
 
 export const BOX_WIDTH_MD = 220;
 export const BOX_HEIGHT_MD = 246;
@@ -49,6 +50,7 @@ const SelectableBoxWithImage: React.FC<SelectableBoxWithImageProps> = ({
           backgroundColor={
             selected || isHovered ? 'transparent' : 'pureWhiteThirty'
           }
+          transition={theme.transitions.medium}
           position="absolute"
           top={0}
           left={0}

@@ -20,11 +20,13 @@ const Template: Story<TitleWithUnderlineProps> = (args) => (
 export const Primary = Template.bind({});
 Primary.args = {
   variant: 'primary',
+  width: 600,
   children: 'A water reminder for your plants',
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   variant: 'secondary',
+  width: 500,
   children: 'Find your plants',
 };

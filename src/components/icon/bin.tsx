@@ -22,6 +22,7 @@ const Bin: React.FC = () => {
         transition={theme.transitions.medium}
       >
         <svg
+          version="1.0"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 51.05 11.53"
           width={isXS ? 15 : 22}
@@ -35,6 +36,7 @@ const Bin: React.FC = () => {
       </Box>
       <Box>
         <svg
+          version="1.0"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 43.86 51.99"
           height={isXS ? 16 : 21}

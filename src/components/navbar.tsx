@@ -42,7 +42,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
       mt={['zero', 'two']}
       border={['none', 'regularBlack']}
       top={[-`${NAVBAR_HEIGHT_XS}`, 'zero']}
-      right={[-`${theme.space.two}`, 'zero']} // padding on Layout
+      right={-`${theme.space.one}`}
       style={{
         transform: !isXS
           ? showDropdown
@@ -119,7 +119,7 @@ const Navbar: React.FC<NavbarProps> = ({ isUserLoggedIn }: NavbarProps) => {
               style={{ cursor: 'pointer' }}
               onClick={() => setShowDropdown((prev) => !prev)}
               zIndex={1}
-              mr={[-`${theme.space.two}`, 'zero']}
+              mr={-`${theme.space.two}`}
             >
               <User />
             </Box>
@@ -132,7 +132,7 @@ const Navbar: React.FC<NavbarProps> = ({ isUserLoggedIn }: NavbarProps) => {
           <Box
             position="absolute"
             right="zero"
-            top={-`${theme.space.zeroPointThree}`}
+            top={-`${theme.space.zeroPointFour}`}
           >
             <Logo strokeWidth={2} />
           </Box>

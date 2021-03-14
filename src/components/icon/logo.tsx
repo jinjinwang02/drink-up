@@ -41,6 +41,8 @@ const Logo: React.FC<LogoProps> = ({
   animated = false,
 }: LogoProps) => (
   <svg
+    version="1.0"
+    xmlns="http://www.w3.org/2000/svg"
     height={28}
     viewBox="0 0 66.14 89.96"
     fill="none"

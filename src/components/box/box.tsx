@@ -20,7 +20,6 @@ import {
   system,
 } from 'styled-system';
 import styled from 'styled-components';
-import { theme } from '../../styles/theme';
 
 export interface BoxProps
   extends LayoutProps,
@@ -60,7 +59,6 @@ const Box: React.FC<React.ComponentProps<typeof StyledBox>> = ({
     justifyContent="center"
     alignItems="center"
     position="relative"
-    transition={theme.transitions.quick}
     {...rest}
   >
     {children}

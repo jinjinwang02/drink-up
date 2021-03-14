@@ -16,6 +16,7 @@ import { Layout } from '../components/layout';
 import { PageTitleWithBody } from '../components/page-title-with-body';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Typography } from '../components/typography';
+import { BoxyButton } from '../components/button/boxy-button';
 
 interface Props {
   collection: Collection[];
@@ -53,9 +54,14 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
 
   return (
     <Layout mb={['four', 'eight', 'ten']}>
-      <NextSeo title="Drink up | Find Your Plant" description="" canonical="" />
+      <NextSeo
+        title="Drink up | Find Your Plants"
+        description=""
+        canonical=""
+      />
       <PageTitleWithBody
         title="Find your plants"
+        underlineWidth={isXS ? 320 : 500}
         body="Can't find your plants? Don't worry, you can add them later."
       />
       <Box
@@ -79,7 +85,7 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
           </Box>
         ))}
       </Box>
-      <Typography textStyle="bodyL" mt="two">
+      <Typography textStyle="bodyL" mt="two" mb={['five', 'zero']}>
         End of list :)
       </Typography>
       {!isXS ? (
@@ -91,7 +97,9 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
         >
           <Arrow size="extraLarge" />
         </Box>
-      ) : null}
+      ) : (
+        <BoxyButton onNext={handlePressNext} />
+      )}
     </Layout>
   );
 };

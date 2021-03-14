@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
       display: flex;
     }
 
-    h1::selection,
+    ::selection,
     ::-webkit-selection,
     ::-moz-selection {
       color: white;
@@ -163,7 +163,6 @@ const space = {
   zero: 0,
   zeroPointOne: 1,
   zeroPointTwo: 2,
-  zeroPointThree: 2,
   zeroPointFour: 4,
   zeroPointSix: 6,
   zeroPointEight: 8,
@@ -172,8 +171,6 @@ const space = {
   onePointSix: 16,
   two: 20,
   twoPointTwo: 22,
-  twoPointFour: 24,
-  twoPointSix: 26,
   twoPointEight: 28,
   three: 30,
   threePointFive: 35,
@@ -181,9 +178,7 @@ const space = {
   fourPointFive: 45,
   five: 50,
   six: 60,
-  seven: 70,
   eight: 80,
-  nine: 90,
   ten: 100,
   twelve: 120,
 };

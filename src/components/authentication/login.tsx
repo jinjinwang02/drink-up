@@ -6,7 +6,7 @@ import { Content } from './content';
 import * as Yup from 'yup';
 import { Box } from '../box/box';
 import { Arrow } from '../icon/arrow';
-import { ArrowButton } from '../button';
+import { ArrowButton } from '../button/arrow-button';
 
 interface LogInProps {
   step: number;
