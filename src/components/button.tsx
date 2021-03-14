@@ -24,7 +24,6 @@ const Button: React.FC<ButtonProps> = ({
       role="button"
       border={borderless ? undefined : 'regularBlack'}
       onClick={onClick}
-      style={{ cursor: 'pointer' }}
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}
     >
@@ -42,9 +41,9 @@ const Button: React.FC<ButtonProps> = ({
         <Cloud />
       </Box>
       <Typography
-        py={['zeroPointFour', 'zero']}
-        px={borderless ? 'five' : 'one'}
-        textStyle={borderless ? 'copyL' : ['copyLBold', 'h4', 'h4', 'h4']}
+        py={['zeroPointTwo', 'zero']}
+        px={borderless ? 'five' : ['zeroPointSix', 'one']}
+        textStyle={borderless ? 'copyL' : ['copyXLBold', 'h4', 'h4', 'h4']}
       >
         {children}
       </Typography>

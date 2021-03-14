@@ -15,9 +15,10 @@ const App: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => (
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <Favicon />
       <FontHead />
+      <Favicon />
     </Head>
+
     <GlobalStyle />
     <ThemeProvider theme={theme}>
       <AuthProvider>

@@ -1,39 +1,26 @@
-import React from 'react';
-import nookies from 'nookies';
+import React, { useEffect } from 'react';
 import { NextSeo } from 'next-seo';
-import { verifyIdToken } from '../firebase/firebase-admin';
 import { Authentication } from '../components/authentication';
 import { Layout } from '../components/layout';
+import { useAuthContext } from '../context/auth-context';
+import { useRouter } from 'next/router';
 
-const Index: React.FC = () => (
-  <>
-    <Layout>
-      <NextSeo title="Drink up | Homepage" description="" canonical="" />
-      <Authentication />
-    </Layout>
-  </>
-);
-
-export const getServerSideProps: (
-  context: any
-) => Promise<{
-  redirect?: {
-    permanent: boolean;
-    destination: string;
-  };
-  props?: any;
-}> = async (context: any) => {
-  try {
-    const cookies = nookies.get(context);
-    const token = await verifyIdToken(cookies.token);
-    if (token) {
-      context.res.writeHead(302, { location: '/dashboard' });
-      context.res.end();
+const Index: React.FC = () => {
+  const { user } = useAuthContext();
+  const router = useRouter();
+  useEffect(() => {
+    if (user) {
+      router.push('/dashboard');
     }
-    return { props: {} };
-  } catch (error) {
-    return { props: {} };
-  }
+  }, [router, user]);
+  return (
+    <>
+      <Layout>
+        <NextSeo title="Drink up | Homepage" description="" canonical="" />
+        <Authentication />
+      </Layout>
+    </>
+  );
 };
 
 export default Index;

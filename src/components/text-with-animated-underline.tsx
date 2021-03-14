@@ -22,9 +22,9 @@ const TextWithAnimatedUnderline: React.FC<TextWithAnimatedUnderlineProps> = ({
     <Box
       flexDirection="column"
       onClick={onClick}
+      style={{ cursor: 'pointer' }}
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}
-      style={{ cursor: 'pointer' }}
     >
       <Typography textStyle="copyL">{children}</Typography>
       <Box

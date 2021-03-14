@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { theme, GlobalStyle } from '../styles/theme';
+import { theme, GlobalStyle } from '../src/styles/theme';
 
 // Global decorator to apply the styles to all stories
 export const decorators = [

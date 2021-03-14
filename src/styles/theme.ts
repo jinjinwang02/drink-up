@@ -85,6 +85,12 @@ const textStyles = {
     fontSize: 21,
     lineHeight: '32px',
   },
+  copyXLBold: {
+    fontFamily: 'SaolDisplay-Regular',
+    fontSize: 21,
+    fontWeight: 700,
+    lineHeight: '32px',
+  },
   copyL: {
     fontFamily: 'SaolDisplay-Regular',
     fontSize: 18,
@@ -153,6 +159,8 @@ const textStyles = {
 const space = {
   zero: 0,
   zeroPointOne: 1,
+  zeroPointTwo: 2,
+  zeroPointThree: 3,
   zeroPointFour: 4,
   zeroPointSix: 6,
   zeroPointEight: 8,

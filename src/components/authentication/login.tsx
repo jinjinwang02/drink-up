@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import 'firebase/auth';
-import { useRouter } from 'next/router';
 import { firebaseClient } from '../../firebase/firebase-client';
 import { FormikContextType, FormikProvider, useFormik } from 'formik';
 import { Content } from './content';
@@ -28,7 +27,6 @@ const LogIn: React.FC<LogInProps> = ({
   onPressNext,
 }: LogInProps) => {
   const { auth } = firebaseClient();
-  const router = useRouter();
   const [isLoading, setLoading] = useState<boolean>(false);
 
   const initialValues = {
@@ -72,15 +70,11 @@ const LogIn: React.FC<LogInProps> = ({
       try {
         setLoading(true);
         await auth.signInWithEmailAndPassword(email, password);
-        router.push('/dashboard');
       } catch (error) {
         passwordFormik.setFieldError('password', error.message);
-      } finally {
-        setLoading(false);
-        router.push('/dashboard');
       }
     },
-    [auth, passwordFormik, router]
+    [auth, passwordFormik]
   );
 
   const getCurrentFormik = (step: number) => {
