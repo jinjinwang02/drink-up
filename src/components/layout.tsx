@@ -1,13 +1,13 @@
 import React from 'react';
 import { useAuthContext } from '../context/auth-context';
-import { Box } from './box/box';
+import { Box, BoxProps } from './box/box';
 import { Navbar } from './navbar';
 
-interface LayoutProps {
+interface LayoutProps extends BoxProps {
   children: React.ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps) => {
+const Layout: React.FC<LayoutProps> = ({ children, ...rest }: LayoutProps) => {
   const { user } = useAuthContext();
   return (
     <Box
@@ -17,6 +17,7 @@ const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps) => {
       overflow="hidden"
       flexWrap="wrap"
       px={['two', 'four', 'eight', 'twelve']}
+      {...rest}
     >
       <Navbar isUserLoggedIn={!!user} />
       {children}

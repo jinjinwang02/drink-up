@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography } from '../typography';
 import { Box } from './box';
 import { Image } from '../image';
@@ -23,40 +23,48 @@ const SelectableBoxWithImage: React.FC<SelectableBoxWithImageProps> = ({
   alt,
   bottomText,
   selected,
-}: SelectableBoxWithImageProps) => (
-  <Box
-    flexDirection="column"
-    height={[BOX_HEIGHT_XS, BOX_HEIGHT_MD]}
-    width={[BOX_WIDTH_XS, BOX_WIDTH_MD]}
-    style={{ cursor: 'pointer' }}
-  >
+}: SelectableBoxWithImageProps) => {
+  const [isHovered, setHovered] = useState<boolean>(false);
+
+  return (
     <Box
-      width="100%"
-      height={[TOP_BOX_HEIGHT_XS, TOP_BOX_HEIGHT_MD]}
-      border={selected ? 'regularBlack' : 'inactiveGrey'}
-      borderBottomWidth={0}
-      p={[16, 12]}
+      flexDirection="column"
+      height={[BOX_HEIGHT_XS, BOX_HEIGHT_MD]}
+      width={[BOX_WIDTH_XS, BOX_WIDTH_MD]}
+      style={{ cursor: 'pointer' }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <Image url={imageUrl} alt={alt} />
       <Box
-        height="100%"
         width="100%"
-        backgroundColor={selected ? 'none' : 'pureWhiteThirty'}
-        position="absolute"
-        top={0}
-        left={0}
-      />
+        height={[TOP_BOX_HEIGHT_XS, TOP_BOX_HEIGHT_MD]}
+        border={selected ? 'regularBlack' : 'inactiveGrey'}
+        borderBottomWidth={0}
+        p={['onePointSix', 'onePointTwo']}
+      >
+        <Image url={imageUrl} alt={alt} />
+        <Box
+          height="100%"
+          width="100%"
+          backgroundColor={
+            selected || isHovered ? 'transparent' : 'pureWhiteThirty'
+          }
+          position="absolute"
+          top={0}
+          left={0}
+        />
+      </Box>
+      <Box
+        width="100%"
+        border={selected ? 'regularBlack' : 'inactiveGrey'}
+        py="zeroPointFour"
+      >
+        <Typography textStyle={['copyXL', 'copyM', 'copyM', 'copyM']}>
+          {bottomText}
+        </Typography>
+      </Box>
     </Box>
-    <Box
-      width="100%"
-      border={selected ? 'regularBlack' : 'inactiveGrey'}
-      py="zeroPointFour"
-    >
-      <Typography textStyle={['copyXL', 'copyM', 'copyM', 'copyM']}>
-        {bottomText}
-      </Typography>
-    </Box>
-  </Box>
-);
+  );
+};
 
 export { SelectableBoxWithImage };

@@ -14,10 +14,13 @@ const GlobalStyle = createGlobalStyle`
       padding: 0;
       box-sizing: border-box;
       display: flex;
-      -webkit-user-select: none; /* Safari */        
-      -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* IE10+/Edge */
-      user-select: none; /* Standard */
+    }
+
+    h1::selection,
+    ::-webkit-selection,
+    ::-moz-selection {
+      color: white;
+      background: rgba(135,189,209,1);
     }
      
     html,
@@ -160,7 +163,7 @@ const space = {
   zero: 0,
   zeroPointOne: 1,
   zeroPointTwo: 2,
-  zeroPointThree: 3,
+  zeroPointThree: 2,
   zeroPointFour: 4,
   zeroPointSix: 6,
   zeroPointEight: 8,

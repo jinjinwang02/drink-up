@@ -24,6 +24,7 @@ const Button: React.FC<ButtonProps> = ({
       role="button"
       border={borderless ? undefined : 'regularBlack'}
       onClick={onClick}
+      style={{ cursor: 'pointer' }}
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}
     >
