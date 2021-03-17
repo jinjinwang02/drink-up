@@ -95,6 +95,7 @@ const Input: React.FC<InputProps> = ({
           outline: 'none',
           border: 'none',
           borderBottom: theme.borders.regularBlack,
+          borderRadius: 0,
           background: 'transparent',
         }}
       />

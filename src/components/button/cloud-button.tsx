@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
 import { Cloud } from '../icon/cloud';
 import { Typography } from '../typography';
@@ -36,13 +37,14 @@ const CloudButton: React.FC<CloudButtonProps> = ({
             ? 'translate(-50%, 2%) scale(1.05)'
             : 'translate(-50%, 2%)',
         }}
+        transition={theme.transitions.medium}
         zIndex={-1}
       >
         <Cloud />
       </Box>
       <Typography
         py={['zeroPointTwo', 'zero']}
-        px={borderless ? 'five' : ['zeroPointSix', 'one']}
+        px={borderless ? 'four' : ['zeroPointSix', 'one']}
         textStyle={borderless ? 'copyL' : ['copyXLBold', 'h4', 'h4', 'h4']}
       >
         {children}

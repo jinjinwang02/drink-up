@@ -16,7 +16,7 @@ const Cloud: React.FC<CloudProps> = ({ width, allowXS = true }: CloudProps) => {
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 324.11 75.97"
         width="100%"
-        height={isXS && allowXS ? 60 : 76}
+        height={isXS && allowXS ? 70 : 76}
         fill="#EDEDED" // lightest grey
         preserveAspectRatio="none"
       >

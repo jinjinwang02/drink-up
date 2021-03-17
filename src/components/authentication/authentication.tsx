@@ -5,10 +5,16 @@ import { TextWithAnimatedUnderline } from '../text-with-animated-underline';
 import { LogIn } from './login';
 import { SignUp } from './sign-up';
 
-const Container: React.FC = () => {
+interface AuthenticationProps {
+  initialIsLogInValue?: boolean;
+}
+
+const Authentication: React.FC<AuthenticationProps> = ({
+  initialIsLogInValue = true,
+}: AuthenticationProps) => {
   const [logInStep, setLogInStep] = useState<number>(1);
   const [signUpStep, setSignUpStep] = useState<number>(1);
-  const [isLogIn, setLogIn] = useState<boolean>(true);
+  const [isLogIn, setLogIn] = useState<boolean>(initialIsLogInValue);
 
   return (
     <BoxWithCloud
@@ -50,4 +56,4 @@ const Container: React.FC = () => {
   );
 };
 
-export { Container };
+export { Authentication };

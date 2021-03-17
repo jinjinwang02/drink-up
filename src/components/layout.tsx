@@ -12,7 +12,6 @@ const Layout: React.FC<LayoutProps> = ({ children, ...rest }: LayoutProps) => {
   return (
     <Box
       width="100vw"
-      minHeight="100vh"
       alignItems="flex-start"
       overflow="hidden"
       flexWrap="wrap"

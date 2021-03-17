@@ -35,7 +35,9 @@ const TitleWithUnderline: React.FC<TitleWithUnderlineProps> = ({
       </Typography>
       <Box
         position="absolute"
-        top={variant === 'primary' ? ['four', 'fourPointFive'] : 'three'}
+        top={
+          variant === 'primary' ? ['four', 'fourPointFive'] : ['two', 'three']
+        }
         left="50%"
         style={{ transform: 'translateX(-50%)' }}
       >
