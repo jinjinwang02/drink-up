@@ -4,11 +4,11 @@ import { Container } from '../components/authentication/container';
 import { Box } from '../components/box/box';
 
 export default {
-  title: 'Authentication Box',
+  title: 'Components/Authentication Box',
   component: Container,
 } as Meta;
 
-export const Basic: React.FC = () => (
+export const AuthenticationBox: React.FC = () => (
   <Box>
     <Container />
   </Box>

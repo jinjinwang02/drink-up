@@ -7,7 +7,7 @@ import {
 } from '../components/button/cloud-button';
 
 export default {
-  title: 'Cloud Button',
+  title: 'Components/Cloud Button',
   component: CloudButton,
 } as Meta;
 
@@ -20,10 +20,11 @@ const Template: Story<CloudButtonProps> = (args) => (
 export const WithBorder = Template.bind({});
 WithBorder.args = {
   children: 'Browse all plants',
+  borderless: false,
 };
 
 export const WithoutBorder = Template.bind({});
 WithoutBorder.args = {
-  borderless: true,
   children: 'Log in',
+  borderless: true,
 };

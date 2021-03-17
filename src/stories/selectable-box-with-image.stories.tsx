@@ -1,17 +1,17 @@
 import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
-import { SelectableBoxWithImage } from '../components/box/selectable-box-with-image';
+import { SelectableBoxWithImage as SelectableBoxWithImageComponent } from '../components/box/selectable-box-with-image';
 import { Box } from '../components/box/box';
 
 export default {
-  title: 'Selectable box with image',
-  component: SelectableBoxWithImage,
+  title: 'Components/Selectable Box With Image',
+  component: SelectableBoxWithImageComponent,
 } as Meta;
 
-export const Basic: React.FC = () => {
+export const SelectableBoxWithImage: React.FC = () => {
   return (
     <Box>
-      <SelectableBoxWithImage
+      <SelectableBoxWithImageComponent
         imageUrl="http://placeimg.com/640/360/any"
         bottomText="random image"
         selected

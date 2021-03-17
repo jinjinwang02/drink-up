@@ -34,16 +34,18 @@ const StyledThirdLine = styled.path`
 export interface LogoProps {
   strokeWidth?: number;
   animated?: boolean;
+  size?: 'medium' | 'small';
 }
 
 const Logo: React.FC<LogoProps> = ({
   strokeWidth = 3,
   animated = false,
+  size = 'small',
 }: LogoProps) => (
   <svg
     version="1.0"
     xmlns="http://www.w3.org/2000/svg"
-    height={28}
+    height={size === 'small' ? 28 : 38}
     viewBox="0 0 66.14 89.96"
     fill="none"
     stroke="#000"

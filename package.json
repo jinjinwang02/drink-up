@@ -6,8 +6,8 @@
     "start": "next",
     "build": "next build",
     "script:add-documents": "ts-node ./utils/firebase/add-documents.ts",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "storybook": "start-storybook -p 6006 -s ./public",
+    "build-storybook": "build-storybook -s ./public",
     "lint": "eslint . --ext=.ts,.tsx",
     "type-check": "tsc -p tsconfig.json --noEmit"
   },

@@ -1,15 +1,15 @@
 import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
-import { Navbar } from '../components/navbar';
+import { Navbar as NavbarComponent } from '../components/navbar';
 import { Box } from '../components/box/box';
 
 export default {
-  title: 'Navbar',
-  component: Navbar,
+  title: 'Components/Navbar',
+  component: NavbarComponent,
 } as Meta;
 
-export const LoggedInNavBar: React.FC = () => (
+export const Navbar: React.FC = () => (
   <Box px={['two', 'four', 'six', 'twelve']}>
-    <Navbar isUserLoggedIn />
+    <NavbarComponent isUserLoggedIn />
   </Box>
 );

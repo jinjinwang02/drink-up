@@ -4,11 +4,11 @@ import { BoxWithImage } from '../components/box/box-with-image';
 import { Box } from '../components/box/box';
 
 export default {
-  title: 'Box with image',
+  title: 'Components/Box with image',
   component: BoxWithImage,
 } as Meta;
 
-export const Basic: React.FC = () => {
+export const Default: React.FC = () => {
   const BOX_WIDTH_MD = 342;
   const BOX_WIDTH_XS = 275;
 

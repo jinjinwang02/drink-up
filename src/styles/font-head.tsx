@@ -13,7 +13,7 @@ const FontHead: React.FC = () => (
       }
       @font-face {
         font-family: 'Altero-Regular';
-        src: url('/fonts/Altero-Outline.otf') format('opentype');
+        src: url('/fonts/Altero-Regular.otf') format('opentype');
         font-weight: normal;
         font-style: normal;
         font-display: swap;

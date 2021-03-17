@@ -17,10 +17,11 @@ const CloudButton: React.FC<CloudButtonProps> = ({
   const [isHovered, setHovered] = useState<boolean>(false);
   return (
     <Box
+      as="button"
       flexDirection="column"
       alignItems="center"
       role="button"
-      border={borderless ? undefined : 'regularBlack'}
+      border={borderless ? 'none' : 'regularBlack'}
       onClick={onClick}
       style={{ cursor: 'pointer' }}
       onMouseOver={() => setHovered(true)}

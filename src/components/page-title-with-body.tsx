@@ -5,18 +5,16 @@ import { Typography } from './typography';
 
 interface PageTitleWithBodyProps {
   title: string;
-  underlineWidth: number;
   body?: string;
 }
 
 const PageTitleWithBody: React.FC<PageTitleWithBodyProps> = ({
   title,
   body,
-  underlineWidth,
 }: PageTitleWithBodyProps) => (
   <Box width="100%" flexDirection="column" mt={['one', 'zero']} mb="three">
     <Box alignSelf={['center', 'center', 'flex-start']}>
-      <TitleWithUnderline width={underlineWidth}>{title}</TitleWithUnderline>
+      <TitleWithUnderline>{title}</TitleWithUnderline>
     </Box>
     <Box
       alignSelf={['center', 'center', 'flex-end']}

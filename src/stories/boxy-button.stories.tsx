@@ -1,12 +1,12 @@
 import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
-import { BoxyButton } from '../components/button/boxy-button';
+import { BoxyButton as BoxyButtonComponent } from '../components/button/boxy-button';
 
 export default {
-  title: 'Boxy Button',
-  component: BoxyButton,
+  title: 'Components/Boxy Button',
+  component: BoxyButtonComponent,
 } as Meta;
 
-export const Basic: React.FC = () => (
-  <BoxyButton onNext={() => null} onBack={() => null} />
+export const BoxyButton: React.FC = () => (
+  <BoxyButtonComponent onNext={() => null} onBack={() => null} />
 );

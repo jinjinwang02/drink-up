@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import {
   LayoutProps,
   layout,
@@ -46,62 +46,68 @@ const StyledText = styled.div<TypographyProps>(
   })
 );
 
-const Typography: React.FC<React.ComponentProps<typeof StyledText>> = ({
-  color,
-  children,
-  textStyle,
-  ...rest
-}: React.ComponentProps<typeof StyledText>) => {
-  const [currentIndex, setCurrentIndex] = useState<number>(2);
+const Typography = forwardRef(
+  (
+    {
+      color,
+      children,
+      textStyle,
+      ...rest
+    }: React.ComponentProps<typeof StyledText>,
+    ref
+  ) => {
+    const [currentIndex, setCurrentIndex] = useState<number>(2);
+    useEffect(() => {
+      if (window.matchMedia(`(max-width: ${theme.breakpoints[0]})`).matches) {
+        setCurrentIndex(0);
+      } else if (
+        window.matchMedia(`(max-width: ${theme.breakpoints[1]})`).matches
+      ) {
+        setCurrentIndex(1);
+      } else if (
+        window.matchMedia(`(max-width: ${theme.breakpoints[2]})`).matches
+      ) {
+        setCurrentIndex(2);
+      } else if (
+        window.matchMedia(`(min-width: ${theme.breakpoints[2]})`).matches
+      ) {
+        setCurrentIndex(3);
+      }
+    }, []);
 
-  useEffect(() => {
-    if (window.matchMedia(`(max-width: ${theme.breakpoints[0]})`).matches) {
-      setCurrentIndex(0);
-    } else if (
-      window.matchMedia(`(max-width: ${theme.breakpoints[1]})`).matches
-    ) {
-      setCurrentIndex(1);
-    } else if (
-      window.matchMedia(`(max-width: ${theme.breakpoints[2]})`).matches
-    ) {
-      setCurrentIndex(2);
-    } else if (
-      window.matchMedia(`(min-width: ${theme.breakpoints[2]})`).matches
-    ) {
-      setCurrentIndex(3);
-    }
-  }, []);
+    const setHTMLTag = (currentTextStyle: keyof Theme['textStyles']) => {
+      const currentTextStyleCSS = theme.textStyles[
+        currentTextStyle
+      ] as CSSProperties;
+      if (currentTextStyle.match(/h1/)) {
+        return <h1 style={currentTextStyleCSS}>{children}</h1>;
+      }
+      if (currentTextStyle.match(/h2/)) {
+        return <h2 style={currentTextStyleCSS}>{children}</h2>;
+      }
+      if (currentTextStyle.match(/h3/)) {
+        return <h3 style={currentTextStyleCSS}>{children}</h3>;
+      }
+      if (currentTextStyle.match(/h4/)) {
+        return <h4 style={currentTextStyleCSS}>{children}</h4>;
+      }
+      if (currentTextStyle.match(/body/) || currentTextStyle.match(/copy/)) {
+        return <span style={currentTextStyleCSS}>{children}</span>;
+      }
+    };
 
-  const setHTMLTag = (currentTextStyle: keyof Theme['textStyles']) => {
-    const currentTextStyleCSS = theme.textStyles[
-      currentTextStyle
-    ] as CSSProperties;
-    if (currentTextStyle.match(/h1/)) {
-      return <h1 style={currentTextStyleCSS}>{children}</h1>;
-    }
-    if (currentTextStyle.match(/h2/)) {
-      return <h2 style={currentTextStyleCSS}>{children}</h2>;
-    }
-    if (currentTextStyle.match(/h3/)) {
-      return <h3 style={currentTextStyleCSS}>{children}</h3>;
-    }
-    if (currentTextStyle.match(/h4/)) {
-      return <h4 style={currentTextStyleCSS}>{children}</h4>;
-    }
-    if (currentTextStyle.match(/body/) || currentTextStyle.match(/copy/)) {
-      return <span style={currentTextStyleCSS}>{children}</span>;
-    }
-  };
+    return !Array.isArray(textStyle) ? (
+      <StyledText ref={ref} color={color} {...rest}>
+        {setHTMLTag(textStyle)}
+      </StyledText>
+    ) : (
+      <StyledText ref={ref} color={color} {...rest}>
+        {setHTMLTag(textStyle[currentIndex])}
+      </StyledText>
+    );
+  }
+);
 
-  return !Array.isArray(textStyle) ? (
-    <StyledText color={color} {...rest}>
-      {setHTMLTag(textStyle)}
-    </StyledText>
-  ) : (
-    <StyledText color={color} {...rest}>
-      {setHTMLTag(textStyle[currentIndex])}
-    </StyledText>
-  );
-};
+Typography.displayName = 'Typography';
 
 export { Typography };

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { GetStaticProps, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { NextSeo } from 'next-seo';
 import { firebaseClient } from '../firebase/firebase-client';
 import { Box } from '../components/box/box';
@@ -24,6 +24,8 @@ interface Props {
 
 const Index: NextPage<Props> = ({ collection }: Props) => {
   const isXS = useMediaQuery();
+  // const [showChild, setShowChild] = useState(false);
+
   const {
     setPlantCollection,
     setPlantCollectionWithInputs,
@@ -52,6 +54,16 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
     setPlantCollectionWithInputs,
   ]);
 
+  // // PageTitleWithBody uses useLayoutEffect which means
+  // //
+  // useEffect(() => {
+  //   setShowChild(true);
+  // }, []);
+
+  // if (!showChild) {
+  //   return null;
+  // }
+
   return (
     <Layout mb={['four', 'eight', 'ten']}>
       <NextSeo
@@ -61,7 +73,6 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
       />
       <PageTitleWithBody
         title="Find your plants"
-        underlineWidth={isXS ? 320 : 500}
         body="Can't find your plants? Don't worry, you can add them later."
       />
       <Box
@@ -104,7 +115,7 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const { firestore } = firebaseClient();
   const collectionRef = firestore.collection('plants');
   const collection: Collection[] = [];

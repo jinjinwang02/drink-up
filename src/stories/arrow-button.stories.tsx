@@ -1,20 +1,20 @@
 import React from 'react';
 import { Meta } from '@storybook/react/types-6-0';
-import { ArrowButton } from '../components/button/arrow-button';
+import { ArrowButton as ArrowButtonComponent } from '../components/button/arrow-button';
 import { Box } from '../components/box/box';
 
 export default {
-  title: 'Arrow Button',
-  component: ArrowButton,
+  title: 'Components/Arrow Button',
+  component: ArrowButtonComponent,
 } as Meta;
 
-export const Basic: React.FC = () => (
+export const ArrowButton: React.FC = () => (
   <Box flexDirection="column" height={200} justifyContent="space-around">
-    <ArrowButton size="small" />
-    <ArrowButton size="small" direction="left" />
-    <ArrowButton />
-    <ArrowButton direction="left" />
-    <ArrowButton size="large" />
-    <ArrowButton size="large" direction="left" />
+    <ArrowButtonComponent size="small" />
+    <ArrowButtonComponent size="small" direction="left" />
+    <ArrowButtonComponent />
+    <ArrowButtonComponent direction="left" />
+    <ArrowButtonComponent size="large" />
+    <ArrowButtonComponent size="large" direction="left" />
   </Box>
 );
