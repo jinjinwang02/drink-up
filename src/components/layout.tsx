@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuthContext } from '../context/auth-context';
 import { Box, BoxProps } from './box/box';
-import { Navbar } from './navbar';
+import { Navbar, NAVBAR_HEIGHT_MD, NAVBAR_HEIGHT_XS } from './navbar';
 
 interface LayoutProps extends BoxProps {
   children: React.ReactNode;
@@ -12,14 +12,19 @@ const Layout: React.FC<LayoutProps> = ({ children, ...rest }: LayoutProps) => {
   return (
     <Box
       width="100vw"
-      alignItems="flex-start"
+      position="relative"
       overflow="hidden"
-      flexWrap="wrap"
       px={['two', 'four', 'six', 'twelve']}
       {...rest}
     >
       <Navbar isUserLoggedIn={!!user} />
-      {children}
+      <Box
+        mt={[NAVBAR_HEIGHT_XS, NAVBAR_HEIGHT_MD]}
+        width="100%"
+        flexWrap="wrap"
+      >
+        {children}
+      </Box>
     </Box>
   );
 };

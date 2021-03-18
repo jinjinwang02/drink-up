@@ -4,17 +4,12 @@ import { Typography } from '../typography';
 import { TextWithAnimatedUnderline } from '../text-with-animated-underline';
 import { LogIn } from './login';
 import { SignUp } from './sign-up';
+import { useAuthContext } from '../../context/auth-context';
 
-interface AuthenticationProps {
-  initialIsLogInValue?: boolean;
-}
-
-const Authentication: React.FC<AuthenticationProps> = ({
-  initialIsLogInValue = true,
-}: AuthenticationProps) => {
+const Authentication: React.FC = () => {
+  const { isLogIn, setLogIn } = useAuthContext();
   const [logInStep, setLogInStep] = useState<number>(1);
   const [signUpStep, setSignUpStep] = useState<number>(1);
-  const [isLogIn, setLogIn] = useState<boolean>(initialIsLogInValue);
 
   return (
     <BoxWithCloud

@@ -11,13 +11,13 @@ import { Logo } from '../components/icon/logo';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { CloudButton } from '../components/button/cloud-button';
 import { theme } from '../styles/theme';
+import { NAVBAR_HEIGHT_MD, NAVBAR_HEIGHT_XS } from '../components/navbar';
 
 const Index: React.FC = () => {
-  const { user } = useAuthContext();
+  const { user, setLogIn } = useAuthContext();
   const router = useRouter();
   const isXS = useMediaQuery();
   const [showAuthentication, setShowAuthentication] = useState<boolean>(false);
-  const [isLogIn, setLogIn] = useState<boolean>(true);
   useEffect(() => {
     if (user) {
       router.push('/dashboard');
@@ -29,6 +29,7 @@ const Index: React.FC = () => {
       <Box
         width="100%"
         height={['100%', '100vh']}
+        mt={[-NAVBAR_HEIGHT_XS, -NAVBAR_HEIGHT_MD]}
         flexDirection={['column', 'column', 'column', 'row']}
         justifyContent={['center', 'center', 'center', 'space-around']}
         mb={['eight', 'zero']}
@@ -73,6 +74,7 @@ const Index: React.FC = () => {
             <CloudButton
               borderless
               onClick={() => {
+                setLogIn(true);
                 setShowAuthentication(true);
               }}
             >
@@ -81,8 +83,8 @@ const Index: React.FC = () => {
             <CloudButton
               borderless
               onClick={() => {
-                setShowAuthentication(true);
                 setLogIn(false);
+                setShowAuthentication(true);
               }}
             >
               Sign up
@@ -98,11 +100,12 @@ const Index: React.FC = () => {
             transition={theme.transitions.slow}
             zIndex={showAuthentication ? 1 : -1}
           >
-            <Authentication initialIsLogInValue={isLogIn} />
+            <Authentication />
           </Box>
         ) : (
           <Authentication />
         )}
+        {/* <Box> {isLogIn ? 'Log in' : 'Sign up'}</Box> */}
       </Box>
     </Layout>
   );

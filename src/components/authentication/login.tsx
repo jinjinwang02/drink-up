@@ -71,6 +71,7 @@ const LogIn: React.FC<LogInProps> = ({
         setLoading(true);
         await auth.signInWithEmailAndPassword(email, password);
       } catch (error) {
+        setLoading(false);
         passwordFormik.setFieldError('password', error.message);
       }
     },

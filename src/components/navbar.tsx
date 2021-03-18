@@ -9,10 +9,10 @@ import { Logo } from './icon/logo';
 import { User } from './icon/user';
 import { Typography } from './typography';
 
-const NAVBAR_HEIGHT_MD = 50;
-const NAVBAR_HEIGHT_XS = 30;
+export const NAVBAR_HEIGHT_MD = 78;
+export const NAVBAR_HEIGHT_XS = 58;
+const ICON_HEIGHT = 28;
 const NAV_DROPDOWN_HEIGHT_MD = 130;
-const NAV_DROPDOWN_HEIGHT_XS = '100vh';
 const NAV_DROPDOWN_WIDTH_MD = 120;
 
 interface NavbarProps {
@@ -35,11 +35,11 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
     <Box
       flexDirection="column"
       width={['100vw', '100%']}
-      height={[NAV_DROPDOWN_HEIGHT_XS, NAV_DROPDOWN_HEIGHT_MD]}
+      height={['85vh', NAV_DROPDOWN_HEIGHT_MD]}
       position={['absolute', 'relative']}
       backgroundColor="pureWhite"
       justifyContent="space-evenly"
-      mt={['zero', 'two']}
+      mt={['three', 'two']}
       border={['none', 'regularBlack']}
       top={[-`${NAVBAR_HEIGHT_XS}`, 'zero']}
       right={-`${theme.space.one}`}
@@ -106,10 +106,11 @@ const Navbar: React.FC<NavbarProps> = ({ isUserLoggedIn }: NavbarProps) => {
   return (
     <Box
       width="100%"
-      mt={[NAVBAR_HEIGHT_XS, NAVBAR_HEIGHT_MD]}
+      position="absolute"
+      top={[NAVBAR_HEIGHT_XS - ICON_HEIGHT, NAVBAR_HEIGHT_MD - ICON_HEIGHT]}
+      right={['two', 'four', 'six', 'twelve']}
       mb={['zero', -`${NAV_DROPDOWN_HEIGHT_MD}`]}
       justifyContent="flex-end"
-      alignItems="flex-start"
     >
       {isUserLoggedIn ? (
         <>

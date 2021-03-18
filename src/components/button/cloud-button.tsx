@@ -18,7 +18,6 @@ const CloudButton: React.FC<CloudButtonProps> = ({
   const [isHovered, setHovered] = useState<boolean>(false);
   return (
     <Box
-      as="button"
       flexDirection="column"
       alignItems="center"
       role="button"

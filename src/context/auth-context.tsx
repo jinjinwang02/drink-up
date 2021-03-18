@@ -8,12 +8,23 @@ interface AuthContextProviderProps {
   children: React.ReactNode;
 }
 
-const AuthContext = createContext<any>({});
+interface AuthContextProps {
+  user: firebase.User | null;
+  isLogIn: boolean;
+  setLogIn: (value: boolean) => void;
+}
+
+const AuthContext = createContext<AuthContextProps>({
+  user: null,
+  isLogIn: true,
+  setLogIn: () => null,
+});
 
 export const AuthProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }: AuthContextProviderProps) => {
   const { auth } = firebaseClient();
+  const [isLogIn, setLogIn] = useState<boolean>(true);
 
   const [user, setUser] = useState<firebase.User | null>(null);
   useEffect(() => {
@@ -30,9 +41,11 @@ export const AuthProvider: React.FC<AuthContextProviderProps> = ({
   }, [auth]);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, isLogIn, setLogIn }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
-export const useAuthContext: () => { user: firebase.User | null } = () =>
+export const useAuthContext: () => AuthContextProps = () =>
   useContext(AuthContext);

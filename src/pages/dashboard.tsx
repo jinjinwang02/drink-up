@@ -4,11 +4,13 @@ import { NextSeo } from 'next-seo';
 import { verifyIdToken } from '../firebase/firebase-admin';
 import { GetServerSideProps, NextPage } from 'next';
 import { Layout } from '../components/layout';
+import { Box } from '../components/box/box';
 
 const Index: NextPage = () => {
   return (
     <Layout>
       <NextSeo title="Drink up | Dashboard" description="" canonical="" />
+      <Box height="80vh" />
     </Layout>
   );
 };
