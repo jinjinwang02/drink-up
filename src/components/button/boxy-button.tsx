@@ -20,10 +20,11 @@ const BoxyButton: React.FC<BoxyButtonProps> = ({
     height={BUTTON_HEIGHT}
     backgroundColor="pureWhite"
     border="regularBlack"
-    justifyContent="space-around"
+    px="four"
+    justifyContent={onBack ? 'space-between' : 'center'}
   >
     {onBack ? (
-      <ArrowButton direction="left" size="small" onClick={onNext} />
+      <ArrowButton direction="left" size="small" onClick={onBack} />
     ) : null}
     <ArrowButton direction="right" size="small" onClick={onNext} />
   </Box>

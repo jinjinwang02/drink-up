@@ -6,7 +6,21 @@ interface PlantContextProviderProps {
   children: React.ReactNode;
 }
 
-const PlantContext = createContext<any>({});
+interface PlantContextProps {
+  plantCollection: Collection[];
+  plantCollectionWithInputs: CollectionWithInputs[];
+  setPlantCollection: (value: React.SetStateAction<Collection[]>) => void;
+  setPlantCollectionWithInputs: (
+    value: React.SetStateAction<CollectionWithInputs[]>
+  ) => void;
+}
+
+const PlantContext = createContext<PlantContextProps>({
+  plantCollection: [],
+  plantCollectionWithInputs: [],
+  setPlantCollection: () => null,
+  setPlantCollectionWithInputs: () => null,
+});
 
 export const PlantProvider: React.FC<PlantContextProviderProps> = ({
   children,
@@ -29,11 +43,5 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
   );
 };
 
-export const usePlantContext: () => {
-  plantCollection: Collection[];
-  plantCollectionWithInputs: CollectionWithInputs[];
-  setPlantCollection: (value: React.SetStateAction<Collection[]>) => void;
-  setPlantCollectionWithInputs: (
-    value: React.SetStateAction<CollectionWithInputs[]>
-  ) => void;
-} = () => useContext(PlantContext);
+export const usePlantContext: () => PlantContextProps = () =>
+  useContext(PlantContext);

@@ -24,18 +24,20 @@ interface Props {
 
 const Index: NextPage<Props> = ({ collection }: Props) => {
   const isXS = useMediaQuery();
-  // const [showChild, setShowChild] = useState(false);
-
+  const router = useRouter();
   const {
+    plantCollection,
     setPlantCollection,
     setPlantCollectionWithInputs,
   } = usePlantContext();
-  const [selectedPlants, setSelctedPlants] = useState<Collection[]>([]);
-  const router = useRouter();
+  const [selectedPlants, setSelctedPlants] = useState<Collection[]>([
+    ...plantCollection,
+  ]);
+
   const handlePressPlant = useCallback(
     (plant: Collection) => {
       if (selectedPlants.map((el) => el.id).includes(plant.id)) {
-        setSelctedPlants(selectedPlants.filter((el) => el !== plant));
+        setSelctedPlants(selectedPlants.filter((el) => el.id !== plant.id));
       } else {
         setSelctedPlants((prev) => [...prev, plant]);
       }
@@ -53,16 +55,6 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
     setPlantCollection,
     setPlantCollectionWithInputs,
   ]);
-
-  // // PageTitleWithBody uses useLayoutEffect which means
-  // //
-  // useEffect(() => {
-  //   setShowChild(true);
-  // }, []);
-
-  // if (!showChild) {
-  //   return null;
-  // }
 
   return (
     <Layout mb={['four', 'eight', 'ten']}>
@@ -91,12 +83,12 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
               imageUrl={plant.imageUrl}
               alt={plant.commonName}
               bottomText={plant.commonName}
-              selected={selectedPlants.includes(plant)}
+              selected={selectedPlants.map((el) => el.id).includes(plant.id)}
             />
           </Box>
         ))}
       </Box>
-      <Typography textStyle="bodyL" mt="two" mb={['five', 'zero']}>
+      <Typography textStyle="bodyL" mt="four" mb={['five', 'zero']}>
         End of list :)
       </Typography>
       {!isXS ? (

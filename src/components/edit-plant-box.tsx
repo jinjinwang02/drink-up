@@ -7,8 +7,8 @@ import { Cross } from './icon/cross';
 import { PlantInfo } from './plant-info';
 import { Bin } from './icon/bin';
 
-const BOX_WIDTH_MD = 342;
-const BOX_WIDTH_XS = 275;
+export const BOX_WIDTH_MD = 342;
+export const BOX_WIDTH_XS = 275;
 
 const TOP_BOX_HEIGHT_MD = 370;
 const TOP_BOX_HEIGHT_XS = 297;
@@ -39,7 +39,7 @@ const EditPlantBox: React.FC<EditPlantBoxProps> = ({
       imageUrl={imageUrl}
       imageText={`About the ${commonName}...`}
       bottomAccessory={
-        <Box width="100%" mb={['fourPointFive', 'zero']}>
+        <Box width="100%" mb={[showControl ? 'fourPointFive' : 'zero', 'zero']}>
           <PlantInfo
             id={id}
             plantInfo={{ commonName, imageUrl, habit, notes, date }}

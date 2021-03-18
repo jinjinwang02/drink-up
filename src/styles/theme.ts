@@ -178,6 +178,7 @@ const space = {
   fourPointFive: 45,
   five: 50,
   six: 60,
+  seven: 70,
   eight: 80,
   ten: 100,
   twelve: 120,

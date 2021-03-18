@@ -26,7 +26,6 @@ const SelectableBoxWithImage: React.FC<SelectableBoxWithImageProps> = ({
   selected,
 }: SelectableBoxWithImageProps) => {
   const [isHovered, setHovered] = useState<boolean>(false);
-
   return (
     <Box
       flexDirection="column"

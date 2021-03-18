@@ -10,7 +10,6 @@ const Authentication: React.FC = () => {
   const { isLogIn, setLogIn } = useAuthContext();
   const [logInStep, setLogInStep] = useState<number>(1);
   const [signUpStep, setSignUpStep] = useState<number>(1);
-
   return (
     <BoxWithCloud
       topAccessory={
