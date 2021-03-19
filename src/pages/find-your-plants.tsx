@@ -5,16 +5,13 @@ import { firebaseClient } from '../firebase/firebase-client';
 import { Box } from '../components/box/box';
 import {
   BOX_WIDTH_MD,
-  BOX_WIDTH_XS,
   SelectableBoxWithImage,
 } from '../components/box/selectable-box-with-image';
 import { Collection } from '../interfaces';
-import { Arrow } from '../components/icon/arrow';
 import { usePlantContext } from '../context/plant-context';
 import { useRouter } from 'next/router';
 import { Layout } from '../components/layout';
 import { PageTitleWithBody } from '../components/page-title-with-body';
-import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Typography } from '../components/typography';
 import { BoxyButton } from '../components/button/boxy-button';
 
@@ -23,7 +20,6 @@ interface Props {
 }
 
 const Index: NextPage<Props> = ({ collection }: Props) => {
-  const isXS = useMediaQuery();
   const router = useRouter();
   const {
     plantCollection,
@@ -71,7 +67,7 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
         width="100%"
         display="grid"
         gridTemplateColumns={[
-          `repeat(auto-fit, minmax(${BOX_WIDTH_XS}px, 1fr))`,
+          '1fr',
           `repeat(auto-fit, minmax(${BOX_WIDTH_MD}px, 1fr))`,
         ]}
         gridRowGap="two"
@@ -91,18 +87,7 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
       <Typography textStyle="bodyL" mt="four" mb={['five', 'zero']}>
         End of list :)
       </Typography>
-      {!isXS ? (
-        <Box
-          width="100%"
-          mr="two"
-          justifyContent="flex-end"
-          onClick={handlePressNext}
-        >
-          <Arrow size="extraLarge" />
-        </Box>
-      ) : (
-        <BoxyButton onNext={handlePressNext} />
-      )}
+      <BoxyButton onNext={handlePressNext} />
     </Layout>
   );
 };

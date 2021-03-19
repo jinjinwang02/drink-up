@@ -8,7 +8,7 @@ import { PlantInfo } from './plant-info';
 import { Bin } from './icon/bin';
 
 export const BOX_WIDTH_MD = 342;
-export const BOX_WIDTH_XS = 275;
+const BOX_WIDTH_XS = 275;
 
 const TOP_BOX_HEIGHT_MD = 370;
 const TOP_BOX_HEIGHT_XS = 297;

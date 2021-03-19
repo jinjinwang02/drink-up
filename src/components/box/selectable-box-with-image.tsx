@@ -5,10 +5,10 @@ import { Image } from '../image';
 import { theme } from '../../styles/theme';
 
 export const BOX_WIDTH_MD = 220;
-export const BOX_HEIGHT_MD = 246;
+const BOX_HEIGHT_MD = 246;
 
-export const BOX_WIDTH_XS = 275;
-export const BOX_HEIGHT_XS = 319;
+const BOX_WIDTH_XS = 275;
+const BOX_HEIGHT_XS = 319;
 
 const TOP_BOX_HEIGHT_MD = 212;
 const TOP_BOX_HEIGHT_XS = 272;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { Box } from '../box/box';
 import { ArrowButton } from './arrow-button';
 
@@ -12,22 +13,33 @@ interface BoxyButtonProps {
 const BoxyButton: React.FC<BoxyButtonProps> = ({
   onNext,
   onBack,
-}: BoxyButtonProps) => (
-  <Box
-    position="fixed"
-    bottom={0}
-    width="100%"
-    height={BUTTON_HEIGHT}
-    backgroundColor="pureWhite"
-    border="regularBlack"
-    px="four"
-    justifyContent={onBack ? 'space-between' : 'center'}
-  >
-    {onBack ? (
-      <ArrowButton direction="left" size="small" onClick={onBack} />
-    ) : null}
-    <ArrowButton direction="right" size="small" onClick={onNext} />
-  </Box>
-);
+}: BoxyButtonProps) => {
+  const isXS = useMediaQuery();
+  return (
+    <Box
+      position="fixed"
+      bottom={0}
+      width="100%"
+      height={BUTTON_HEIGHT}
+      backgroundColor="pureWhite"
+      border="regularBlack"
+      px="four"
+      justifyContent={onBack ? 'space-around' : 'center'}
+    >
+      {onBack ? (
+        <ArrowButton
+          direction="left"
+          size={isXS ? 'small' : 'large'}
+          onClick={onBack}
+        />
+      ) : null}
+      <ArrowButton
+        direction="right"
+        size={isXS ? 'small' : 'large'}
+        onClick={onNext}
+      />
+    </Box>
+  );
+};
 
 export { BoxyButton };
