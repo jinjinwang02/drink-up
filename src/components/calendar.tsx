@@ -10,24 +10,42 @@ dayjs.locale({
   weekStart: 1,
 });
 
-const CELL_WIDTH = '35px';
+const CELL_WIDTH_AND_HEIGHT = '35px';
 const DATE_FORMAT = 'D / M';
+const DAY_FORMAT = 'D';
+const MONTH_FORMAT = 'M';
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-interface CalendarProps {
-  allowFutureDates?: boolean;
+export interface CalendarProps {
+  futureMonthLimit?: number;
+  previousMonthLimit?: number;
 }
 
-const Calendar: React.FC<CalendarProps> = () => {
+const Calendar: React.FC<CalendarProps> = ({
+  futureMonthLimit,
+  previousMonthLimit,
+}: CalendarProps) => {
+  const calendar: dayjs.Dayjs[][] = [];
   const today = dayjs();
   const formatedToday = dayjs().format(DATE_FORMAT);
+  const [currentCalendarTime, setCurrentCalendarTime] = useState<dayjs.Dayjs>(
+    today
+  );
+  const [monthDiff, setMonthDiff] = useState<number>(0);
+  const currentMonth = currentCalendarTime.format(MONTH_FORMAT);
 
-  const [now, setNow] = useState<dayjs.Dayjs>(today);
-  const currentMonthIndex = (now.month() + 1).toString();
-  const startDayOfCurrentMonth = now.startOf('month').startOf('week');
-  const endDayOfCurrentMonth = now.endOf('month').endOf('week');
+  const allowFuture =
+    futureMonthLimit === undefined ||
+    (futureMonthLimit >= 0 && monthDiff < futureMonthLimit);
+  const allowPrevious =
+    previousMonthLimit === undefined ||
+    (previousMonthLimit >= 0 && -monthDiff < previousMonthLimit);
+
+  const startDayOfCurrentMonth = currentCalendarTime
+    .startOf('month')
+    .startOf('week');
+  const endDayOfCurrentMonth = currentCalendarTime.endOf('month').endOf('week');
   const endDayOfPreviousMonth = startDayOfCurrentMonth.subtract(1, 'day');
-  const calendar: string[][] = [];
 
   const numberOfRows =
     endDayOfCurrentMonth.diff(endDayOfPreviousMonth, 'day') / 7;
@@ -36,40 +54,69 @@ const Calendar: React.FC<CalendarProps> = () => {
       Array(7)
         .fill(0)
         .map((_el, index) =>
-          endDayOfPreviousMonth
-            .add(index + 1 + 7 * currentRow, 'day')
-            .format(DATE_FORMAT)
+          endDayOfPreviousMonth.add(index + 1 + 7 * currentRow, 'day')
         )
     );
   }
 
   const handleBack = useCallback(() => {
-    setNow(now.subtract(1, 'month'));
-  }, [now]);
+    if (allowPrevious) {
+      setCurrentCalendarTime(currentCalendarTime.subtract(1, 'month'));
+      setMonthDiff((prev) => prev - 1);
+    }
+  }, [currentCalendarTime, allowPrevious]);
+
   const handleNext = useCallback(() => {
-    setNow(now.add(1, 'month'));
-  }, [now]);
+    if (allowFuture) {
+      setCurrentCalendarTime(currentCalendarTime.add(1, 'month'));
+      setMonthDiff((prev) => prev + 1);
+    }
+  }, [allowFuture, currentCalendarTime]);
+
+  const handleChooseDate = useCallback(
+    (date: dayjs.Dayjs, isFutureDate: boolean) => {
+      if (allowFuture) {
+        console.log(date);
+      } else if (!isFutureDate) {
+        console.log(date);
+      }
+    },
+    [allowFuture]
+  );
 
   return (
-    <Box flexDirection="column">
-      <Box
-        width="100%"
-        height={35}
-        border="regularBlack"
-        borderBottomWidth={0}
-        px="one"
-        justifyContent="space-between"
-      >
-        <ArrowButton size="small" direction="left" onClick={handleBack} />
-        <Typography textStyle="copyXS">
-          {now.format('MMMM') + ' ' + now.format('YYYY')}
-        </Typography>
-        <ArrowButton size="small" onClick={handleNext} />
-      </Box>
+    <Box>
       <Box flexDirection="column" py="onePointSix" border="regularBlack">
-        <Box mb="zeroPointFour">
+        <Box
+          position="absolute"
+          width="100%"
+          top={0}
+          height={CELL_WIDTH_AND_HEIGHT}
+          border="none"
+          borderBottom="regularBlack"
+          px="one"
+          justifyContent="space-between"
+        >
+          <ArrowButton
+            size="small"
+            direction="left"
+            onClick={handleBack}
+            disabled={!allowPrevious}
+          />
+          <Typography textStyle="copyXS">
+            {currentCalendarTime.format('MMMM') +
+              ' ' +
+              currentCalendarTime.format('YYYY')}
+          </Typography>
+          <ArrowButton
+            size="small"
+            onClick={handleNext}
+            disabled={!allowFuture}
+          />
+        </Box>
+        <Box mb="zeroPointFour" mt={CELL_WIDTH_AND_HEIGHT}>
           {WEEKDAYS.map((weekday) => (
-            <Box width={CELL_WIDTH} key={weekday} px="zeroPointFour">
+            <Box width={CELL_WIDTH_AND_HEIGHT} key={weekday} px="zeroPointFour">
               <Typography textAlign="center" textStyle="bodyS">
                 {weekday}
               </Typography>
@@ -77,24 +124,33 @@ const Calendar: React.FC<CalendarProps> = () => {
           ))}
         </Box>
         {calendar.map((week, weekIndex) => (
-          <Box key={week[0][0] + weekIndex} px="zeroPointFour">
+          <Box key={weekIndex} px="zeroPointFour">
             {week.map((dayWithMonth, dayIndex) => {
-              const day = dayWithMonth.split('/')[0];
-              const month = dayWithMonth.split('/')[1].trim();
+              const formatedDayWithMonth = dayWithMonth.format(DATE_FORMAT);
+              const day = dayWithMonth.format(DAY_FORMAT);
+              const month = dayWithMonth.format(MONTH_FORMAT);
+              const isFutureDate = dayWithMonth.isAfter(today);
+              const getCursor = () => {
+                if (allowFuture) return 'pointer';
+                if (!isFutureDate) return 'pointer';
+                return 'not-allowed';
+              };
               return (
                 <Box
-                  width={CELL_WIDTH}
-                  key={day + dayIndex}
+                  width={CELL_WIDTH_AND_HEIGHT}
+                  key={dayIndex}
                   py="zeroPointEight"
                 >
                   <Typography
                     textAlign="center"
                     textStyle={
-                      dayWithMonth === formatedToday ? 'bodySBold' : 'bodyS'
+                      formatedDayWithMonth === formatedToday
+                        ? 'bodySBold'
+                        : 'bodyS'
                     }
-                    color={
-                      month === currentMonthIndex ? 'pureBlack' : 'mediumGrey'
-                    }
+                    color={month === currentMonth ? 'pureBlack' : 'mediumGrey'}
+                    style={{ cursor: getCursor() }}
+                    onClick={() => handleChooseDate(dayWithMonth, isFutureDate)}
                   >
                     {day}
                   </Typography>

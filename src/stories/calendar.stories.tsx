@@ -1,10 +1,21 @@
 import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
-import { Calendar as Cl } from '../components/calendar';
+import { Meta, Story } from '@storybook/react/types-6-0';
+import {
+  Calendar as CalendarComponent,
+  CalendarProps,
+} from '../components/calendar';
 
 export default {
   title: 'Components/Calendar',
-  component: Cl,
+  component: CalendarComponent,
 } as Meta;
 
-export const Calendar: React.FC = () => <Cl />;
+const Template: Story<CalendarProps> = (args) => (
+  <CalendarComponent {...args} />
+);
+
+export const Calendar = Template.bind({});
+Calendar.args = {
+  futureMonthLimit: undefined,
+  previousMonthLimit: undefined,
+};
