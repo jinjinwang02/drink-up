@@ -1,5 +1,7 @@
+import css from '@styled-system/css';
 import React from 'react';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
 import { ArrowButton } from './arrow-button';
 
@@ -21,10 +23,16 @@ const BoxyButton: React.FC<BoxyButtonProps> = ({
       bottom={0}
       width="100%"
       height={BUTTON_HEIGHT}
+      justifyContent={onBack ? 'space-around' : 'center'}
       backgroundColor="pureWhite"
       border="regularBlack"
       px="four"
-      justifyContent={onBack ? 'space-around' : 'center'}
+      transition={theme.transitions.quick}
+      css={css({
+        ' &:hover': {
+          height: BUTTON_HEIGHT + 5,
+        },
+      })}
     >
       {onBack ? (
         <ArrowButton

@@ -17,10 +17,6 @@ const Index: NextPage = () => {
   const router = useRouter();
   const { plantCollection, plantCollectionWithInputs } = usePlantContext();
 
-  const handlePressBack = useCallback(() => {
-    router.push('/find-your-plants');
-  }, [router]);
-
   const handleSubmit = useCallback(async () => {
     await firestore
       .collection('users')
@@ -58,7 +54,7 @@ const Index: NextPage = () => {
           />
         ))}
       </Box>
-      <BoxyButton onBack={handlePressBack} onNext={handleSubmit} />
+      <BoxyButton onBack={() => router.back()} onNext={handleSubmit} />
     </Layout>
   );
 };

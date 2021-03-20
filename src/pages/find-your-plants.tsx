@@ -42,9 +42,13 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
   );
 
   const handlePressNext = useCallback(() => {
-    setPlantCollection(selectedPlants);
-    setPlantCollectionWithInputs(selectedPlants);
-    router.push('/edit-your-plants');
+    if (selectedPlants.length) {
+      setPlantCollection(selectedPlants);
+      setPlantCollectionWithInputs(selectedPlants);
+      router.push('/edit-your-plants');
+    } else {
+      router.push('/add-your-plants');
+    }
   }, [
     router,
     selectedPlants,
