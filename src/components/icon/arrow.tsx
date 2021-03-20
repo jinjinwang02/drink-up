@@ -7,6 +7,7 @@ type Size = 'extraLarge' | 'large' | 'medium' | 'small';
 export interface ArrowProps {
   direction?: 'left' | 'right';
   size?: Size;
+  color?: string;
 }
 
 export const getHeight: (size: Size) => 18 | 12 | 28 | 15 | undefined = (
@@ -26,6 +27,7 @@ export const getHeight: (size: Size) => 18 | 12 | 28 | 15 | undefined = (
 const Arrow: React.FC<ArrowProps> = ({
   direction = 'right',
   size = 'medium',
+  color,
 }: ArrowProps) => {
   const isXS = useMediaQuery();
   const [isHovered, setHovered] = useState<boolean>(false);
@@ -58,7 +60,7 @@ const Arrow: React.FC<ArrowProps> = ({
         viewBox="0 0 75.66 52.81"
         height={getHeight(isXS ? 'medium' : size)}
         fill="none"
-        stroke="#000"
+        stroke={color}
         strokeWidth={size === 'extraLarge' ? 2 : 2.5}
         style={{
           transform: direction === 'left' ? 'rotate(180deg)' : 'rotate(0)',

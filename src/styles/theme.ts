@@ -154,7 +154,7 @@ const textStyles = {
   bodyXS: {
     fontFamily: 'HelveticaNeue-Light, Helvetica Neue',
     fontWeight: 200,
-    fontSize: 8,
+    fontSize: 9,
     lineHeight: '10px',
   },
 };
