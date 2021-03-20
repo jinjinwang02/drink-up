@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { theme } from '../../styles/theme';
+import React from 'react';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
-import { Box } from '../box/box';
 
 type Size = 'extraLarge' | 'large' | 'medium' | 'small';
 export interface ArrowProps {
@@ -30,45 +28,21 @@ const Arrow: React.FC<ArrowProps> = ({
   color,
 }: ArrowProps) => {
   const isXS = useMediaQuery();
-  const [isHovered, setHovered] = useState<boolean>(false);
-  const getTranslate = () => {
-    if (isHovered) {
-      if (size === 'small') {
-        return direction === 'right' ? 'translateX(20%)' : 'translateX(-20%)';
-      } else if (size === 'medium') {
-        return direction === 'right' ? 'translateX(25%)' : 'translateX(-25%)';
-      } else if (size === 'large' || size === 'extraLarge') {
-        return direction === 'right' ? 'translateX(15%)' : 'translateX(-15%)';
-      }
-    }
-    return 'translateX(0)';
-  };
-
   return (
-    <Box
+    <svg
+      version="1.0"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 75.66 52.81"
+      height={getHeight(isXS ? 'medium' : size)}
+      fill="none"
+      stroke={color}
+      strokeWidth={size === 'extraLarge' ? 2 : 2.5}
       style={{
-        transform: getTranslate(),
-        cursor: 'pointer',
+        transform: direction === 'left' ? 'rotate(180deg)' : 'rotate(0)',
       }}
-      onMouseOver={() => setHovered(true)}
-      onMouseOut={() => setHovered(false)}
-      transition={theme.transitions.medium}
     >
-      <svg
-        version="1.0"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 75.66 52.81"
-        height={getHeight(isXS ? 'medium' : size)}
-        fill="none"
-        stroke={color}
-        strokeWidth={size === 'extraLarge' ? 2 : 2.5}
-        style={{
-          transform: direction === 'left' ? 'rotate(180deg)' : 'rotate(0)',
-        }}
-      >
-        <path d="M0.93,26.19l73.42-0.01 M47.04,51.99l27.3-25.81L47.28,0.88" />
-      </svg>
-    </Box>
+      <path d="M0.93,26.19l73.42-0.01 M47.04,51.99l27.3-25.81L47.28,0.88" />
+    </svg>
   );
 };
 

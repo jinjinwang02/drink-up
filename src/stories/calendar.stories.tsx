@@ -18,4 +18,5 @@ export const Calendar = Template.bind({});
 Calendar.args = {
   futureMonthLimit: undefined,
   previousMonthLimit: undefined,
+  onSelectDate: (date) => console.log(date),
 };

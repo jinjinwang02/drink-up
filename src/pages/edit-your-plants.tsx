@@ -10,6 +10,7 @@ import { Layout } from '../components/layout';
 import { PageTitleWithBody } from '../components/page-title-with-body';
 import { BoxyButton } from '../components/button/boxy-button';
 import { useRouter } from 'next/router';
+import { theme } from '../styles/theme';
 
 const Index: NextPage = () => {
   const { user } = useAuthContext();
@@ -38,6 +39,8 @@ const Index: NextPage = () => {
       <PageTitleWithBody title="Edit the details" />
       <Box
         width="100%"
+        height="100%"
+        transition={theme.transitions.medium}
         display="grid"
         gridTemplateColumns={[
           '1fr',

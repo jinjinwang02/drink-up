@@ -93,7 +93,7 @@ const Navbar: React.FC<NavbarProps> = ({ isUserLoggedIn }: NavbarProps) => {
     const icon = document?.getElementById('userIcon');
     // don't perform the function if the target is the icon for the dropdown
     // otherwise menu will be firstly closed by the document event then opened
-    if (event.targeventt === icon || icon?.contains(event.target)) return;
+    if (event.target === icon || icon?.contains(event.target)) return;
     setShowDropdown(false);
   }, []);
 
@@ -102,7 +102,7 @@ const Navbar: React.FC<NavbarProps> = ({ isUserLoggedIn }: NavbarProps) => {
     return () => {
       document.removeEventListener('mouseup', handleCloseDropdown);
     };
-  }, [handleCloseDropdown, setShowDropdown]);
+  }, [handleCloseDropdown]);
   return (
     <Box
       width="100%"

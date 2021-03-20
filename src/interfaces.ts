@@ -6,6 +6,6 @@ export interface Collection {
 
 export interface CollectionWithInputs extends Collection {
   habit?: string;
-  date?: string;
+  lastWateredOn?: string;
   notes?: string;
 }

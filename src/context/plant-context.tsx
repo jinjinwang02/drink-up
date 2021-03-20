@@ -7,8 +7,10 @@ interface PlantContextProviderProps {
 }
 
 interface PlantContextProps {
+  currentCalendar: string;
   plantCollection: Collection[];
   plantCollectionWithInputs: CollectionWithInputs[];
+  setCurrentCalendar: (value: React.SetStateAction<string>) => void;
   setPlantCollection: (value: React.SetStateAction<Collection[]>) => void;
   setPlantCollectionWithInputs: (
     value: React.SetStateAction<CollectionWithInputs[]>
@@ -16,8 +18,10 @@ interface PlantContextProps {
 }
 
 const PlantContext = createContext<PlantContextProps>({
+  currentCalendar: '',
   plantCollection: [],
   plantCollectionWithInputs: [],
+  setCurrentCalendar: () => null,
   setPlantCollection: () => null,
   setPlantCollectionWithInputs: () => null,
 });
@@ -29,11 +33,14 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
   const [plantCollectionWithInputs, setPlantCollectionWithInputs] = useState<
     CollectionWithInputs[]
   >([]);
+  const [currentCalendar, setCurrentCalendar] = useState<string>('');
   return (
     <PlantContext.Provider
       value={{
+        currentCalendar,
         plantCollection,
         plantCollectionWithInputs,
+        setCurrentCalendar,
         setPlantCollection,
         setPlantCollectionWithInputs,
       }}

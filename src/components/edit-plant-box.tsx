@@ -18,7 +18,7 @@ export interface EditPlantBoxProps {
   commonName: string;
   habit?: string;
   notes?: string;
-  date?: string;
+  lastWateredOn?: string;
   imageUrl?: string;
   showControl?: boolean;
 }
@@ -29,7 +29,7 @@ const EditPlantBox: React.FC<EditPlantBoxProps> = ({
   imageUrl = 'http://placeimg.com/640/360/any',
   habit,
   notes,
-  date,
+  lastWateredOn,
   showControl,
 }: EditPlantBoxProps) => (
   <Box flexDirection="column">
@@ -42,7 +42,7 @@ const EditPlantBox: React.FC<EditPlantBoxProps> = ({
         <Box width="100%" mb={[showControl ? 'fourPointFive' : 'zero', 'zero']}>
           <PlantInfo
             id={id}
-            plantInfo={{ commonName, imageUrl, habit, notes, date }}
+            plantInfo={{ commonName, imageUrl, habit, notes, lastWateredOn }}
             inputTextStyle={['bodyXS', 'bodyS', 'bodyS', 'bodyS']}
             labelTextStyle={['copyXS', 'copyS', 'copyS', 'copyS']}
             placeholderSize={theme.textStyles.copyS.fontSize - 1}

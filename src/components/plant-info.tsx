@@ -25,7 +25,7 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
       commonName: plantInfo?.commonName || '',
       habit: plantInfo?.habit || '',
       notes: plantInfo?.notes || '',
-      date: plantInfo?.date || '',
+      lastWateredOn: plantInfo?.lastWateredOn || '',
     },
     validateOnChange: false,
     validateOnBlur: false,
@@ -85,9 +85,9 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
         />
         <InputWithLabel
           id={id}
-          name="date"
+          name="lastWateredOn"
           label="Last watered on:"
-          placeholder="DD/MM/YYYY"
+          placeholder="Click to select date"
           formik={formik}
           inputTextStyle={inputTextStyle}
           labelTextStyle={labelTextStyle}

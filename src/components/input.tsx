@@ -31,6 +31,7 @@ export interface InputProps {
   name: string;
   type?: string;
   label?: string;
+  dateValue?: string;
   inputTextStyle?: string | string[];
   inputTextAlign?: 'left' | 'center';
   placeholder?: string;
@@ -44,6 +45,7 @@ const Input: React.FC<InputProps> = ({
   name,
   type = 'text',
   label,
+  dateValue,
   inputTextAlign = 'center',
   inputTextStyle,
   placeholder,
@@ -55,9 +57,12 @@ const Input: React.FC<InputProps> = ({
     setPlantCollectionWithInputs,
   } = usePlantContext();
   const error = formik.errors[name];
+
   const handleChange = useCallback(
     (e, id) => {
       formik.handleChange(e);
+      // find the plant in edit in collection
+      // and add the input to the plant object
       if (plantCollection.map((el) => el.id).includes(id)) {
         const currentPlant = plantCollectionWithInputs.filter(
           (el) => el.id === id
@@ -82,6 +87,8 @@ const Input: React.FC<InputProps> = ({
         id={id}
         onChange={(e: React.ChangeEvent<any>) => handleChange(e, id)}
         name={name}
+        value={name === 'lastWateredOn' ? dateValue : formik.values[name]}
+        disabled={name === 'lastWateredOn'}
         autoComplete="off"
         type={type}
         placeholder={placeholder}
@@ -97,6 +104,8 @@ const Input: React.FC<InputProps> = ({
           borderBottom: theme.borders.regularBlack,
           borderRadius: 0,
           background: 'transparent',
+          color: 'black',
+          cursor: name === 'lastWateredOn' ? 'pointer' : 'initial',
         }}
       />
       <InputLabel

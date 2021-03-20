@@ -16,7 +16,7 @@ export const EditPlantBox: React.FC = () => (
       commonName="Fiddle-leaf Fig"
       habit="Every week"
       notes="Bright, indirect light"
-      date="01/03/2021"
+      lastWateredOn="01/03/2021"
     />
   </Box>
 );

@@ -11,7 +11,8 @@ dayjs.locale({
 });
 
 const CELL_WIDTH_AND_HEIGHT = '35px';
-const DATE_FORMAT = 'D / M';
+export const DATE_DISPLAY_FORMAT = 'DD/MM/YYYY';
+export const DATE_DIFF_FORMAT = 'YYYY-MM-DD';
 const DAY_FORMAT = 'D';
 const MONTH_FORMAT = 'M';
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -19,15 +20,17 @@ const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 export interface CalendarProps {
   futureMonthLimit?: number;
   previousMonthLimit?: number;
+  onSelectDate: (date: dayjs.Dayjs) => void;
 }
 
 const Calendar: React.FC<CalendarProps> = ({
   futureMonthLimit,
   previousMonthLimit,
+  onSelectDate,
 }: CalendarProps) => {
   const calendar: dayjs.Dayjs[][] = [];
   const today = dayjs();
-  const formatedToday = dayjs().format(DATE_FORMAT);
+  const formatedToday = dayjs().format(DATE_DISPLAY_FORMAT);
   const [currentCalendarTime, setCurrentCalendarTime] = useState<dayjs.Dayjs>(
     today
   );
@@ -73,19 +76,17 @@ const Calendar: React.FC<CalendarProps> = ({
     }
   }, [allowFuture, currentCalendarTime]);
 
-  const handleChooseDate = useCallback(
+  const handleSelectDate = useCallback(
     (date: dayjs.Dayjs, isFutureDate: boolean) => {
-      if (allowFuture) {
-        console.log(date);
-      } else if (!isFutureDate) {
-        console.log(date);
+      if (allowFuture || !isFutureDate) {
+        onSelectDate(date);
       }
     },
-    [allowFuture]
+    [allowFuture, onSelectDate]
   );
 
   return (
-    <Box>
+    <Box backgroundColor="white">
       <Box flexDirection="column" py="onePointSix" border="regularBlack">
         <Box
           position="absolute"
@@ -103,7 +104,7 @@ const Calendar: React.FC<CalendarProps> = ({
             onClick={handleBack}
             disabled={!allowPrevious}
           />
-          <Typography textStyle="copyXS">
+          <Typography textStyle="copyS">
             {currentCalendarTime.format('MMMM') +
               ' ' +
               currentCalendarTime.format('YYYY')}
@@ -126,7 +127,9 @@ const Calendar: React.FC<CalendarProps> = ({
         {calendar.map((week, weekIndex) => (
           <Box key={weekIndex} px="zeroPointFour">
             {week.map((dayWithMonth, dayIndex) => {
-              const formatedDayWithMonth = dayWithMonth.format(DATE_FORMAT);
+              const formatedDayWithMonth = dayWithMonth.format(
+                DATE_DISPLAY_FORMAT
+              );
               const day = dayWithMonth.format(DAY_FORMAT);
               const month = dayWithMonth.format(MONTH_FORMAT);
               const isFutureDate = dayWithMonth.isAfter(today);
@@ -150,7 +153,7 @@ const Calendar: React.FC<CalendarProps> = ({
                     }
                     color={month === currentMonth ? 'pureBlack' : 'mediumGrey'}
                     style={{ cursor: getCursor() }}
-                    onClick={() => handleChooseDate(dayWithMonth, isFutureDate)}
+                    onClick={() => handleSelectDate(dayWithMonth, isFutureDate)}
                   >
                     {day}
                   </Typography>
