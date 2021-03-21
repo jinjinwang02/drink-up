@@ -111,7 +111,7 @@ const InputWithLabel: React.FC<InputWithLabelProps> = ({
             <Box
               id={`calendar-${id}`}
               position="absolute"
-              zIndex={99}
+              zIndex="calendar"
               top="three"
               left={-theme.space.onePointSix}
               style={{

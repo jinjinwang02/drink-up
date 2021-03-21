@@ -182,6 +182,12 @@ const space = {
   eight: 80,
   ten: 100,
   twelve: 120,
+  calendarHeight: 255,
+};
+
+const zIndices = {
+  calendar: 9,
+  boxyButton: 99,
 };
 
 const breakpoints = ['576px', '768px', '1200px'];
@@ -221,6 +227,7 @@ const theme = {
   textStyles,
   colors,
   space,
+  zIndices,
   device,
   breakpoints,
   borders,

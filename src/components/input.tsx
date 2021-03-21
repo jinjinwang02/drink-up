@@ -58,9 +58,8 @@ const Input: React.FC<InputProps> = ({
   } = usePlantContext();
   const error = formik.errors[name];
 
-  const handleChange = useCallback(
-    (e, id) => {
-      formik.handleChange(e);
+  const handleBlur = useCallback(
+    (id) => {
       // find the plant in edit in collection
       // and add the input to the plant object
       if (plantCollection.map((el) => el.id).includes(id)) {
@@ -69,23 +68,24 @@ const Input: React.FC<InputProps> = ({
         )[0];
         setPlantCollectionWithInputs((prev) => [
           ...prev.filter((el) => el !== currentPlant),
-          { ...currentPlant, [name]: e.target.value },
+          { ...currentPlant, [name]: formik.values[name] },
         ]);
       }
     },
     [
-      formik,
+      formik.values,
       name,
       plantCollection,
       plantCollectionWithInputs,
       setPlantCollectionWithInputs,
     ]
   );
+
   return (
     <Box flexDirection="column" width="100%" position="relative">
       <InputField
         id={id}
-        onChange={(e: React.ChangeEvent<any>) => handleChange(e, id)}
+        onBlur={() => handleBlur(id)}
         name={name}
         value={name === 'lastWateredOn' ? dateValue : formik.values[name]}
         disabled={name === 'lastWateredOn'}

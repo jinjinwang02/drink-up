@@ -16,7 +16,11 @@ const Index: NextPage = () => {
   const { user } = useAuthContext();
   const { firestore, firestoreFieldValue } = firebaseClient();
   const router = useRouter();
-  const { plantCollection, plantCollectionWithInputs } = usePlantContext();
+  const {
+    currentCalendar,
+    plantCollection,
+    plantCollectionWithInputs,
+  } = usePlantContext();
 
   const handleSubmit = useCallback(async () => {
     await firestore
@@ -39,9 +43,9 @@ const Index: NextPage = () => {
       <PageTitleWithBody title="Edit the details" />
       <Box
         width="100%"
-        height="100%"
         transition={theme.transitions.medium}
         display="grid"
+        mb={currentCalendar ? 'calendarHeight' : 0}
         gridTemplateColumns={[
           '1fr',
           `repeat(auto-fill, minmax(${BOX_WIDTH_MD}px, 1fr))`,

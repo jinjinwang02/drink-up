@@ -27,6 +27,7 @@ const BoxyButton: React.FC<BoxyButtonProps> = ({
       backgroundColor="pureWhite"
       border="regularBlack"
       px="four"
+      zIndex="boxyButton"
       transition={theme.transitions.quick}
       css={css({
         ' &:hover': {
