@@ -31,7 +31,7 @@ const BoxWithImage: React.FC<BoxWithImageProps> = ({
       pb={invertible ? ['zero', 'onePointSix'] : 'zeroPointSix'}
       px={[invertible ? 'zero' : 'onePointTwo', 'onePointSix']}
     >
-      <Image url={imageUrl || ''} alt={alt} />
+      <Image url={imageUrl || '/image/default-plant-image.png'} alt={alt} />
       {imageText ? (
         <Typography
           textStyle={['copyS', 'copyL']}

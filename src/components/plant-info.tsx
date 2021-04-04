@@ -30,9 +30,7 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
     },
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: () => undefined,
   });
 
   return (
@@ -87,24 +85,8 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
               name="schedule"
               formik={formik}
               startText="Every"
-              endText="Days"
+              endText="Day(s)"
               placeholder="e.g. 7"
-              inputTextAlign="left"
-              placeholderSize={placeholderSize}
-            />
-          }
-        />
-        <InputWithLabel
-          plantId={plantId}
-          name="notes"
-          label="You notes:"
-          labelTextStyle={labelTextStyle}
-          Input={
-            <Input
-              plantId={plantId}
-              name="notes"
-              formik={formik}
-              placeholder="e.g. likes soil to be gently moist"
               inputTextAlign="left"
               placeholderSize={placeholderSize}
             />
@@ -121,6 +103,22 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
               name="lastWateredOn"
               formik={formik}
               placeholder="Click to select date"
+              placeholderSize={placeholderSize}
+            />
+          }
+        />
+        <InputWithLabel
+          plantId={plantId}
+          name="notes"
+          label="You notes:"
+          labelTextStyle={labelTextStyle}
+          Input={
+            <Input
+              plantId={plantId}
+              name="notes"
+              formik={formik}
+              placeholder="e.g. likes soil to be gently moist"
+              inputTextAlign="left"
               placeholderSize={placeholderSize}
             />
           }

@@ -6,8 +6,6 @@ export const getPlantInputErrorMessage: (
   switch (field) {
     case 'commonName':
       return 'Please give your plant a name.';
-    case 'imageUrl':
-      return 'Image link is Required.';
     case 'lastWateredOn':
       return 'Please choose a date to help us calculate the next watering date.';
     case 'schedule':

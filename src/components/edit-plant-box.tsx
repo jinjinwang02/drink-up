@@ -18,9 +18,9 @@ const TOP_BOX_HEIGHT_XS = 297;
 export interface EditPlantBoxProps {
   id: string;
   commonName: string;
-  imageUrl: string;
   schedule: string;
   lastWateredOn: string;
+  imageUrl?: string;
   notes?: string;
   showControl?: boolean;
   onCancel?: () => void;

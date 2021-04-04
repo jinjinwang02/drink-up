@@ -11,7 +11,6 @@ export default {
   component: EditPlantBoxComponent,
   args: {
     showControl: true,
-    imageUrl: 'http://placeimg.com/640/360/any',
     id: 'filleLeafFig',
     commonName: 'Fiddle-leaf Fig',
     schedule: '7',

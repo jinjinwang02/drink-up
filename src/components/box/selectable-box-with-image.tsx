@@ -14,7 +14,7 @@ const TOP_BOX_HEIGHT_MD = 212;
 const TOP_BOX_HEIGHT_XS = 272;
 
 export interface SelectableBoxWithImageProps {
-  imageUrl: string;
+  imageUrl?: string;
   alt?: string;
   selected?: boolean;
   bottomText: string;
@@ -42,7 +42,7 @@ const SelectableBoxWithImage: React.FC<SelectableBoxWithImageProps> = ({
         borderBottomWidth={0}
         p={['onePointSix', 'onePointTwo']}
       >
-        <Image url={imageUrl} alt={alt} />
+        <Image url={imageUrl || '/image/default-plant-image.png'} alt={alt} />
         <Box
           height="100%"
           width="100%"

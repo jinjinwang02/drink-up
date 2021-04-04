@@ -8,7 +8,6 @@ import { getPlantInputErrorMessage } from '../utils';
 const REQUIRED_FIELDS: (keyof CollectionWithInputs)[] = [
   'id',
   'commonName',
-  'imageUrl',
   'lastWateredOn',
   'schedule',
 ];

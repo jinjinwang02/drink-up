@@ -3,7 +3,7 @@ import { BoxProps } from './components/box/box';
 export interface Collection {
   id: string;
   commonName: string;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 export interface CollectionWithInputs extends Collection {
