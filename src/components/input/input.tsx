@@ -87,7 +87,6 @@ const Input: React.FC<InputProps> = ({
         type={type}
         placeholder={placeholder}
         placeholdersize={placeholderSize}
-        textStyle="h1"
         style={{
           width: '100%',
           padding: theme.space.zeroPointFour,

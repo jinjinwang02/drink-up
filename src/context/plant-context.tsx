@@ -86,7 +86,10 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
             // add new plants to the array
             // without creating duplicates
             plants: firestoreFieldValue.arrayUnion(
-              ...plantCollectionWithInputs
+              ...plantCollectionWithInputs.map((el) => ({
+                ...el,
+                createdAt: new Date(),
+              }))
             ),
           });
       }

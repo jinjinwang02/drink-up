@@ -1,9 +1,8 @@
-import dayjs from 'dayjs';
 import React, { useCallback, useEffect } from 'react';
 import { usePlantContext } from '../../context/plant-context';
 import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
-import { Calendar, DATE_DISPLAY_FORMAT, DATE_DIFF_FORMAT } from '../calendar';
+import { Calendar } from '../calendar';
 import { Input, InputProps } from '../input/input';
 
 export interface CalendarInputProps extends Omit<InputProps, 'plantId'> {
@@ -55,8 +54,8 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
   }, [handleCloseCalendar]);
 
   const handleSelectDate = useCallback(
-    (lastWateredOn: dayjs.Dayjs) => {
-      formik.setFieldValue(name, lastWateredOn.format(DATE_DISPLAY_FORMAT));
+    (lastWateredOn: string) => {
+      formik.setFieldValue(name, lastWateredOn);
       setCurrentCalendarId(null);
       // find the plant in edit in collection
       // and add the input to the plant object
@@ -68,7 +67,7 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
           ...prev.filter((el) => el !== currentPlant),
           {
             ...currentPlant,
-            lastWateredOn: lastWateredOn.format(DATE_DIFF_FORMAT),
+            lastWateredOn,
           },
         ]);
       }
@@ -103,11 +102,11 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
         id={`calendar-${plantId}`}
         position="absolute"
         zIndex="calendar"
-        top="three"
-        left={-theme.space.onePointSix}
+        top={-135}
+        left={0}
         style={{
           transform:
-            currentCalendarId === plantId ? 'translateY(0)' : 'translateY(-5%)',
+            currentCalendarId === plantId ? 'translateY(0)' : 'translateY(5%)',
           opacity: currentCalendarId === plantId ? 1 : 0,
           visibility: currentCalendarId === plantId ? 'visible' : 'hidden',
         }}

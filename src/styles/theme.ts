@@ -1,59 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`
-     *,
-     *::after,
-     *::before {
-      margin: 0;
-      padding: 0;
-      box-sizing: inherit;
-     }
-
-    body {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      display: flex;
-    }
-
-    /* Chrome, Safari, Edge, Opera */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* Firefox */
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-     
-    html,
-    body,
-    input,
-    ::placeholder {
-      font: 14px 'HelveticaNeue-Light', 'Helvetica Neue Light',
-        'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      font-weight: 200;
-    }
-
-    h1, h2, h3, h4 {
-      margin: 0;
-      padding: 0;
-    }
-
-    a,
-    a:active,
-    a:visited,
-    a:focus,
-    a:hover {
-      text-decoration: none;
-      color: inherit;
-    }
-
-`;
-
 const textStyles = {
   h1Brand: {
     fontFamily: 'Altero-Regular',
@@ -220,6 +166,7 @@ const colors = {
 const borders = {
   regularBlack: `1px solid ${colors.pureBlack}`,
   inactiveGrey: `1px solid ${colors.lightGrey}`,
+  mediumGrey: `1px solid ${colors.mediumGrey}`,
   transparent: '1px solid transparent',
 };
 
@@ -239,6 +186,63 @@ const theme = {
   borders,
   transitions,
 };
+
+const GlobalStyle = createGlobalStyle`
+     *,
+     *::after,
+     *::before {
+      margin: 0;
+      padding: 0;
+      box-sizing: inherit;
+     }
+
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      display: flex;
+    }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+     
+    html,
+    body,
+    input,
+    ::placeholder {
+      font: 14px 'HelveticaNeue-Light', 'Helvetica Neue Light',
+        'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      font-weight: 200;
+    }
+
+    h1, h2, h3, h4 {
+      margin: 0;
+      padding: 0;
+    }
+
+    a,
+    a:active,
+    a:visited,
+    a:focus,
+    a:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    svg line {
+      transition: ${transitions.medium};
+    }
+`;
 
 export type Theme = typeof theme;
 export { theme, GlobalStyle };

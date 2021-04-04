@@ -12,11 +12,7 @@ import { theme } from '../styles/theme';
 
 const Index: NextPage = () => {
   const router = useRouter();
-  const {
-    currentCalendarId,
-    plantCollection,
-    handleEditPlantSubmit,
-  } = usePlantContext();
+  const { plantCollection, handleEditPlantSubmit } = usePlantContext();
   return (
     <Layout mb={['four', 'eight', 'ten']}>
       <NextSeo
@@ -29,12 +25,12 @@ const Index: NextPage = () => {
         width="100%"
         transition={theme.transitions.medium}
         display="grid"
-        mb={currentCalendarId ? 'calendarHeight' : 0}
         gridTemplateColumns={[
           '1fr',
           `repeat(auto-fill, minmax(${BOX_WIDTH_MD}px, 1fr))`,
         ]}
         gridRowGap="four"
+        alignItems="flex-start"
       >
         {plantCollection.map((plant) => {
           const { id, imageUrl, commonName } = plant;

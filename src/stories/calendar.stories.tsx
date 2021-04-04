@@ -4,6 +4,7 @@ import {
   Calendar as CalendarComponent,
   CalendarProps,
 } from '../components/calendar';
+import { Box } from '../components/box/box';
 
 export default {
   title: 'Components/Calendar',
@@ -16,5 +17,7 @@ export default {
 } as Meta;
 
 export const Calendar: Story<CalendarProps> = (args) => (
-  <CalendarComponent {...args} />
+  <Box>
+    <CalendarComponent {...args} />
+  </Box>
 );

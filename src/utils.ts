@@ -22,3 +22,15 @@ export const blockInvalidChar: (e: KeyboardEvent, type: string) => void = (
   if (type === 'number' && ['e', 'E', '+', '-'].includes(e.key))
     e.preventDefault();
 };
+
+export const transformDateForDiff: (date: string) => string = (
+  date: string
+) => {
+  // date stored in Firebase is in format DD/MM/YYYY
+  // for diff, it needs to be in format YYYY-MM-DD
+  return date.split('/').reverse().join('-');
+};
+
+export const generateId: () => string = () =>
+  Math.random().toString(36).substring(2, 15) +
+  Math.random().toString(36).substring(2, 15);

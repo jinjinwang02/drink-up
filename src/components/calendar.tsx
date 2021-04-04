@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import dayjs from 'dayjs';
 import en from 'dayjs/locale/en';
+import styled from 'styled-components';
 import { Box } from './box/box';
 import { Typography } from './typography';
 import { ArrowButton } from './button/arrow-button';
@@ -12,6 +13,20 @@ dayjs.locale({
   weekStart: 1,
 });
 
+const StyledBox = styled(Box)`
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    border: ${theme.borders.mediumGrey};
+    background-color: ${theme.colors.pureWhite};
+    width: ${theme.space.calendarHeight}px;
+    height: ${theme.space.calendarHeight}px;
+    top: 5px;
+    left: -10px;
+  }
+`;
+
 const CELL_WIDTH_AND_HEIGHT = '35px';
 export const DATE_DISPLAY_FORMAT = 'DD/MM/YYYY';
 export const DATE_DIFF_FORMAT = 'YYYY-MM-DD';
@@ -22,7 +37,7 @@ const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 export interface CalendarProps {
   futureMonthLimit?: number;
   previousMonthLimit?: number;
-  onSelectDate: (date: dayjs.Dayjs) => void;
+  onSelectDate: (date: string) => void;
 }
 
 const Calendar: React.FC<CalendarProps> = ({
@@ -81,23 +96,26 @@ const Calendar: React.FC<CalendarProps> = ({
   const handleSelectDate = useCallback(
     (date: dayjs.Dayjs, isFutureDate: boolean) => {
       if (allowFuture || !isFutureDate) {
-        onSelectDate(date);
+        onSelectDate(date.format(DATE_DISPLAY_FORMAT));
       }
     },
     [allowFuture, onSelectDate]
   );
 
   return (
-    <Box backgroundColor="white">
-      <Box flexDirection="column" py="onePointSix" border="regularBlack">
+    <Box backgroundColor="pureWhite">
+      <StyledBox
+        flexDirection="column"
+        pb="one"
+        border="regularBlack"
+        position="relative"
+      >
         <Box
-          position="absolute"
           width="100%"
-          top={0}
-          height={CELL_WIDTH_AND_HEIGHT}
           border="none"
           borderBottom="regularBlack"
           px="one"
+          py="zeroPointEight"
           justifyContent="space-between"
         >
           <ArrowButton
@@ -115,7 +133,7 @@ const Calendar: React.FC<CalendarProps> = ({
             disabled={!allowFuture}
           />
         </Box>
-        <Box mb="zeroPointFour" mt={CELL_WIDTH_AND_HEIGHT}>
+        <Box mb="zeroPointFour" pt="onePointSix">
           {WEEKDAYS.map((weekday) => (
             <Box width={CELL_WIDTH_AND_HEIGHT} key={weekday} px="zeroPointFour">
               <Typography textAlign="center" textStyle="bodyS">
@@ -170,7 +188,7 @@ const Calendar: React.FC<CalendarProps> = ({
             })}
           </Box>
         ))}
-      </Box>
+      </StyledBox>
     </Box>
   );
 };
