@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { usePlantContext } from '../../context/plant-context';
 import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
@@ -18,7 +18,6 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
   inputTextStyle,
   placeholderSize,
 }: CalendarInputProps) => {
-  const [dateValue, setDateValue] = useState<string>('');
   const {
     currentCalendarId,
     plantCollection,
@@ -58,7 +57,7 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
 
   const handleSelectDate = useCallback(
     (lastWateredOn: dayjs.Dayjs) => {
-      setDateValue(lastWateredOn.format(DATE_DISPLAY_FORMAT));
+      formik.setFieldValue(name, lastWateredOn.format(DATE_DISPLAY_FORMAT));
       setCurrentCalendarId(null);
       // find the plant in edit in collection
       // and add the input to the plant object
@@ -76,9 +75,11 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
       }
     },
     [
+      formik,
+      name,
+      setCurrentCalendarId,
       plantCollection,
       plantId,
-      setCurrentCalendarId,
       plantCollectionWithInputs,
       setPlantCollectionWithInputs,
     ]
@@ -94,7 +95,6 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
           plantId={plantId}
           name={name}
           formik={formik}
-          dateValue={dateValue}
           inputTextAlign="left"
           placeholder={placeholder}
           placeholderSize={placeholderSize}

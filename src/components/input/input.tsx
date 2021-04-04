@@ -1,4 +1,4 @@
-import { Field } from 'formik';
+import { Field, FormikContextType } from 'formik';
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { usePlantContext } from '../../context/plant-context';
@@ -26,12 +26,11 @@ const InputLabel = styled(Box)`
 `;
 
 export interface InputProps {
-  formik: any;
+  formik: FormikContextType<any>;
   plantId?: string;
   name: string;
   type?: string;
   label?: string;
-  dateValue?: string;
   inputTextStyle?: string | string[];
   inputTextAlign?: 'left' | 'center';
   placeholder?: string;
@@ -44,7 +43,6 @@ const Input: React.FC<InputProps> = ({
   name,
   type = 'text',
   label,
-  dateValue,
   inputTextAlign = 'center',
   inputTextStyle,
   placeholder,
@@ -84,7 +82,6 @@ const Input: React.FC<InputProps> = ({
       <InputField
         onBlur={handleBlur}
         name={name}
-        value={name === 'lastWateredOn' ? dateValue : formik.values[name]}
         disabled={name === 'lastWateredOn'}
         autoComplete="off"
         type={type}
