@@ -19,7 +19,7 @@ export interface EditPlantBoxProps {
   id: string;
   commonName: string;
   imageUrl: string;
-  habit: string;
+  schedule: string;
   lastWateredOn: string;
   notes?: string;
   showControl?: boolean;
@@ -32,7 +32,7 @@ const EditPlantBox: React.FC<EditPlantBoxProps> = ({
   id,
   commonName,
   imageUrl,
-  habit,
+  schedule,
   notes,
   lastWateredOn,
   showControl,
@@ -57,9 +57,13 @@ const EditPlantBox: React.FC<EditPlantBoxProps> = ({
           >
             <PlantInfo
               plantId={id}
-              plantInfo={{ commonName, imageUrl, habit, notes, lastWateredOn }}
-              inputTextStyle={['bodyXS', 'bodyS', 'bodyS', 'bodyS']}
-              labelTextStyle={['copyXS', 'copyS', 'copyS', 'copyS']}
+              plantInfo={{
+                commonName,
+                imageUrl,
+                schedule,
+                notes,
+                lastWateredOn,
+              }}
               placeholderSize={theme.textStyles.copyS.fontSize - 1}
             />
           </Box>
@@ -81,7 +85,7 @@ const EditPlantBox: React.FC<EditPlantBoxProps> = ({
       <Box width="100%" flexDirection="column" mt="one" alignItems="flex-start">
         {Array.isArray(errorFields) &&
           errorFields?.map((el) => (
-            <Typography key={el.name} textStyle="bodyM" color="red">
+            <Typography key={el.name} textStyle="bodyM" color="warningRed">
               {el.errorMessage}
             </Typography>
           ))}

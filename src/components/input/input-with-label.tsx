@@ -17,17 +17,21 @@ const InputWithLabel: React.FC<InputWithLabelProps> = ({
   name,
   label,
   Input,
-  labelTextStyle = ['copyS', 'copyM', 'copyM', 'copyM'],
+  labelTextStyle = ['copyS', 'copyM'],
 }: InputWithLabelProps) => {
   const { inputErrors } = usePlantContext();
-  const errorFields = inputErrors && inputErrors[plantId].map((el) => el.name);
+  const errorFields =
+    inputErrors &&
+    inputErrors[plantId] &&
+    inputErrors[plantId].map((el) => el.name);
+
   return (
     <Box my={['zeroPointEight', 'one']} width="100%">
-      <Box flex={3} flexDirection="column" alignItems="flex-start">
+      <Box flex={2} flexDirection="column" alignItems="flex-start">
         <Typography
           color={
             errorFields?.includes(name as keyof CollectionWithInputs)
-              ? 'red'
+              ? 'warningRed'
               : 'black'
           }
           textStyle={labelTextStyle}
@@ -35,7 +39,7 @@ const InputWithLabel: React.FC<InputWithLabelProps> = ({
           {label}
         </Typography>
       </Box>
-      <Box flex={5}>{Input}</Box>
+      <Box flex={3}>{Input}</Box>
     </Box>
   );
 };

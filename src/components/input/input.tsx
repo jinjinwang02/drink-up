@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { usePlantContext } from '../../context/plant-context';
 import { theme } from '../../styles/theme';
+import { blockInvalidChar } from '../../utils';
 import { Box } from '../box/box';
 import { Typography } from '../typography';
 
@@ -31,7 +32,6 @@ export interface InputProps {
   name: string;
   type?: string;
   label?: string;
-  inputTextStyle?: string | string[];
   inputTextAlign?: 'left' | 'center';
   placeholder?: string;
   placeholderSize?: number;
@@ -44,7 +44,6 @@ const Input: React.FC<InputProps> = ({
   type = 'text',
   label,
   inputTextAlign = 'center',
-  inputTextStyle,
   placeholder,
   placeholderSize,
 }: InputProps) => {
@@ -81,13 +80,14 @@ const Input: React.FC<InputProps> = ({
     <Box flexDirection="column" width="100%" position="relative">
       <InputField
         onBlur={handleBlur}
+        onKeyDown={(e: KeyboardEvent) => blockInvalidChar(e, type)}
         name={name}
         disabled={name === 'lastWateredOn'}
         autoComplete="off"
         type={type}
         placeholder={placeholder}
         placeholdersize={placeholderSize}
-        textstyle={inputTextStyle}
+        textStyle="h1"
         style={{
           width: '100%',
           padding: theme.space.zeroPointFour,

@@ -16,11 +16,16 @@ const GlobalStyle = createGlobalStyle`
       display: flex;
     }
 
-    ::selection,
-    ::-webkit-selection,
-    ::-moz-selection {
-      color: white;
-      background: rgba(135,189,209,1);
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
     }
      
     html,
@@ -209,7 +214,7 @@ const colors = {
   lightGrey: 'rgba(227,227,227,1)',
   lightestGrey: 'rgba(237,237,237,1)',
   pastelBlue: 'rgba(135,189,209,1)',
-  warningRed: 'rgba(201, 10, 16, 1)',
+  warningRed: 'rgba(229, 29, 29, 1)',
 };
 
 const borders = {

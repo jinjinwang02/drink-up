@@ -57,19 +57,17 @@ const Typography = forwardRef(
     ref
   ) => {
     const [currentIndex, setCurrentIndex] = useState<number>(2);
+
     useEffect(() => {
-      if (window.matchMedia(`(max-width: ${theme.breakpoints[0]})`).matches) {
+      if (window.matchMedia(`${theme.device.mobile}`).matches) {
         setCurrentIndex(0);
-      } else if (
-        window.matchMedia(`(max-width: ${theme.breakpoints[1]})`).matches
-      ) {
+      } else if (window.matchMedia(`${theme.device.tablet}`).matches) {
         setCurrentIndex(1);
-      } else if (
-        window.matchMedia(`(max-width: ${theme.breakpoints[2]})`).matches
-      ) {
+      } else if (window.matchMedia(`${theme.device.landscape}`).matches) {
         setCurrentIndex(2);
       } else if (
-        window.matchMedia(`(min-width: ${theme.breakpoints[2]})`).matches
+        window.matchMedia(`${theme.device.desktop}`).matches ||
+        window.matchMedia(`${theme.device.desktopL}`).matches
       ) {
         setCurrentIndex(3);
       }
@@ -102,7 +100,11 @@ const Typography = forwardRef(
       </StyledText>
     ) : (
       <StyledText ref={ref} color={color} {...rest}>
-        {setHTMLTag(textStyle[currentIndex])}
+        {setHTMLTag(
+          textStyle[currentIndex]
+            ? textStyle[currentIndex]
+            : textStyle[textStyle.length - 1]
+        )}
       </StyledText>
     );
   }

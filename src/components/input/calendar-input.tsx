@@ -15,7 +15,6 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
   plantId,
   name,
   placeholder,
-  inputTextStyle,
   placeholderSize,
 }: CalendarInputProps) => {
   const {
@@ -98,7 +97,6 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
           inputTextAlign="left"
           placeholder={placeholder}
           placeholderSize={placeholderSize}
-          inputTextStyle={inputTextStyle}
         />
       </Box>
       <Box

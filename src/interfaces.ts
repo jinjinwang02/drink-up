@@ -7,7 +7,7 @@ export interface Collection {
 }
 
 export interface CollectionWithInputs extends Collection {
-  habit?: string;
+  schedule?: string;
   lastWateredOn?: string;
   notes?: string;
 }

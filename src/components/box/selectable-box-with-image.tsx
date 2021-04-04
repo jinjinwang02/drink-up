@@ -60,9 +60,7 @@ const SelectableBoxWithImage: React.FC<SelectableBoxWithImageProps> = ({
         border={selected ? 'regularBlack' : 'inactiveGrey'}
         py="zeroPointFour"
       >
-        <Typography textStyle={['copyXL', 'copyM', 'copyM', 'copyM']}>
-          {bottomText}
-        </Typography>
+        <Typography textStyle={['copyXL', 'copyM']}>{bottomText}</Typography>
       </Box>
     </Box>
   );

@@ -10,7 +10,7 @@ const REQUIRED_FIELDS: (keyof CollectionWithInputs)[] = [
   'commonName',
   'imageUrl',
   'lastWateredOn',
-  'habit',
+  'schedule',
 ];
 
 interface PlantContextProviderProps {
@@ -24,6 +24,7 @@ interface PlantContextProps {
   inputErrors: {
     [id: string]: { name: keyof CollectionWithInputs; errorMessage: string }[];
   } | null;
+  validateInputs: (inputs: CollectionWithInputs[]) => void;
   setCurrentCalendarId: (value: React.SetStateAction<string | null>) => void;
   setPlantCollection: (value: React.SetStateAction<Collection[]>) => void;
   setPlantCollectionWithInputs: (
@@ -37,6 +38,7 @@ const PlantContext = createContext<PlantContextProps>({
   plantCollection: [],
   plantCollectionWithInputs: [],
   inputErrors: null,
+  validateInputs: () => null,
   setCurrentCalendarId: () => null,
   setPlantCollection: () => null,
   setPlantCollectionWithInputs: () => null,
@@ -48,7 +50,6 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
 }: PlantContextProviderProps) => {
   const { user } = useAuthContext();
   const { firestore, firestoreFieldValue } = firebaseClient();
-
   const [plantCollection, setPlantCollection] = useState<Collection[]>([]);
   const [plantCollectionWithInputs, setPlantCollectionWithInputs] = useState<
     CollectionWithInputs[]
@@ -60,43 +61,43 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
     [id: string]: { name: keyof CollectionWithInputs; errorMessage: string }[];
   } | null>(null);
 
-  const validateInputs = useCallback((inputs: CollectionWithInputs[]) => {
-    for (const input of inputs) {
-      for (const field of REQUIRED_FIELDS) {
-        if (!input[field]) {
-          setInputErrors((prev: any) => ({
-            ...prev,
-            [input.id]: [
-              ...(prev && prev[input.id] ? prev[input.id] : []),
-              { name: field, errorMessage: getPlantInputErrorMessage(field) },
-            ],
-          }));
+  const validateInputs = useCallback(
+    async (inputs: CollectionWithInputs[]) => {
+      let errorCount = 0;
+      for (const input of inputs) {
+        for (const field of REQUIRED_FIELDS) {
+          if (!input[field]) {
+            errorCount += 1;
+            setInputErrors((prev: any) => ({
+              ...prev,
+              [input.id]: [
+                ...(prev && prev[input.id] ? prev[input.id] : []),
+                { name: field, errorMessage: getPlantInputErrorMessage(field) },
+              ],
+            }));
+          }
         }
       }
-    }
-  }, []);
+      if (!errorCount) {
+        await firestore
+          .collection('users')
+          .doc(user?.uid)
+          .update({
+            // add new plants to the array
+            // without creating duplicates
+            plants: firestoreFieldValue.arrayUnion(
+              ...plantCollectionWithInputs
+            ),
+          });
+      }
+    },
+    [firestore, firestoreFieldValue, plantCollectionWithInputs, user?.uid]
+  );
 
   const handleEditPlantSubmit = useCallback(async () => {
     setInputErrors(null);
     validateInputs(plantCollectionWithInputs);
-    if (inputErrors) return;
-
-    await firestore
-      .collection('users')
-      .doc(user?.uid)
-      .update({
-        // add new plants to the array
-        // without creating duplicates
-        plants: firestoreFieldValue.arrayUnion(...plantCollectionWithInputs),
-      });
-  }, [
-    firestore,
-    firestoreFieldValue,
-    inputErrors,
-    plantCollectionWithInputs,
-    user?.uid,
-    validateInputs,
-  ]);
+  }, [plantCollectionWithInputs, validateInputs]);
 
   return (
     <PlantContext.Provider
@@ -105,6 +106,7 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
         plantCollection,
         plantCollectionWithInputs,
         inputErrors,
+        validateInputs,
         setCurrentCalendarId,
         setPlantCollection,
         setPlantCollectionWithInputs,

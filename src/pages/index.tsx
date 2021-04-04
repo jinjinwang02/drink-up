@@ -51,7 +51,7 @@ const Index: React.FC = () => {
         >
           <Box mb="zeroPointFour">
             <Typography
-              textStyle={['h2Brand', 'h2Brand', 'h1Brand', 'h1Brand']}
+              textStyle={['h2Brand', 'h2Brand', 'h1Brand']}
               mr={['two', 'three']}
             >
               DRINK UP

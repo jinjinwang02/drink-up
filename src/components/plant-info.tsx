@@ -5,18 +5,17 @@ import { Box } from './box/box';
 import { CalendarInput } from './input/calendar-input';
 import { Input } from './input/input';
 import { InputWithLabel } from './input/input-with-label';
+import { NumberInput } from './input/number-input';
 
 export interface PlantInfoProps {
   plantId: string;
   labelTextStyle?: string | string[];
-  inputTextStyle?: string | string[];
   placeholderSize?: number;
   plantInfo?: Omit<CollectionWithInputs, 'id'>;
 }
 
 const PlantInfo: React.FC<PlantInfoProps> = ({
   plantId,
-  inputTextStyle,
   labelTextStyle,
   plantInfo,
   placeholderSize,
@@ -25,7 +24,7 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
     initialValues: {
       imageUrl: plantInfo?.imageUrl || '',
       commonName: plantInfo?.commonName || '',
-      habit: plantInfo?.habit || '',
+      schedule: plantInfo?.schedule || '',
       notes: plantInfo?.notes || '',
       lastWateredOn: plantInfo?.lastWateredOn || '',
     },
@@ -58,7 +57,6 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
               inputTextAlign="left"
               placeholder="https://"
               placeholderSize={placeholderSize}
-              inputTextStyle={inputTextStyle}
             />
           }
         />
@@ -75,24 +73,24 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
               placeholder="e.g. Devils ivy"
               inputTextAlign="left"
               placeholderSize={placeholderSize}
-              inputTextStyle={inputTextStyle}
             />
           }
         />
         <InputWithLabel
           plantId={plantId}
-          name="habit"
-          label="Watering habit:"
+          name="schedule"
+          label="Schedule:"
           labelTextStyle={labelTextStyle}
           Input={
-            <Input
+            <NumberInput
               plantId={plantId}
-              name="habit"
+              name="schedule"
               formik={formik}
+              startText="Every"
+              endText="Days"
               placeholder="e.g. 7"
               inputTextAlign="left"
               placeholderSize={placeholderSize}
-              inputTextStyle={inputTextStyle}
             />
           }
         />
@@ -109,7 +107,6 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
               placeholder="e.g. likes soil to be gently moist"
               inputTextAlign="left"
               placeholderSize={placeholderSize}
-              inputTextStyle={inputTextStyle}
             />
           }
         />
@@ -124,9 +121,7 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
               name="lastWateredOn"
               formik={formik}
               placeholder="Click to select date"
-              inputTextAlign="left"
               placeholderSize={placeholderSize}
-              inputTextStyle={inputTextStyle}
             />
           }
         />

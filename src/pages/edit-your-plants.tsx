@@ -44,7 +44,7 @@ const Index: NextPage = () => {
                 id={id}
                 imageUrl={imageUrl}
                 commonName={commonName}
-                habit=""
+                schedule=""
                 lastWateredOn=""
               />
             </Box>

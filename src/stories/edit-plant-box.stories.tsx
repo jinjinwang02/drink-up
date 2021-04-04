@@ -14,7 +14,7 @@ export default {
     imageUrl: 'http://placeimg.com/640/360/any',
     id: 'filleLeafFig',
     commonName: 'Fiddle-leaf Fig',
-    habit: 'Every week',
+    schedule: '7',
     notes: 'Bright, indirect light',
     lastWateredOn: '01/03/2021',
     onCancel: () => null,

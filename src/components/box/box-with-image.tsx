@@ -34,7 +34,7 @@ const BoxWithImage: React.FC<BoxWithImageProps> = ({
       <Image url={imageUrl || ''} alt={alt} />
       {imageText ? (
         <Typography
-          textStyle={['copyS', 'copyL', 'copyL', 'copyL']}
+          textStyle={['copyS', 'copyL']}
           pt={['one', 'zeroPointEight']}
         >
           {imageText}
