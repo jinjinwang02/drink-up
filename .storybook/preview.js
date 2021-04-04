@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { AuthProvider } from '../src/context/auth-context';
 import { PlantProvider } from '../src/context/plant-context';
 import { theme, GlobalStyle } from '../src/styles/theme';
 
@@ -8,11 +9,13 @@ export const decorators = [
   (Story) => (
     <>
       <GlobalStyle />
-      <PlantProvider>
-        <ThemeProvider theme={theme}>
-          <Story />
-        </ThemeProvider>
-      </PlantProvider>
+      <AuthProvider>
+        <PlantProvider>
+          <ThemeProvider theme={theme}>
+            <Story />
+          </ThemeProvider>
+        </PlantProvider>
+      </AuthProvider>
     </>
   ),
 ];

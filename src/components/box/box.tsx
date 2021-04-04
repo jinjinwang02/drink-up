@@ -32,6 +32,8 @@ export interface BoxProps
     BorderProps {
   zIndex?: string | number;
   onClick?: React.KeyboardEventHandler<HTMLElement>;
+  onMouseOver?: React.MouseEventHandler<HTMLElement>;
+  onMouseOut?: React.MouseEventHandler<HTMLElement>;
 }
 
 const StyledBox = styled.div<BoxProps>(

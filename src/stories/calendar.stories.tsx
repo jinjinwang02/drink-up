@@ -8,15 +8,13 @@ import {
 export default {
   title: 'Components/Calendar',
   component: CalendarComponent,
+  args: {
+    futureMonthLimit: undefined,
+    previousMonthLimit: undefined,
+    onSelectDate: () => null,
+  },
 } as Meta;
 
-const Template: Story<CalendarProps> = (args) => (
+export const Calendar: Story<CalendarProps> = (args) => (
   <CalendarComponent {...args} />
 );
-
-export const Calendar = Template.bind({});
-Calendar.args = {
-  futureMonthLimit: undefined,
-  previousMonthLimit: undefined,
-  onSelectDate: (date) => console.log(date),
-};

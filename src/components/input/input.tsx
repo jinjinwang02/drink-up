@@ -1,10 +1,10 @@
 import { Field } from 'formik';
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { usePlantContext } from '../context/plant-context';
-import { theme } from '../styles/theme';
-import { Box } from './box/box';
-import { Typography } from './typography';
+import { usePlantContext } from '../../context/plant-context';
+import { theme } from '../../styles/theme';
+import { Box } from '../box/box';
+import { Typography } from '../typography';
 
 const InputField = styled(Field)`
   ::placeholder {
@@ -27,7 +27,7 @@ const InputLabel = styled(Box)`
 
 export interface InputProps {
   formik: any;
-  id: string;
+  plantId?: string;
   name: string;
   type?: string;
   label?: string;
@@ -36,12 +36,11 @@ export interface InputProps {
   inputTextAlign?: 'left' | 'center';
   placeholder?: string;
   placeholderSize?: number;
-  onChange?: () => void;
 }
 
 const Input: React.FC<InputProps> = ({
   formik,
-  id,
+  plantId,
   name,
   type = 'text',
   label,
@@ -58,34 +57,32 @@ const Input: React.FC<InputProps> = ({
   } = usePlantContext();
   const error = formik.errors[name];
 
-  const handleBlur = useCallback(
-    (id) => {
-      // find the plant in edit in collection
-      // and add the input to the plant object
-      if (plantCollection.map((el) => el.id).includes(id)) {
-        const currentPlant = plantCollectionWithInputs.filter(
-          (el) => el.id === id
-        )[0];
-        setPlantCollectionWithInputs((prev) => [
-          ...prev.filter((el) => el !== currentPlant),
-          { ...currentPlant, [name]: formik.values[name] },
-        ]);
-      }
-    },
-    [
-      formik.values,
-      name,
-      plantCollection,
-      plantCollectionWithInputs,
-      setPlantCollectionWithInputs,
-    ]
-  );
+  const handleBlur = useCallback(() => {
+    // find the plant in edit in collection
+    // and add the input to the plant object
+    if (!plantId) return;
+    if (plantCollection.map((el) => el.id).includes(plantId)) {
+      const currentPlant = plantCollectionWithInputs.filter(
+        (el) => el.id === plantId
+      )[0];
+      setPlantCollectionWithInputs((prev) => [
+        ...prev.filter((el) => el !== currentPlant),
+        { ...currentPlant, [name]: formik.values[name] },
+      ]);
+    }
+  }, [
+    formik.values,
+    name,
+    plantCollection,
+    plantCollectionWithInputs,
+    plantId,
+    setPlantCollectionWithInputs,
+  ]);
 
   return (
     <Box flexDirection="column" width="100%" position="relative">
       <InputField
-        id={id}
-        onBlur={() => handleBlur(id)}
+        onBlur={handleBlur}
         name={name}
         value={name === 'lastWateredOn' ? dateValue : formik.values[name]}
         disabled={name === 'lastWateredOn'}

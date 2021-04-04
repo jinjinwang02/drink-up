@@ -4,6 +4,8 @@ import en from 'dayjs/locale/en';
 import { Box } from './box/box';
 import { Typography } from './typography';
 import { ArrowButton } from './button/arrow-button';
+import { css } from '@styled-system/css';
+import { theme } from '../styles/theme';
 
 dayjs.locale({
   ...en,
@@ -105,9 +107,7 @@ const Calendar: React.FC<CalendarProps> = ({
             disabled={!allowPrevious}
           />
           <Typography textStyle="copyS">
-            {currentCalendarTime.format('MMMM') +
-              ' ' +
-              currentCalendarTime.format('YYYY')}
+            {currentCalendarTime.format('MMMM YYYY')}
           </Typography>
           <ArrowButton
             size="small"
@@ -126,34 +126,42 @@ const Calendar: React.FC<CalendarProps> = ({
         </Box>
         {calendar.map((week, weekIndex) => (
           <Box key={weekIndex} px="zeroPointFour">
-            {week.map((dayWithMonth, dayIndex) => {
+            {week.map((dayWithMonth) => {
               const formatedDayWithMonth = dayWithMonth.format(
                 DATE_DISPLAY_FORMAT
               );
               const day = dayWithMonth.format(DAY_FORMAT);
               const month = dayWithMonth.format(MONTH_FORMAT);
               const isFutureDate = dayWithMonth.isAfter(today);
-              const getCursor = () => {
-                if (allowFuture) return 'pointer';
-                if (!isFutureDate) return 'pointer';
-                return 'not-allowed';
-              };
+
               return (
                 <Box
                   width={CELL_WIDTH_AND_HEIGHT}
-                  key={dayIndex}
-                  py="zeroPointEight"
+                  key={`${day}${month}`}
+                  pt="zeroPointSix"
+                  pb="zeroPointEight"
+                  border="transparent"
+                  borderRadius="100px"
+                  style={{ cursor: !isFutureDate ? 'pointer' : 'not-allowed' }}
+                  transition={theme.transitions.quick}
+                  css={css({
+                    '&:hover': {
+                      border: !isFutureDate ? 'inactiveGrey' : undefined,
+                    },
+                    '&:active': {
+                      border: !isFutureDate ? 'regularBlack' : undefined,
+                    },
+                  })}
+                  onClick={() => handleSelectDate(dayWithMonth, isFutureDate)}
                 >
                   <Typography
                     textAlign="center"
+                    color={month === currentMonth ? 'pureBlack' : 'mediumGrey'}
                     textStyle={
                       formatedDayWithMonth === formatedToday
                         ? 'bodySBold'
                         : 'bodyS'
                     }
-                    color={month === currentMonth ? 'pureBlack' : 'mediumGrey'}
-                    style={{ cursor: getCursor() }}
-                    onClick={() => handleSelectDate(dayWithMonth, isFutureDate)}
                   >
                     {day}
                   </Typography>

@@ -1,29 +1,27 @@
 import React, { useState } from 'react';
+import { ButtonProps } from '../../interfaces';
 import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
 import { Cloud } from '../icon/cloud';
 import { Typography } from '../typography';
+import { ButtonContainer } from './button-container';
 
-export interface CloudButtonProps {
+export interface CloudButtonProps extends ButtonProps {
   children: string;
   borderless?: boolean;
-  onClick?: () => void;
 }
 
 const CloudButton: React.FC<CloudButtonProps> = ({
   children,
   borderless,
-  onClick,
+  ...props
 }: CloudButtonProps) => {
   const [isHovered, setHovered] = useState<boolean>(false);
   return (
-    <Box
+    <ButtonContainer
+      {...props}
       flexDirection="column"
-      alignItems="center"
-      role="button"
       border={borderless ? 'none' : 'regularBlack'}
-      onClick={onClick}
-      style={{ cursor: 'pointer' }}
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}
     >
@@ -48,7 +46,7 @@ const CloudButton: React.FC<CloudButtonProps> = ({
       >
         {children}
       </Typography>
-    </Box>
+    </ButtonContainer>
   );
 };
 

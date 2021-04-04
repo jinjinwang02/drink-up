@@ -4,16 +4,16 @@ import { firebaseClient } from '../firebase/firebase-client';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { theme } from '../styles/theme';
 import { Box } from './box/box';
+import { UserButton } from './button/user-button';
 import { Cross } from './icon/cross';
 import { Logo } from './icon/logo';
-import { User } from './icon/user';
 import { Typography } from './typography';
 
 export const NAVBAR_HEIGHT_MD = 78;
 export const NAVBAR_HEIGHT_XS = 58;
 const ICON_HEIGHT = 28;
 const NAV_DROPDOWN_HEIGHT_MD = 130;
-const NAV_DROPDOWN_WIDTH_MD = 120;
+const NAV_DROPDOWN_WIDTH_MD = 125;
 
 interface NavbarProps {
   isUserLoggedIn?: boolean;
@@ -115,15 +115,12 @@ const Navbar: React.FC<NavbarProps> = ({ isUserLoggedIn }: NavbarProps) => {
       {isUserLoggedIn ? (
         <>
           <Box flexDirection="column" width={NAV_DROPDOWN_WIDTH_MD}>
-            <Box
+            <UserButton
               id="userIcon"
-              style={{ cursor: 'pointer' }}
               onClick={() => setShowDropdown((prev) => !prev)}
               zIndex={1}
               mr={-`${theme.space.two}`}
-            >
-              <User />
-            </Box>
+            />
             <NavDropdown
               showDropdown={showDropdown}
               onCloseDropdown={handleCloseDropdown}

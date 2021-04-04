@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import { Authentication } from '../components/authentication/authentication';
 import { Box } from '../components/box/box';
 
@@ -8,7 +8,7 @@ export default {
   component: Authentication,
 } as Meta;
 
-export const AuthenticationBox: React.FC = () => (
+export const AuthenticationBox: Story = () => (
   <Box>
     <Authentication />
   </Box>

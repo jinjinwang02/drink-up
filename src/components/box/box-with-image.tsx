@@ -4,7 +4,7 @@ import { Box } from './box';
 import { Image } from '../image';
 
 export interface BoxWithImageProps {
-  imageUrl: string;
+  imageUrl?: string;
   imageText?: string;
   width: number[];
   topBoxHeight: number[];
@@ -31,7 +31,7 @@ const BoxWithImage: React.FC<BoxWithImageProps> = ({
       pb={invertible ? ['zero', 'onePointSix'] : 'zeroPointSix'}
       px={[invertible ? 'zero' : 'onePointTwo', 'onePointSix']}
     >
-      <Image url={imageUrl} alt={alt} />
+      <Image url={imageUrl || ''} alt={alt} />
       {imageText ? (
         <Typography
           textStyle={['copyS', 'copyL', 'copyL', 'copyL']}

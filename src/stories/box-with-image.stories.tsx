@@ -1,14 +1,14 @@
 import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import { BoxWithImage } from '../components/box/box-with-image';
 import { Box } from '../components/box/box';
 
 export default {
-  title: 'Components/Box with image',
+  title: 'Components/Box/Box with image',
   component: BoxWithImage,
 } as Meta;
 
-export const Default: React.FC = () => {
+export const Default: Story = () => {
   const BOX_WIDTH_MD = 342;
   const BOX_WIDTH_XS = 275;
 
@@ -21,13 +21,13 @@ export const Default: React.FC = () => {
         topBoxHeight={[TOP_BOX_HEIGHT_XS, TOP_BOX_HEIGHT_MD]}
         imageUrl="http://placeimg.com/640/360/any"
         imageText="random image"
-        bottomAccessory="hahahahasdsdsdssdsds sdsd sds sdfdsfsdf sdsf sdshha"
+        bottomAccessory="random image"
       />
     </Box>
   );
 };
 
-export const Invertible: React.FC = () => {
+export const Invertible: Story = () => {
   const BOX_WIDTH_MD = 272;
   const BOX_WIDTH_XS = 322;
 
@@ -39,7 +39,7 @@ export const Invertible: React.FC = () => {
         width={[BOX_WIDTH_XS, BOX_WIDTH_MD]}
         topBoxHeight={[TOP_BOX_HEIGHT_XS, TOP_BOX_HEIGHT_MD]}
         imageUrl="http://placeimg.com/640/360/any"
-        bottomAccessory="hahahahasdsdsdssdsds sdsd sds sdfdsfsdf sdsf sdshha"
+        bottomAccessory="Test"
         invertible
       />
     </Box>

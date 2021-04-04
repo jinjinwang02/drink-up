@@ -215,6 +215,7 @@ const colors = {
 const borders = {
   regularBlack: `1px solid ${colors.pureBlack}`,
   inactiveGrey: `1px solid ${colors.lightGrey}`,
+  transparent: '1px solid transparent',
 };
 
 const transitions = {

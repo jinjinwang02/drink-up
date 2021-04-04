@@ -1,4 +1,3 @@
-import css from '@styled-system/css';
 import React from 'react';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { theme } from '../../styles/theme';
@@ -8,7 +7,7 @@ import { ArrowButton } from './arrow-button';
 const BUTTON_HEIGHT = 60;
 
 interface BoxyButtonProps {
-  onNext?: () => void;
+  onNext: () => void;
   onBack?: () => void;
 }
 
@@ -29,11 +28,6 @@ const BoxyButton: React.FC<BoxyButtonProps> = ({
       px="four"
       zIndex="boxyButton"
       transition={theme.transitions.quick}
-      css={css({
-        ' &:hover': {
-          height: BUTTON_HEIGHT + 5,
-        },
-      })}
     >
       {onBack ? (
         <ArrowButton

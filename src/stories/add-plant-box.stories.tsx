@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta } from '@storybook/react/types-6-0';
+import { Meta, Story } from '@storybook/react/types-6-0';
 import { AddPlantBox as AddPlantBoxComponent } from '../components/add-plant-box';
 import { Box } from '../components/box/box';
 
@@ -8,7 +8,7 @@ export default {
   component: AddPlantBoxComponent,
 } as Meta;
 
-export const AddPlantBox: React.FC = () => (
+export const AddPlantBox: Story = () => (
   <Box>
     <AddPlantBoxComponent />
   </Box>

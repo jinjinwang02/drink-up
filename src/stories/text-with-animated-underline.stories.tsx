@@ -9,16 +9,16 @@ import { Box } from '../components/box/box';
 export default {
   title: 'Components/Text With Animated Underline',
   component: TextWithAnimatedUnderlineComponent,
+  args: {
+    children: 'Sign up',
+    backgroundColor: 'lightGrey',
+  },
 } as Meta;
 
-const Template: Story<TextWithAnimatedUnderlineProps> = (args) => (
+export const TextWithAnimatedUnderline: Story<TextWithAnimatedUnderlineProps> = (
+  args
+) => (
   <Box>
     <TextWithAnimatedUnderlineComponent {...args} />
   </Box>
 );
-
-export const TextWithAnimatedUnderline = Template.bind({});
-TextWithAnimatedUnderline.args = {
-  children: 'Sign up',
-  backgroundColor: 'lightGrey',
-};

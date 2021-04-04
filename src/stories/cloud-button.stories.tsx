@@ -7,7 +7,7 @@ import {
 } from '../components/button/cloud-button';
 
 export default {
-  title: 'Components/Cloud Button',
+  title: 'Components/Button/Cloud Button',
   component: CloudButton,
 } as Meta;
 

@@ -7,18 +7,16 @@ import {
 import { Box } from '../components/box/box';
 
 export default {
-  title: 'Components/Box With Cloud',
+  title: 'Components/Box/Box With Cloud',
   component: BoxWithCloudComponent,
+  args: {
+    topAccessory: '',
+    bottomAccessory: <Box height={225} width="100%" />,
+  },
 } as Meta;
 
-const Template: Story<BoxWithCloudProps> = (args) => (
+export const BoxWithCloud: Story<BoxWithCloudProps> = (args) => (
   <Box>
     <BoxWithCloudComponent {...args} />
   </Box>
 );
-
-export const BoxWithCloud = Template.bind({});
-BoxWithCloud.args = {
-  topAccessory: '',
-  bottomAccessory: <Box height={225} width="100%" />,
-};

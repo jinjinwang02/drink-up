@@ -1,19 +1,21 @@
 import { FormikProvider, useFormik } from 'formik';
 import React from 'react';
+import { CollectionWithInputs } from '../interfaces';
 import { Box } from './box/box';
-import { EditPlantBoxProps } from './edit-plant-box';
-import { InputWithLabel } from './input-with-label';
+import { CalendarInput } from './input/calendar-input';
+import { Input } from './input/input';
+import { InputWithLabel } from './input/input-with-label';
 
 export interface PlantInfoProps {
-  id: string;
+  plantId: string;
   labelTextStyle?: string | string[];
   inputTextStyle?: string | string[];
   placeholderSize?: number;
-  plantInfo?: Omit<EditPlantBoxProps, 'id'>;
+  plantInfo?: Omit<CollectionWithInputs, 'id'>;
 }
 
 const PlantInfo: React.FC<PlantInfoProps> = ({
-  id,
+  plantId,
   inputTextStyle,
   labelTextStyle,
   plantInfo,
@@ -44,54 +46,89 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
     >
       <FormikProvider value={formik}>
         <InputWithLabel
-          id={id}
+          plantId={plantId}
           name="imageUrl"
           label="Image url:"
-          placeholder="https://"
-          formik={formik}
-          inputTextStyle={inputTextStyle}
           labelTextStyle={labelTextStyle}
-          placeholderSize={placeholderSize}
+          Input={
+            <Input
+              plantId={plantId}
+              name="imageUrl"
+              formik={formik}
+              inputTextAlign="left"
+              placeholder="https://"
+              placeholderSize={placeholderSize}
+              inputTextStyle={inputTextStyle}
+            />
+          }
         />
         <InputWithLabel
-          id={id}
+          plantId={plantId}
           name="commonName"
           label="Common name:"
-          placeholder="e.g. Devils ivy"
-          formik={formik}
-          inputTextStyle={inputTextStyle}
           labelTextStyle={labelTextStyle}
-          placeholderSize={placeholderSize}
+          Input={
+            <Input
+              plantId={plantId}
+              name="commonName"
+              formik={formik}
+              placeholder="e.g. Devils ivy"
+              inputTextAlign="left"
+              placeholderSize={placeholderSize}
+              inputTextStyle={inputTextStyle}
+            />
+          }
         />
         <InputWithLabel
-          id={id}
+          plantId={plantId}
           name="habit"
           label="Watering habit:"
-          placeholder="e.g. once a week"
-          formik={formik}
-          inputTextStyle={inputTextStyle}
           labelTextStyle={labelTextStyle}
-          placeholderSize={placeholderSize}
+          Input={
+            <Input
+              plantId={plantId}
+              name="habit"
+              formik={formik}
+              placeholder="e.g. 7"
+              inputTextAlign="left"
+              placeholderSize={placeholderSize}
+              inputTextStyle={inputTextStyle}
+            />
+          }
         />
         <InputWithLabel
-          id={id}
+          plantId={plantId}
           name="notes"
           label="You notes:"
-          placeholder="e.g. likes soil to be gently moist"
-          formik={formik}
-          inputTextStyle={inputTextStyle}
           labelTextStyle={labelTextStyle}
-          placeholderSize={placeholderSize}
+          Input={
+            <Input
+              plantId={plantId}
+              name="notes"
+              formik={formik}
+              placeholder="e.g. likes soil to be gently moist"
+              inputTextAlign="left"
+              placeholderSize={placeholderSize}
+              inputTextStyle={inputTextStyle}
+            />
+          }
         />
         <InputWithLabel
-          id={id}
+          plantId={plantId}
           name="lastWateredOn"
           label="Last watered on:"
-          placeholder="Click to select date"
-          formik={formik}
-          inputTextStyle={inputTextStyle}
           labelTextStyle={labelTextStyle}
-          placeholderSize={placeholderSize}
+          Input={
+            <CalendarInput
+              plantId={plantId}
+              name="lastWateredOn"
+              formik={formik}
+              placeholder="Click to select date"
+              inputTextAlign="left"
+              placeholderSize={placeholderSize}
+              inputTextStyle={inputTextStyle}
+            />
+          }
         />
       </FormikProvider>
     </Box>

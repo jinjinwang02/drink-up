@@ -3,7 +3,7 @@ import React from 'react';
 import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
 import { Logo } from '../icon/logo';
-import { Input } from '../input';
+import { Input } from '../input/input';
 import { Typography } from '../typography';
 
 interface ContentProps {
@@ -74,13 +74,7 @@ const Content: React.FC<ContentProps> = ({
               {text}
             </Typography>
           </Box>
-          <Input
-            id={name}
-            name={name}
-            label={label}
-            type={type}
-            formik={formik}
-          />
+          <Input name={name} label={label} type={type} formik={formik} />
         </Box>
       )}
     </Box>

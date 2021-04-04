@@ -1,18 +1,13 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react/types-6-0';
-import {
-  Typography as TypographyComponent,
-  TypographyProps,
-} from '../components/typography';
+import { Typography as Text, TypographyProps } from '../components/typography';
 
 export default {
   title: 'Components/Typography',
-  component: TypographyComponent,
+  component: Text,
 } as Meta;
 
-const Template: Story<TypographyProps> = (args) => (
-  <TypographyComponent {...args} />
-);
+const Template: Story<TypographyProps> = (args) => <Text {...args} />;
 
 export const Typography = Template.bind({});
 Typography.args = {
@@ -21,55 +16,27 @@ Typography.args = {
   color: 'pureBlack',
 };
 
-const H1 = () => <TypographyComponent textStyle="h1">h1</TypographyComponent>;
-const H2 = () => <TypographyComponent textStyle="h2">h2</TypographyComponent>;
-const H3 = () => <TypographyComponent textStyle="h3">h3</TypographyComponent>;
-const H1Brand = () => (
-  <TypographyComponent textStyle="h1Brand">h1 Brand</TypographyComponent>
-);
-const H2Brand = () => (
-  <TypographyComponent textStyle="h2Brand">h2 Brand</TypographyComponent>
-);
+const H1 = () => <Text textStyle="h1">h1</Text>;
+const H2 = () => <Text textStyle="h2">h2</Text>;
+const H3 = () => <Text textStyle="h3">h3</Text>;
+const H1Brand = () => <Text textStyle="h1Brand">h1 Brand</Text>;
+const H2Brand = () => <Text textStyle="h2Brand">h2 Brand</Text>;
 
-const CopyXL = () => (
-  <TypographyComponent textStyle="copyXL">copyXL</TypographyComponent>
-);
-const CopyL = () => (
-  <TypographyComponent textStyle="copyL">copyL</TypographyComponent>
-);
-const CopyLBold = () => (
-  <TypographyComponent textStyle="copyLBold">copyLBold</TypographyComponent>
-);
-const CopyM = () => (
-  <TypographyComponent textStyle="copyM">copyM</TypographyComponent>
-);
-const CopyS = () => (
-  <TypographyComponent textStyle="copyS">copyS</TypographyComponent>
-);
-const CopyXS = () => (
-  <TypographyComponent textStyle="copyXS">copyXS</TypographyComponent>
-);
+const CopyXL = () => <Text textStyle="copyXL">copyXL</Text>;
+const CopyL = () => <Text textStyle="copyL">copyL</Text>;
+const CopyLBold = () => <Text textStyle="copyLBold">copyLBold</Text>;
+const CopyM = () => <Text textStyle="copyM">copyM</Text>;
+const CopyS = () => <Text textStyle="copyS">copyS</Text>;
+const CopyXS = () => <Text textStyle="copyXS">copyXS</Text>;
 
-const BodyXL = () => (
-  <TypographyComponent textStyle="bodyXL">bodyXL</TypographyComponent>
-);
-const BodyL = () => (
-  <TypographyComponent textStyle="bodyL">bodyL</TypographyComponent>
-);
-const BodyM = () => (
-  <TypographyComponent textStyle="bodyM">bodyM</TypographyComponent>
-);
-const BodyS = () => (
-  <TypographyComponent textStyle="bodyS">bodyS</TypographyComponent>
-);
-const BodySBold = () => (
-  <TypographyComponent textStyle="bodySBold">bodySBold</TypographyComponent>
-);
-const BodyXS = () => (
-  <TypographyComponent textStyle="bodyXS">bodyXS</TypographyComponent>
-);
+const BodyXL = () => <Text textStyle="bodyXL">bodyXL</Text>;
+const BodyL = () => <Text textStyle="bodyL">bodyL</Text>;
+const BodyM = () => <Text textStyle="bodyM">bodyM</Text>;
+const BodyS = () => <Text textStyle="bodyS">bodyS</Text>;
+const BodySBold = () => <Text textStyle="bodySBold">bodySBold</Text>;
+const BodyXS = () => <Text textStyle="bodyXS">bodyXS</Text>;
 
-export const Heading: React.FC = () => (
+export const Heading: Story = () => (
   <>
     <H1 />
     <H2 />
@@ -79,7 +46,7 @@ export const Heading: React.FC = () => (
   </>
 );
 
-export const Copy: React.FC = () => (
+export const Copy: Story = () => (
   <>
     <CopyXL />
     <CopyL />
@@ -90,7 +57,7 @@ export const Copy: React.FC = () => (
   </>
 );
 
-export const Body: React.FC = () => (
+export const Body: Story = () => (
   <>
     <BodyXL />
     <BodyL />

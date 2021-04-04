@@ -8,7 +8,6 @@ const Bin: React.FC = () => {
   const [isHovered, setHovered] = useState<boolean>(false);
   return (
     <Box
-      style={{ cursor: 'pointer' }}
       flexDirection="column"
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}
@@ -25,7 +24,7 @@ const Bin: React.FC = () => {
           version="1.0"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 51.05 11.53"
-          width={isXS ? 15 : 22}
+          width={isXS ? 15 : 21}
           fill="none"
           stroke="#000"
           strokeWidth={isXS ? 3 : 2.5}

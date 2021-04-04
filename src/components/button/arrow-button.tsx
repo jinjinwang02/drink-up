@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { Arrow, ArrowProps } from '../icon/arrow';
-import { Box } from '../box/box';
 import { theme } from '../../styles/theme';
+import { ButtonProps } from '../../interfaces';
+import { ButtonContainer } from './button-container';
 
-interface ArrowButtonProps extends ArrowProps {
-  onClick?: () => void;
-  disabled?: boolean;
-}
+type ArrowButtonProps = ArrowProps & ButtonProps;
 
 const ArrowButton: React.FC<ArrowButtonProps> = ({
   direction = 'right',
   size = 'medium',
-  disabled,
-  onClick,
+  ...props
 }: ArrowButtonProps) => {
   const [isHovered, setHovered] = useState<boolean>(false);
   const getTranslate = () => {
@@ -28,28 +25,24 @@ const ArrowButton: React.FC<ArrowButtonProps> = ({
     return 'translateX(0)';
   };
   return (
-    <Box
-      as="button"
+    <ButtonContainer
+      {...props}
       type="submit"
-      background="transparent"
-      border="none"
-      disabled={disabled}
-      onClick={onClick}
-      style={{
-        transform: disabled ? undefined : getTranslate(),
-        outline: 'none',
-        cursor: disabled ? 'not-allowed' : 'pointer',
+      additionalStyles={{
+        transform: props.disabled ? undefined : getTranslate(),
+        transition: theme.transitions.medium,
       }}
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}
-      transition={theme.transitions.medium}
     >
       <Arrow
         direction={direction}
-        color={disabled ? theme.colors.mediumGrey : theme.colors.pureBlack}
+        color={
+          props.disabled ? theme.colors.mediumGrey : theme.colors.pureBlack
+        }
         size={size}
       />
-    </Box>
+    </ButtonContainer>
   );
 };
 
