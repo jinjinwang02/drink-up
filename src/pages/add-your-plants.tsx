@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { NextSeo } from 'next-seo';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -7,48 +7,56 @@ import { AddPlantBox } from '../components/add-plant-box';
 import { PageTitleWithBody } from '../components/page-title-with-body';
 import { Box } from '../components/box/box';
 import { BoxyButton } from '../components/button/boxy-button';
-import { useAuthContext } from '../context/auth-context';
-import { firebaseClient } from '../firebase/firebase-client';
 import { AddButton } from '../stories/add-button.stories';
 import { CloudButton } from '../components/button/cloud-button';
 import { theme } from '../styles/theme';
 import { CrossButton } from '../components/button/cross-button';
+import { generateId } from '../utils';
+import { usePlantContext } from '../context/plant-context';
+import { CollectionWithInputs } from '../interfaces';
 
 const Index: NextPage = () => {
-  const { user } = useAuthContext();
-  const { firestore } = firebaseClient();
   const router = useRouter();
-  const [boxCount, setBoxCount] = useState<number>(0);
+  const {
+    inputErrors,
+    customCollectionWithInputs,
+    setCustomCollectionWithInputs,
+    handleAddOrEditPlants,
+  } = usePlantContext();
+
   const handleAddBox = useCallback(() => {
-    setBoxCount((prev) => prev + 1);
-  }, []);
+    setCustomCollectionWithInputs((prev) => [...prev, { id: generateId() }]);
+  }, [setCustomCollectionWithInputs]);
 
   const handleDeleteBox = useCallback(() => {
-    setBoxCount((prev) => prev - 1);
-  }, []);
+    setCustomCollectionWithInputs((prev) =>
+      prev.slice(0, customCollectionWithInputs.length - 1)
+    );
+  }, [customCollectionWithInputs.length, setCustomCollectionWithInputs]);
 
   const handleSubmit = useCallback(async () => {
-    if (boxCount === 0) {
+    if (!customCollectionWithInputs.length) {
       router.push('/dashboard');
       return;
     }
-    await firestore.collection('users').doc(user?.uid).update({
-      plants: 'bla',
-    });
-  }, [boxCount, firestore, router, user?.uid]);
+    handleAddOrEditPlants(customCollectionWithInputs as CollectionWithInputs[]);
+    if (inputErrors) {
+      router.push('/dashboard');
+    }
+  }, [customCollectionWithInputs, handleAddOrEditPlants, inputErrors, router]);
 
   useEffect(() => {
     window.scrollTo({
       top: document.body.scrollHeight,
       behavior: 'smooth',
     });
-  }, [boxCount]);
+  }, []);
 
   return (
     <Layout mb={['four', 'eight', 'ten']}>
       <NextSeo title="Drink up | Add Your Plants" description="" canonical="" />
       <Box
-        mt={boxCount ? 'zero' : 'ten'}
+        mt={customCollectionWithInputs.length ? 'zero' : 'ten'}
         width="100%"
         transition={theme.transitions.medium}
       >
@@ -59,14 +67,12 @@ const Index: NextPage = () => {
         />
       </Box>
       <Box flexDirection="column">
-        {Array(boxCount)
-          .fill(boxCount)
-          .map((_el, index) => (
-            <Box key={index.toString()} my="two">
-              <AddPlantBox />
-            </Box>
-          ))}
-        {boxCount ? (
+        {customCollectionWithInputs.map((el) => (
+          <Box key={el.id} mt="two" mb="three">
+            <AddPlantBox plantId={el.id} />
+          </Box>
+        ))}
+        {customCollectionWithInputs.length ? (
           <Box mt="one" width="100%" justifyContent="space-around">
             <AddButton onClick={handleAddBox} />
             <CrossButton onClick={handleDeleteBox} />

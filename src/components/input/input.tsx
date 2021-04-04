@@ -1,5 +1,5 @@
 import { Field, FormikContextType } from 'formik';
-import React, { useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { usePlantContext } from '../../context/plant-context';
 import { theme } from '../../styles/theme';
@@ -47,39 +47,13 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   placeholderSize,
 }: InputProps) => {
-  const {
-    plantCollection,
-    plantCollectionWithInputs,
-    setPlantCollectionWithInputs,
-  } = usePlantContext();
+  const { handleSetInput } = usePlantContext();
   const error = formik.errors[name];
-
-  const handleBlur = useCallback(() => {
-    // find the plant in edit in collection
-    // and add the input to the plant object
-    if (!plantId) return;
-    if (plantCollection.map((el) => el.id).includes(plantId)) {
-      const currentPlant = plantCollectionWithInputs.filter(
-        (el) => el.id === plantId
-      )[0];
-      setPlantCollectionWithInputs((prev) => [
-        ...prev.filter((el) => el !== currentPlant),
-        { ...currentPlant, [name]: formik.values[name] },
-      ]);
-    }
-  }, [
-    formik.values,
-    name,
-    plantCollection,
-    plantCollectionWithInputs,
-    plantId,
-    setPlantCollectionWithInputs,
-  ]);
 
   return (
     <Box flexDirection="column" width="100%" position="relative">
       <InputField
-        onBlur={handleBlur}
+        onBlur={() => handleSetInput(plantId, name, formik.values[name])}
         onKeyDown={(e: KeyboardEvent) => blockInvalidChar(e, type)}
         name={name}
         disabled={name === 'lastWateredOn'}

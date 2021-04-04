@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
 import { Box } from '../components/box/box';
@@ -12,7 +12,20 @@ import { theme } from '../styles/theme';
 
 const Index: NextPage = () => {
   const router = useRouter();
-  const { plantCollection, handleEditPlantSubmit } = usePlantContext();
+  const {
+    inputErrors,
+    plantCollection,
+    plantCollectionWithInputs,
+    handleAddOrEditPlants,
+  } = usePlantContext();
+
+  const handleSubmit = useCallback(() => {
+    handleAddOrEditPlants(plantCollectionWithInputs);
+    if (!inputErrors) {
+      router.push('/add-your-plants');
+    }
+  }, [handleAddOrEditPlants, inputErrors, plantCollectionWithInputs, router]);
+
   return (
     <Layout mb={['four', 'eight', 'ten']}>
       <NextSeo
@@ -47,7 +60,7 @@ const Index: NextPage = () => {
           );
         })}
       </Box>
-      <BoxyButton onBack={() => router.back()} onNext={handleEditPlantSubmit} />
+      <BoxyButton onBack={() => router.back()} onNext={handleSubmit} />
     </Layout>
   );
 };

@@ -6,8 +6,8 @@ import { PlantInfo } from './plant-info';
 import { ArrowButton } from './button/arrow-button';
 import { CrossButton } from './button/cross-button';
 import { BinButton } from './button/bin-button';
-import { Typography } from './typography';
 import { usePlantContext } from '../context/plant-context';
+import { ErrorFields } from './error-fields';
 
 export const BOX_WIDTH_MD = 342;
 const BOX_WIDTH_XS = 275;
@@ -41,7 +41,7 @@ const EditPlantBox: React.FC<EditPlantBoxProps> = ({
   onSubmit = () => null,
 }: EditPlantBoxProps) => {
   const { inputErrors } = usePlantContext();
-  const errorFields = inputErrors && inputErrors[id];
+  const errors = inputErrors && inputErrors[id];
 
   return (
     <Box flexDirection="column">
@@ -82,14 +82,7 @@ const EditPlantBox: React.FC<EditPlantBoxProps> = ({
           <ArrowButton size="large" onClick={onSubmit} />
         </Box>
       ) : null}
-      <Box width="100%" flexDirection="column" mt="one" alignItems="flex-start">
-        {Array.isArray(errorFields) &&
-          errorFields?.map((el) => (
-            <Typography key={el.name} textStyle="bodyM" color="warningRed">
-              {el.errorMessage}
-            </Typography>
-          ))}
-      </Box>
+      {Array.isArray(errors) ? <ErrorFields errors={errors} /> : null}
     </Box>
   );
 };

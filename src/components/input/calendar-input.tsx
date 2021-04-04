@@ -18,10 +18,8 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
 }: CalendarInputProps) => {
   const {
     currentCalendarId,
-    plantCollection,
-    plantCollectionWithInputs,
     setCurrentCalendarId,
-    setPlantCollectionWithInputs,
+    handleSetInput,
   } = usePlantContext();
   const handleOpenCalendar = useCallback(
     (id: string) => {
@@ -57,31 +55,11 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
     (lastWateredOn: string) => {
       formik.setFieldValue(name, lastWateredOn);
       setCurrentCalendarId(null);
-      // find the plant in edit in collection
-      // and add the input to the plant object
-      if (plantCollection.map((el) => el.id).includes(plantId)) {
-        const currentPlant = plantCollectionWithInputs.filter(
-          (el) => el.id === plantId
-        )[0];
-        setPlantCollectionWithInputs((prev) => [
-          ...prev.filter((el) => el !== currentPlant),
-          {
-            ...currentPlant,
-            lastWateredOn,
-          },
-        ]);
-      }
+      handleSetInput(plantId, 'lastWateredOn', lastWateredOn);
     },
-    [
-      formik,
-      name,
-      setCurrentCalendarId,
-      plantCollection,
-      plantId,
-      plantCollectionWithInputs,
-      setPlantCollectionWithInputs,
-    ]
+    [formik, name, setCurrentCalendarId, handleSetInput, plantId]
   );
+
   return (
     <>
       <Box

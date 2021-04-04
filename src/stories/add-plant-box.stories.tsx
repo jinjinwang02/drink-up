@@ -10,6 +10,6 @@ export default {
 
 export const AddPlantBox: Story = () => (
   <Box>
-    <AddPlantBoxComponent />
+    <AddPlantBoxComponent plantId="" />
   </Box>
 );
