@@ -13,8 +13,8 @@ const CircleButton: React.FC<CircleBoxProps> = ({
   ...props
 }: CircleBoxProps) =>
   checked ? (
-    <Box pb="zeroPointFour" pr="zeroPointSix">
-      <Water width={20} />
+    <Box pb="zeroPointFour" pr="onePointFour">
+      <Water width={12} animated />
     </Box>
   ) : (
     <ButtonContainer {...props}>

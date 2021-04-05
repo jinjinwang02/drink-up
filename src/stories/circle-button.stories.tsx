@@ -12,7 +12,7 @@ export default {
   args: {
     onClick: () => null,
     disabled: false,
-    checked: false,
+    checked: true,
   },
 } as Meta;
 

@@ -18,6 +18,7 @@ export interface DisplayBoxProps {
   schedule: string;
   imageUrl?: string;
   notes?: string;
+  onClick: () => void;
 }
 
 const TitleBox = ({ commonName }: { commonName: string }) => (
@@ -38,12 +39,12 @@ const ScheduleAndNoteBox = ({
     borderBottom="regularBlack"
     width="100%"
     flexDirection="column"
-    py="zeroPointSix"
+    py="zeroPointEight"
     px="two"
     overflow="hidden"
   >
     <Box pr="zeroPointTwo">
-      <Box pt="zeroPointFour" pr="zeroPointTwo">
+      <Box pr="zeroPointSix">
         <Water />
       </Box>
       <Typography textStyle="bodyM">
@@ -90,9 +91,20 @@ const NextWateringDateBox = ({ countDown }: { countDown: number }) => (
   </Box>
 );
 
-const SubmitBox = ({ isWateredToday }: { isWateredToday: boolean }) => (
+const SubmitBox = ({
+  isWateredToday,
+  onClick,
+}: {
+  isWateredToday: boolean;
+  onClick: () => void;
+}) => (
   <Box pt="zeroPointEight" pb="zeroPointSix" alignItems="center">
-    <CircleButton pr="one" pb="zeroPointFour" checked={isWateredToday} />
+    <CircleButton
+      pr="one"
+      pb="zeroPointFour"
+      checked={isWateredToday}
+      onClick={onClick}
+    />
     <Typography textStyle="copyLBold">I watered it today</Typography>
   </Box>
 );
@@ -102,6 +114,7 @@ const Content = ({
   lastWateredOn,
   schedule,
   notes,
+  onClick,
 }: DisplayBoxProps) => {
   const nextWateringDate = dayjs(transformDateForDiff(lastWateredOn)).add(
     parseInt(schedule, 10),
@@ -115,7 +128,7 @@ const Content = ({
       <ScheduleAndNoteBox schedule={schedule} notes={notes} />
       <LastWateredOnBox lastWateredOn={lastWateredOn} />
       <NextWateringDateBox countDown={countDown} />
-      <SubmitBox isWateredToday={isWateredToday} />
+      <SubmitBox isWateredToday={isWateredToday} onClick={onClick} />
     </Box>
   );
 };
@@ -127,6 +140,7 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
   lastWateredOn,
   schedule,
   notes,
+  onClick,
 }: DisplayBoxProps) => {
   return (
     <BoxWithImage
@@ -141,6 +155,7 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
           schedule={schedule}
           lastWateredOn={lastWateredOn}
           notes={notes}
+          onClick={onClick}
         />
       }
     />

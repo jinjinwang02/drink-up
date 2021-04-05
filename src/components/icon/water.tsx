@@ -1,18 +1,51 @@
 import React from 'react';
+import styled, { keyframes } from 'styled-components';
+import { pathAnimation } from './logo';
 
 interface WaterProps {
   width?: number;
+  animated?: boolean;
 }
 
-const Water: React.FC<WaterProps> = ({ width = 16 }: WaterProps) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 66.23 66.23"
-    fill="#87bdd1"
-    width={width}
-  >
-    <path d="M0,40.84a18.76,18.76,0,0,1,1.47-7.29H1.42L1.71,33a17.84,17.84,0,0,1,1-1.83L19.22,0,35.75,31.16a17.76,17.76,0,0,1,1,1.83l.3.56H37a18.58,18.58,0,0,1,1.47,7.29,19.09,19.09,0,0,1-19.22,19A19.09,19.09,0,0,1,0,40.84Z" />
-  </svg>
-);
+const path =
+  'M18.33,66c12.53,0,17.41-8.37,18.46-14.43a22.71,22.71,0,0,0,.32-4.93,35.79,35.79,0,0,0-4-15.48L19.56,4.42,6,31.11A35.94,35.94,0,0,0,2,46.59a23.36,23.36,0,0,0,.32,4.93C3.38,57.58,8.27,66,20.79,66';
+
+const fillAnimation = keyframes`
+  to {
+    fill: #87bdd1;
+  }
+`;
+
+const StyledPath = styled.path`
+  stroke-dasharray: 155;
+  stroke-dashoffset: 155;
+  animation: ${pathAnimation} 1.2s ease forwards 0.2s;
+`;
+const StyledSvg = styled.svg`
+  animation: ${fillAnimation} 0.4s ease forwards 1.4s;
+`;
+
+const Water: React.FC<WaterProps> = ({ width = 10, animated }: WaterProps) =>
+  animated ? (
+    <StyledSvg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 39.13 67.95"
+      fill="#fff"
+      stroke="#87bdd1"
+      width={width}
+      strokeMiterlimit={10}
+    >
+      <StyledPath strokeWidth={4} d={path} />
+    </StyledSvg>
+  ) : (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 43.13 67.95"
+      fill="#87bdd1"
+      width={width}
+    >
+      <path d={path} />
+    </svg>
+  );
 
 export { Water };

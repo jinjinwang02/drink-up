@@ -7,28 +7,28 @@ const secondPath =
 const thirdPath =
   'M56.4,9a41.82,41.82,0,0,1-1.86,21.9c-2.08,5.47-7.31,14.91-19,16.63a26,26,0,0,1-3.9.28h-.89c-17.72-.53-24.2-11.87-26.56-20a17.29,17.29,0,0,0,4.14.47A30.47,30.47,0,0,0,15,27.39,14.51,14.51,0,0,1,18.25,27c7.85,0,12.51,7.21,13.37,8.65a3.15,3.15,0,0,0,5.86-1.39c.93-12.86,4.37-16.83,13.57-21.59A21.34,21.34,0,0,0,56.4,9M55.58,0s4,4.9-5.9,10-14.16,9.76-15.19,24a.16.16,0,0,1-.16.15.16.16,0,0,1-.13-.08C33,32.11,27.63,24,18.25,24a17.63,17.63,0,0,0-3.9.45,27,27,0,0,1-6,.76C3,25.22,1,22.91.3,21.51a.16.16,0,0,0-.14-.09.15.15,0,0,0-.16.17C.52,27,4.26,50,30.7,50.75h1A30.26,30.26,0,0,0,36,50.45C61.16,46.74,64.67,10.85,55.58,0Z';
 
-const line = keyframes`
+export const pathAnimation = keyframes`
   to {
     stroke-dashoffset: 0;
   }
 `;
 
-const StyledFirstLine = styled.path`
+const StyledFirstPath = styled.path`
   stroke-dasharray: 55;
   stroke-dashoffset: 55;
-  animation: ${line} 0.6s ease forwards;
+  animation: ${pathAnimation} 0.6s ease forwards;
 `;
 
-const StyledSecondLine = styled.path`
+const StyledSecondPath = styled.path`
   stroke-dasharray: 55;
   stroke-dashoffset: 55;
-  animation: ${line} 0.6s ease forwards 0.4s;
+  animation: ${pathAnimation} 0.6s ease forwards 0.4s;
 `;
 
-const StyledThirdLine = styled.path`
+const StyledThirdPath = styled.path`
   stroke-dasharray: 360;
   stroke-dashoffset: 360;
-  animation: ${line} 2.2s ease forwards 1s;
+  animation: ${pathAnimation} 2.2s ease forwards 1s;
 `;
 
 export interface LogoProps {
@@ -53,9 +53,9 @@ const Logo: React.FC<LogoProps> = ({
   >
     {animated ? (
       <>
-        <StyledFirstLine strokeWidth={strokeWidth + 3} d={firstPath} />
-        <StyledSecondLine strokeWidth={strokeWidth} d={secondPath} />
-        <StyledThirdLine strokeWidth={strokeWidth} d={thirdPath} />
+        <StyledFirstPath strokeWidth={strokeWidth + 3} d={firstPath} />
+        <StyledSecondPath strokeWidth={strokeWidth} d={secondPath} />
+        <StyledThirdPath strokeWidth={strokeWidth} d={thirdPath} />
       </>
     ) : (
       <>
