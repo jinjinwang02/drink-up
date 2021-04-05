@@ -7,7 +7,7 @@ import { AddPlantBox } from '../components/add-plant-box';
 import { PageTitleWithBody } from '../components/page-title-with-body';
 import { Box } from '../components/box/box';
 import { BoxyButton } from '../components/button/boxy-button';
-import { AddButton } from '../stories/add-button.stories';
+import { AddButton } from '../components/button/add-button';
 import { CloudButton } from '../components/button/cloud-button';
 import { theme } from '../styles/theme';
 import { CrossButton } from '../components/button/cross-button';

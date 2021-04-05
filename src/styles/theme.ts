@@ -90,6 +90,12 @@ const textStyles = {
     fontSize: 12,
     lineHeight: '14px',
   },
+  bodyMBold: {
+    fontFamily: 'HelveticaNeue-Light, Helvetica Neue',
+    fontWeight: 700,
+    fontSize: 12,
+    lineHeight: '14px',
+  },
   bodyS: {
     fontFamily: 'HelveticaNeue-Light, Helvetica Neue',
     fontWeight: 200,
@@ -167,6 +173,7 @@ const borders = {
   regularBlack: `1px solid ${colors.pureBlack}`,
   inactiveGrey: `1px solid ${colors.lightGrey}`,
   mediumGrey: `1px solid ${colors.mediumGrey}`,
+  blue: `2px solid ${colors.pastelBlue}`,
   transparent: '1px solid transparent',
 };
 

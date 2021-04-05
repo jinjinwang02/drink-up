@@ -6,7 +6,7 @@ import { Image } from '../image';
 export interface BoxWithImageProps {
   imageUrl?: string;
   imageText?: string;
-  width: number[];
+  width: number[] | number;
   topBoxHeight: number[];
   alt?: string;
   bottomAccessory?: React.ReactNode;
@@ -28,7 +28,13 @@ const BoxWithImage: React.FC<BoxWithImageProps> = ({
       height={topBoxHeight}
       border={[invertible ? undefined : 'regularBlack', 'regularBlack']}
       pt={[invertible ? 'zero' : 'onePointTwo', 'onePointSix']}
-      pb={invertible ? ['zero', 'onePointSix'] : 'zeroPointSix'}
+      pb={
+        invertible
+          ? ['zero', 'onePointSix']
+          : imageText
+          ? 'zeroPointSix'
+          : 'onePointSix'
+      }
       px={[invertible ? 'zero' : 'onePointTwo', 'onePointSix']}
     >
       <Image url={imageUrl || '/image/default-plant-image.png'} alt={alt} />

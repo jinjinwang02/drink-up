@@ -4,7 +4,7 @@ import { BoxWithImage } from '../components/box/box-with-image';
 import { Box } from '../components/box/box';
 
 export default {
-  title: 'Components/Box/Box with image',
+  title: 'Components/Basic Boxes/Box with Image',
   component: BoxWithImage,
 } as Meta;
 

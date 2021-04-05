@@ -7,7 +7,7 @@ import {
 import { Box } from '../components/box/box';
 
 export default {
-  title: 'Components/Box/Selectable Box With Image',
+  title: 'Components/Basic Boxes/Selectable Box With Image',
   component: SelectableBoxWithImageComponent,
   args: {
     imageUrl: 'http://placeimg.com/640/360/any',

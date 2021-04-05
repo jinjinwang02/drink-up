@@ -29,7 +29,6 @@ const StyledBox = styled(Box)`
 
 const CELL_WIDTH_AND_HEIGHT = '35px';
 export const DATE_DISPLAY_FORMAT = 'DD/MM/YYYY';
-export const DATE_DIFF_FORMAT = 'YYYY-MM-DD';
 const DAY_FORMAT = 'D';
 const MONTH_FORMAT = 'M';
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];

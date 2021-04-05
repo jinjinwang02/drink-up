@@ -7,7 +7,7 @@ import {
 import { Box } from '../components/box/box';
 
 export default {
-  title: 'Components/Box/Box With Cloud',
+  title: 'Components/Basic Boxes/Box With Cloud',
   component: BoxWithCloudComponent,
   args: {
     topAccessory: '',
