@@ -13,6 +13,12 @@ export interface CollectionWithInputs extends Collection {
   createdAt?: string;
 }
 
+export interface CollectionFromDB extends Collection {
+  schedule: string;
+  lastWateredOn: string;
+  notes?: string;
+}
+
 export interface CustomCollectionWithInputs
   extends Omit<CollectionWithInputs, 'commonName'> {
   commonName?: string;

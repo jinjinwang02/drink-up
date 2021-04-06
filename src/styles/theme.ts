@@ -34,6 +34,11 @@ const textStyles = {
     fontSize: 32,
     lineHeight: '48px',
   },
+  h5: {
+    fontFamily: 'SaolDisplay-Regular',
+    fontSize: 28,
+    lineHeight: '44px',
+  },
   copyXL: {
     fontFamily: 'SaolDisplay-Regular',
     fontSize: 21,
@@ -81,6 +86,12 @@ const textStyles = {
   bodyL: {
     fontFamily: 'HelveticaNeue-Light, Helvetica Neue',
     fontWeight: 200,
+    fontSize: 14,
+    lineHeight: '18px',
+  },
+  bodyLBold: {
+    fontFamily: 'HelveticaNeue-Light, Helvetica Neue',
+    fontWeight: 700,
     fontSize: 14,
     lineHeight: '18px',
   },
@@ -148,7 +159,7 @@ const zIndices = {
   boxyButton: 99,
 };
 
-const breakpoints = ['576px', '768px', '1200px'];
+const breakpoints = ['576px', '768px', '998px', '1200px'];
 
 const device = {
   mobile: `(max-width: ${breakpoints[0]})`,
@@ -233,7 +244,7 @@ const GlobalStyle = createGlobalStyle`
       font-weight: 200;
     }
 
-    h1, h2, h3, h4 {
+    h1, h2, h3, h4, h5 {
       margin: 0;
       padding: 0;
     }

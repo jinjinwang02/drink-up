@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import React from 'react';
-import { transformDateForDiff } from '../utils';
+import { CollectionFromDB } from '../interfaces';
+import { getWateringCountdown } from '../utils';
 import { Box } from './box/box';
 import { BoxWithImage } from './box/box-with-image';
 import { CircleButton } from './button/circle-button';
@@ -9,22 +10,17 @@ import { DATE_DISPLAY_FORMAT } from './calendar';
 import { Water } from './icon/water';
 import { Typography } from './typography';
 
-const BOX_WIDTH = 272;
+const BOX_WIDTH_MD = 272;
+const BOX_WIDTH_SM = 240;
 
-export interface DisplayBoxProps {
-  id: string;
-  commonName: string;
-  lastWateredOn: string;
-  schedule: string;
-  imageUrl?: string;
-  notes?: string;
-  onClick: () => void;
+export interface DisplayBoxProps extends CollectionFromDB {
+  onClickWatered: () => void;
 }
 
 const TitleBox = ({ commonName }: { commonName: string }) => (
   <Box borderBottom="regularBlack" py="zeroPointEight" width="100%" pl="two">
-    <Typography textStyle="copyLBold">{commonName.toUpperCase()}</Typography>
-    <EditButton ml="one" mb="zeroPointFour" />
+    <Typography textStyle="copyLBold">{commonName}</Typography>
+    <EditButton ml="one" mb="zeroPointTwo" />
   </Box>
 );
 
@@ -93,17 +89,17 @@ const NextWateringDateBox = ({ countDown }: { countDown: number }) => (
 
 const SubmitBox = ({
   isWateredToday,
-  onClick,
+  onClickWatered,
 }: {
   isWateredToday: boolean;
-  onClick: () => void;
+  onClickWatered: () => void;
 }) => (
   <Box pt="zeroPointEight" pb="zeroPointSix" alignItems="center">
     <CircleButton
       pr="one"
       pb="zeroPointFour"
       checked={isWateredToday}
-      onClick={onClick}
+      onClick={onClickWatered}
     />
     <Typography textStyle="copyLBold">I watered it today</Typography>
   </Box>
@@ -114,13 +110,9 @@ const Content = ({
   lastWateredOn,
   schedule,
   notes,
-  onClick,
+  onClickWatered,
 }: DisplayBoxProps) => {
-  const nextWateringDate = dayjs(transformDateForDiff(lastWateredOn)).add(
-    parseInt(schedule, 10),
-    'day'
-  );
-  const countDown = dayjs(nextWateringDate).diff(dayjs(), 'day') + 1;
+  const countDown = getWateringCountdown(lastWateredOn, schedule);
   const isWateredToday = lastWateredOn === dayjs().format(DATE_DISPLAY_FORMAT);
   return (
     <Box flexDirection="column" width="100%">
@@ -128,7 +120,10 @@ const Content = ({
       <ScheduleAndNoteBox schedule={schedule} notes={notes} />
       <LastWateredOnBox lastWateredOn={lastWateredOn} />
       <NextWateringDateBox countDown={countDown} />
-      <SubmitBox isWateredToday={isWateredToday} onClick={onClick} />
+      <SubmitBox
+        isWateredToday={isWateredToday}
+        onClickWatered={onClickWatered}
+      />
     </Box>
   );
 };
@@ -140,12 +135,12 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
   lastWateredOn,
   schedule,
   notes,
-  onClick,
+  onClickWatered,
 }: DisplayBoxProps) => {
   return (
     <BoxWithImage
-      width={BOX_WIDTH}
-      topBoxHeight={[BOX_WIDTH]}
+      width={[BOX_WIDTH_SM, BOX_WIDTH_MD]}
+      topBoxHeight={[BOX_WIDTH_SM, BOX_WIDTH_MD]}
       imageUrl={imageUrl}
       alt={commonName}
       bottomAccessory={
@@ -155,7 +150,7 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
           schedule={schedule}
           lastWateredOn={lastWateredOn}
           notes={notes}
-          onClick={onClick}
+          onClickWatered={onClickWatered}
         />
       }
     />

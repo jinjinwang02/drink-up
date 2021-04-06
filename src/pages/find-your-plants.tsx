@@ -14,6 +14,7 @@ import { Layout } from '../components/layout';
 import { PageTitleWithBody } from '../components/page-title-with-body';
 import { Typography } from '../components/typography';
 import { BoxyButton } from '../components/button/boxy-button';
+import { NAVBAR_HEIGHT_MD, NAVBAR_HEIGHT_XS } from '../components/navbar';
 
 interface Props {
   collection: Collection[];
@@ -57,16 +58,21 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
   ]);
 
   return (
-    <Layout mb={['four', 'eight', 'ten']}>
+    <Layout
+      pt={[NAVBAR_HEIGHT_XS, NAVBAR_HEIGHT_MD]}
+      mb={['four', 'eight', 'ten']}
+    >
       <NextSeo
         title="Drink up | Find Your Plants"
         description=""
         canonical=""
       />
-      <PageTitleWithBody
-        title="Find your plants"
-        body="Can't find your plants? Don't worry, you can add them later."
-      />
+      <Box mb="three" width="100%">
+        <PageTitleWithBody
+          title="Find your plants"
+          body="Can't find your plants? Don't worry, you can add them later."
+        />
+      </Box>
       <Box
         width="100%"
         display="grid"

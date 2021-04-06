@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { CollectionWithInputs } from './interfaces';
 
 export const getPlantInputErrorMessage: (
@@ -32,3 +33,14 @@ export const transformDateForDiff: (date: string) => string = (
 export const generateId: () => string = () =>
   Math.random().toString(36).substring(2, 15) +
   Math.random().toString(36).substring(2, 15);
+
+export const getWateringCountdown: (
+  lastWateredOn: string,
+  schedule: string
+) => number = (lastWateredOn: string, schedule: string) => {
+  const nextWateringDate = dayjs(transformDateForDiff(lastWateredOn)).add(
+    parseInt(schedule, 10),
+    'day'
+  );
+  return dayjs(nextWateringDate).diff(dayjs(), 'day') + 1;
+};

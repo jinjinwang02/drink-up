@@ -11,7 +11,7 @@ import { Logo } from '../components/icon/logo';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { CloudButton } from '../components/button/cloud-button';
 import { theme } from '../styles/theme';
-import { NAVBAR_HEIGHT_MD, NAVBAR_HEIGHT_XS } from '../components/navbar';
+import { NAVBAR_HEIGHT_MD } from '../components/navbar';
 
 const Index: React.FC = () => {
   const { user, setLogIn } = useAuthContext();
@@ -24,21 +24,20 @@ const Index: React.FC = () => {
     }
   }, [router, user]);
   return (
-    <Layout>
+    <Layout hasMinHeight={!isXS}>
       <NextSeo title="Drink up | Homepage" description="" canonical="" />
       <Box
         width="100%"
-        height={['100%', '100vh']}
-        mt={[-NAVBAR_HEIGHT_XS, -NAVBAR_HEIGHT_MD]}
+        mt={[NAVBAR_HEIGHT_MD, -NAVBAR_HEIGHT_MD]}
+        mb={['ten', 'zero']}
         flexDirection={['column', 'column', 'column', 'row']}
         justifyContent={['center', 'center', 'center', 'space-around']}
-        mb={['eight', 'zero']}
         style={
           isXS
             ? {
                 transform: showAuthentication
-                  ? 'translateY(15%)'
-                  : 'translateY(65%)',
+                  ? 'translateY(5%)'
+                  : 'translateY(80%)',
               }
             : null
         }
@@ -47,16 +46,16 @@ const Index: React.FC = () => {
         <Box
           flexDirection="column"
           alignItems={['flex-start', 'center', 'center', 'flex-start']}
-          mb={['zero', 'eight', 'eight', 'zero']}
+          pb={['zero', 'eight', 'eight', 'zero']}
         >
-          <Box mb="zeroPointFour">
+          <Box pb="zeroPointFour">
             <Typography
               textStyle={['h2Brand', 'h2Brand', 'h1Brand']}
               mr={['two', 'three']}
             >
               DRINK UP
             </Typography>
-            <Box mb={['zeroPointFour', 'one']}>
+            <Box pb={['zeroPointFour', 'one']}>
               <Logo size={isXS ? 'small' : 'medium'} />
             </Box>
           </Box>
@@ -96,7 +95,7 @@ const Index: React.FC = () => {
             style={{
               opacity: showAuthentication ? 1 : 0,
             }}
-            mt="eight"
+            mt={showAuthentication ? 'eight' : 'zero'}
             transition={theme.transitions.slow}
             zIndex={showAuthentication ? 1 : -1}
           >
@@ -105,7 +104,6 @@ const Index: React.FC = () => {
         ) : (
           <Authentication />
         )}
-        {/* <Box> {isLogIn ? 'Log in' : 'Sign up'}</Box> */}
       </Box>
     </Layout>
   );

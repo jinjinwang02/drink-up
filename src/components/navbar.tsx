@@ -17,6 +17,7 @@ const NAV_DROPDOWN_WIDTH_MD = 125;
 
 interface NavbarProps {
   isUserLoggedIn?: boolean;
+  right: string[];
 }
 
 interface NavDropdownProps {
@@ -35,7 +36,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
     <Box
       flexDirection="column"
       width={['100vw', '100%']}
-      height={['85vh', NAV_DROPDOWN_HEIGHT_MD]}
+      height={['100vh', NAV_DROPDOWN_HEIGHT_MD]}
       position={['absolute', 'relative']}
       backgroundColor="pureWhite"
       justifyContent="space-evenly"
@@ -86,7 +87,10 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
   );
 };
 
-const Navbar: React.FC<NavbarProps> = ({ isUserLoggedIn }: NavbarProps) => {
+const Navbar: React.FC<NavbarProps> = ({
+  isUserLoggedIn,
+  right,
+}: NavbarProps) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const isXS = useMediaQuery();
   const handleCloseDropdown = useCallback((event: any) => {
@@ -108,7 +112,7 @@ const Navbar: React.FC<NavbarProps> = ({ isUserLoggedIn }: NavbarProps) => {
       width="100%"
       position="absolute"
       top={[NAVBAR_HEIGHT_XS - ICON_HEIGHT, NAVBAR_HEIGHT_MD - ICON_HEIGHT]}
-      right={['two', 'four', 'six', 'twelve']}
+      right={right}
       mb={['zero', -`${NAV_DROPDOWN_HEIGHT_MD}`]}
       justifyContent="flex-end"
     >

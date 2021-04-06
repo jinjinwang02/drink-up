@@ -22,7 +22,7 @@ const StyledPath = styled.path`
   animation: ${pathAnimation} 1.2s ease forwards 0.2s;
 `;
 const StyledSvg = styled.svg`
-  animation: ${fillAnimation} 0.4s ease forwards 1.4s;
+  animation: ${fillAnimation} 0.3s ease forwards 1.4s;
 `;
 
 const Water: React.FC<WaterProps> = ({ width = 10, animated }: WaterProps) =>

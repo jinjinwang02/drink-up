@@ -1,6 +1,5 @@
 import React, { useState, useContext, createContext, useCallback } from 'react';
 import 'firebase/auth';
-import firebase from 'firebase/app';
 import {
   Collection,
   CollectionWithInputs,
@@ -58,8 +57,8 @@ const PlantContext = createContext<PlantContextProps>({
 export const PlantProvider: React.FC<PlantContextProviderProps> = ({
   children,
 }: PlantContextProviderProps) => {
-  const { user } = useAuthContext();
-  const { firestore, firestoreFieldValue } = firebaseClient();
+  const { userRef, userDoc } = useAuthContext();
+  const { firestoreFieldValue } = firebaseClient();
   const [plantCollection, setPlantCollection] = useState<Collection[]>([]);
   const [plantCollectionWithInputs, setPlantCollectionWithInputs] = useState<
     CollectionWithInputs[]
@@ -101,30 +100,26 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
   );
 
   const addPlantEntry = useCallback(
-    async (
-      userRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>,
-      plant: CollectionWithInputs
-    ) => {
-      await userRef.update({
+    async (plant: CollectionWithInputs) => {
+      await userRef?.update({
         plants: firestoreFieldValue.arrayUnion({
           ...plant,
           createdAt: new Date(),
         }),
       });
     },
-    [firestoreFieldValue]
+    [firestoreFieldValue, userRef]
   );
 
   const updatePlantEntry = useCallback(
     async (
-      userRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>,
       existingPlantEntry: CollectionWithInputs,
       plant: CollectionWithInputs
     ) => {
-      await userRef.update({
+      await userRef?.update({
         plants: firestoreFieldValue.arrayRemove(existingPlantEntry),
       });
-      await userRef.update({
+      await userRef?.update({
         plants: firestoreFieldValue.arrayUnion({
           ...plant,
           createdAt: existingPlantEntry.createdAt,
@@ -132,7 +127,7 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
         }),
       });
     },
-    [firestoreFieldValue]
+    [firestoreFieldValue, userRef]
   );
 
   const handleAddOrEditPlants = useCallback(
@@ -154,29 +149,25 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
         }
       }
       if (!errorCount) {
-        const userRef = firestore.doc(`users/${user?.uid}`);
-        const existingPlants = (await userRef
-          .get()
-          .then((res) => res.data())
-          .then((data) => data?.plants)) as CollectionWithInputs[] | [];
+        const existingPlants = userDoc?.plants as CollectionWithInputs[] | [];
         const existingPlantsIds = existingPlants?.map(
           (el: CollectionWithInputs) => el.id
         );
         await Promise.all(
           plantInputs.map(async (plant) => {
             if (!existingPlantsIds?.includes(plant.id)) {
-              addPlantEntry(userRef, plant);
+              addPlantEntry(plant);
             } else {
               const existingPlantEntry = existingPlants?.filter(
                 (el) => el.id === plant.id
               )[0];
-              updatePlantEntry(userRef, existingPlantEntry, plant);
+              updatePlantEntry(existingPlantEntry, plant);
             }
           })
         );
       }
     },
-    [addPlantEntry, firestore, updatePlantEntry, user?.uid]
+    [addPlantEntry, updatePlantEntry, userDoc?.plants]
   );
 
   return (

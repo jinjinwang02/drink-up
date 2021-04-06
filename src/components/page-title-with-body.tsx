@@ -14,7 +14,7 @@ const PageTitleWithBody: React.FC<PageTitleWithBodyProps> = ({
   body,
   centered,
 }: PageTitleWithBodyProps) => (
-  <Box width="100%" flexDirection="column" mt={['one', 'zero']} mb="three">
+  <Box width="100%" flexDirection="column" mt={['one', 'zero']}>
     <Box alignSelf={['center', 'center', centered ? 'center' : 'flex-start']}>
       <TitleWithUnderline>{title}</TitleWithUnderline>
     </Box>

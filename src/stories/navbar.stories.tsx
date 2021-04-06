@@ -10,6 +10,6 @@ export default {
 
 export const Navbar: Story = () => (
   <Box px={['two', 'four', 'six', 'twelve']}>
-    <NavbarComponent isUserLoggedIn />
+    <NavbarComponent isUserLoggedIn right={['two', 'four', 'six', 'twelve']} />
   </Box>
 );

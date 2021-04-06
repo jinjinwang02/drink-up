@@ -9,6 +9,7 @@ import { PageTitleWithBody } from '../components/page-title-with-body';
 import { BoxyButton } from '../components/button/boxy-button';
 import { useRouter } from 'next/router';
 import { theme } from '../styles/theme';
+import { NAVBAR_HEIGHT_MD, NAVBAR_HEIGHT_XS } from '../components/navbar';
 
 const Index: NextPage = () => {
   const router = useRouter();
@@ -27,17 +28,22 @@ const Index: NextPage = () => {
   }, [handleAddOrEditPlants, inputErrors, plantCollectionWithInputs, router]);
 
   return (
-    <Layout mb={['four', 'eight', 'ten']}>
+    <Layout
+      pt={[NAVBAR_HEIGHT_XS, NAVBAR_HEIGHT_MD]}
+      mb={['four', 'eight', 'ten']}
+    >
       <NextSeo
         title="Drink up | Edit The Details"
         description=""
         canonical=""
       />
+
       <PageTitleWithBody title="Edit the details" />
       <Box
         width="100%"
         transition={theme.transitions.medium}
         display="grid"
+        mt="two"
         gridTemplateColumns={[
           '1fr',
           `repeat(auto-fill, minmax(${BOX_WIDTH_MD}px, 1fr))`,

@@ -50,23 +50,26 @@ const Index: NextPage = () => {
       top: document.body.scrollHeight,
       behavior: 'smooth',
     });
-  }, []);
+  }, [customCollectionWithInputs]);
 
   return (
-    <Layout mb={['four', 'eight', 'ten']}>
+    <Layout
+      flexDirection="column"
+      mb={
+        customCollectionWithInputs.length > 1
+          ? ['four', 'eight', 'ten']
+          : 'zero'
+      }
+    >
       <NextSeo title="Drink up | Add Your Plants" description="" canonical="" />
-      <Box
-        mt={customCollectionWithInputs.length ? 'zero' : 'ten'}
-        width="100%"
-        transition={theme.transitions.medium}
-      >
+      <Box width="100%" transition={theme.transitions.medium}>
         <PageTitleWithBody
           title="Add your plants"
           body="If you didn't find your plants, add them here."
           centered
         />
       </Box>
-      <Box flexDirection="column">
+      <Box flexDirection="column" alignSelf="flex-start">
         {customCollectionWithInputs.map((el) => (
           <Box key={el.id} mt="two" mb="three">
             <AddPlantBox plantId={el.id} />

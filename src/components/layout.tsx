@@ -1,27 +1,44 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useAuthContext } from '../context/auth-context';
 import { Box, BoxProps } from './box/box';
-import { Navbar, NAVBAR_HEIGHT_MD, NAVBAR_HEIGHT_XS } from './navbar';
+import { Navbar } from './navbar';
 
 interface LayoutProps extends BoxProps {
   children: React.ReactNode;
+  hasMinHeight?: boolean;
+  maxWidth?: 'default' | 'dashboard';
+  wrapPage?: boolean;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, ...rest }: LayoutProps) => {
+const Layout: React.FC<LayoutProps> = ({
+  children,
+  hasMinHeight = true,
+  maxWidth = 'default',
+  wrapPage = true,
+  ...rest
+}: LayoutProps) => {
   const { user } = useAuthContext();
+  const spacing = useMemo(
+    () =>
+      maxWidth === 'default'
+        ? ['two', 'four', 'six', 'twelve']
+        : ['two', 'four', 'five', 'seven', 'ten'],
+    [maxWidth]
+  );
   return (
     <Box
       width="100vw"
+      minHeight="100vh"
       position="relative"
       overflow="hidden"
-      px={['two', 'four', 'six', 'twelve']}
+      px={spacing}
       {...rest}
     >
-      <Navbar isUserLoggedIn={!!user} />
+      <Navbar isUserLoggedIn={!!user} right={spacing} />
       <Box
-        mt={[NAVBAR_HEIGHT_XS, NAVBAR_HEIGHT_MD]}
         width="100%"
-        flexWrap="wrap"
+        minHeight={hasMinHeight ? '100vh' : 0}
+        flexWrap={wrapPage ? 'wrap' : 'noWrap'}
       >
         {children}
       </Box>

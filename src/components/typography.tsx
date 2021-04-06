@@ -56,23 +56,19 @@ const Typography = forwardRef(
     }: React.ComponentProps<typeof StyledText>,
     ref
   ) => {
-    const [currentIndex, setCurrentIndex] = useState<number>(2);
+    const [currentIndex, setCurrentIndex] = useState<number>(3);
 
     useEffect(() => {
-      if (window.matchMedia(`${theme.device.mobile}`).matches) {
+      if (window.matchMedia(theme.device.mobile).matches) {
         setCurrentIndex(0);
-      } else if (window.matchMedia(`${theme.device.tablet}`).matches) {
+      } else if (window.matchMedia(theme.device.tablet).matches) {
         setCurrentIndex(1);
-      } else if (window.matchMedia(`${theme.device.landscape}`).matches) {
+      } else if (window.matchMedia(theme.device.landscape).matches) {
         setCurrentIndex(2);
-      } else if (
-        window.matchMedia(`${theme.device.desktop}`).matches ||
-        window.matchMedia(`${theme.device.desktopL}`).matches
-      ) {
+      } else if (window.matchMedia(theme.device.desktop).matches) {
         setCurrentIndex(3);
       }
     }, []);
-
     const setHTMLTag = (currentTextStyle: keyof Theme['textStyles']) => {
       const currentTextStyleCSS = theme.textStyles[
         currentTextStyle
@@ -88,6 +84,9 @@ const Typography = forwardRef(
       }
       if (currentTextStyle.match(/h4/)) {
         return <h4 style={currentTextStyleCSS}>{children}</h4>;
+      }
+      if (currentTextStyle.match(/h5/)) {
+        return <h5 style={currentTextStyleCSS}>{children}</h5>;
       }
       if (currentTextStyle.match(/body/) || currentTextStyle.match(/copy/)) {
         return <span style={currentTextStyleCSS}>{children}</span>;

@@ -1,13 +1,17 @@
 import React from 'react';
 
-const Edit: React.FC = () => (
+interface EditProps {
+  width?: number;
+}
+
+const Edit: React.FC<EditProps> = ({ width = 16 }: EditProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 67.23 67.23"
     fill="none"
     stroke="#000"
-    height={16}
-    width={16}
+    height={width}
+    width={width}
   >
     <path
       fill="#000"
