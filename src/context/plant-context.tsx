@@ -8,6 +8,7 @@ import {
 import { firebaseClient } from '../firebase/firebase-client';
 import { useAuthContext } from './auth-context';
 import { getPlantInputErrorMessage } from '../utils';
+import { useRouter } from 'next/router';
 
 const REQUIRED_FIELDS: (keyof CollectionWithInputs)[] = [
   'id',
@@ -36,7 +37,7 @@ interface PlantContextProps {
   setCustomCollectionWithInputs: (
     value: React.SetStateAction<CustomCollectionWithInputs[]>
   ) => void;
-  handleAddOrEditPlants: (inputs: CollectionWithInputs[]) => void;
+  handleAddOrEditPlants: (inputs: CollectionWithInputs[], href: string) => void;
   handleSetInput: (id: string | undefined, name: string, value: string) => void;
 }
 
@@ -57,6 +58,7 @@ const PlantContext = createContext<PlantContextProps>({
 export const PlantProvider: React.FC<PlantContextProviderProps> = ({
   children,
 }: PlantContextProviderProps) => {
+  const router = useRouter();
   const { userRef, userDoc } = useAuthContext();
   const { firestoreFieldValue } = firebaseClient();
   const [plantCollection, setPlantCollection] = useState<Collection[]>([]);
@@ -131,7 +133,7 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
   );
 
   const handleAddOrEditPlants = useCallback(
-    async (plantInputs: CollectionWithInputs[]) => {
+    async (plantInputs: CollectionWithInputs[], href: string) => {
       setInputErrors(null);
       let errorCount = 0;
       for (const input of plantInputs) {
@@ -164,10 +166,10 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
               updatePlantEntry(existingPlantEntry, plant);
             }
           })
-        );
+        ).then(() => router.push(href));
       }
     },
-    [addPlantEntry, updatePlantEntry, userDoc?.plants]
+    [addPlantEntry, router, updatePlantEntry, userDoc?.plants]
   );
 
   return (

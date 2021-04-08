@@ -4,7 +4,7 @@ import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { Box } from '../box/box';
 
 const Bin: React.FC = () => {
-  const isXS = useMediaQuery();
+  const { isXS } = useMediaQuery();
   const [isHovered, setHovered] = useState<boolean>(false);
   return (
     <Box

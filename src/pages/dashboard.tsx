@@ -14,16 +14,16 @@ import { ButtonContainer } from '../components/button/button-container';
 
 import { CollectionFromDB } from '../interfaces';
 import { getWateringCountdown } from '../utils';
-import { NAVBAR_HEIGHT_XS } from '../components/navbar';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { TitleWithUnderline } from '../components/title-with-underline';
+import { theme } from '../styles/theme';
 
 interface Props {
   userDoc?: UserDoc;
 }
 
 const Index: NextPage<any> = ({ userDoc }: Props) => {
-  const isXS = useMediaQuery();
+  const { isXS, isSM } = useMediaQuery();
   const plants = useMemo(() => (userDoc?.plants || []) as CollectionFromDB[], [
     userDoc?.plants,
   ]);
@@ -42,14 +42,33 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
     },
     [plants]
   );
+
+  const getGradientProps = useCallback((difference) => {
+    const sharedProps = {
+      '-webkit-background-clip': 'text',
+      '-webkit-text-fill-color': 'transparent',
+    };
+    if (difference === 3) {
+      return {
+        background: `-webkit-linear-gradient(${theme.colors.lightestGrey}, ${theme.colors.mediumGrey})`,
+        ...sharedProps,
+      };
+    } else if (difference === -3) {
+      return {
+        background: `-webkit-linear-gradient(${theme.colors.mediumGrey}, ${theme.colors.lightestGrey})`,
+        ...sharedProps,
+      };
+    }
+  }, []);
+
   return (
     <Layout
+      flexDirection={['column', 'row']}
       justifyContent={['flex-start', 'space-between']}
       maxWidth="dashboard"
-      flexDirection={['column', 'row']}
-      mt={[NAVBAR_HEIGHT_XS, 0]}
       hasMinHeight={!isXS}
-      wrapPage={false}
+      height={isXS ? '100%' : '100vh'}
+      wrapPage={isXS ? true : false}
     >
       <NextSeo title="Drink up | Dashboard" description="" canonical="" />
       <Box
@@ -59,9 +78,10 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
         alignItems={['center', 'flex-start']}
         display={['flex', 'none', 'none', 'flex']}
         mb={['four', 'zero']}
+        maxWidth="520px"
       >
         <Typography textStyle={['h2', 'h2', 'h2', 'h1']}>
-          Hi {userDoc?.displayName},
+          Hi {userDoc?.displayName ?? 'there'},
         </Typography>
         {!isXS ? (
           <Typography
@@ -79,24 +99,33 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
               : `You haven't added any plants.`}
           </TitleWithUnderline>
         )}
-        {plantsDueTomorrow.length ? (
-          <Box
-            mt={['four', 'three']}
-            justifyContent={['center', 'flex-start']}
-            flexWrap="wrap"
-          >
-            {plantsDueTomorrow.map((el) => (
-              <Typography key={el.id} textStyle="bodyL">
-                {el.commonName},&nbsp;
+        <Box
+          mt={['four', 'three']}
+          mb={['zero', 'four']}
+          justifyContent={['center', 'flex-start']}
+          flexWrap="wrap"
+        >
+          {plantsDueTomorrow.length ? (
+            <>
+              {plantsDueTomorrow.map((el) => (
+                <Typography key={el.id} textStyle="bodyL">
+                  {el.commonName},&nbsp;
+                </Typography>
+              ))}
+              <Typography textStyle="bodyL">
+                {plantsDueTomorrow.length > 1 ? 'need' : 'needs'} to be
+                watered&nbsp;
               </Typography>
-            ))}
+              <Typography textStyle="bodyLBold">tomorrow.</Typography>
+            </>
+          ) : plants.length ? (
             <Typography textStyle="bodyL">
-              {plantsDueTomorrow.length > 1 ? 'need' : 'needs'} to be
-              watered&nbsp;
+              All sufficently hydrated :)
             </Typography>
-            <Typography textStyle="bodyLBold">tomorrow.</Typography>
-          </Box>
-        ) : null}
+          ) : (
+            <Typography textStyle="bodyL">Why not adding some?</Typography>
+          )}
+        </Box>
       </Box>
       {currentPlant ? (
         <Box mx="one" flexGrow={1} display={['none', 'flex']}>
@@ -119,56 +148,85 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
       >
         <Underline variant="tertiary" />
       </Box>
-      <Box
-        flexGrow={[0, 1]}
-        flexShrink={0}
-        flexDirection="column"
-        alignItems={['center', 'flex-start']}
-      >
-        {plants.map((el: CollectionFromDB) => (
-          <Box key={el.id} mb="twoPointTwo">
-            <ButtonContainer onClick={() => handleClickTitle(el.id)}>
-              <Typography
-                textStyle={['h3', 'h5', 'h3']}
-                color={currentPlant?.id === el.id ? 'pureBlack' : 'mediumGrey'}
-              >
-                {el.commonName}
-              </Typography>
-            </ButtonContainer>
-          </Box>
-        ))}
-      </Box>
+      {isXS ? (
+        <Box flexGrow={0} flexShrink={0} flexDirection="column">
+          {plants.map((el: CollectionFromDB) => (
+            <Box key={el.id} id="title" mb="twoPointTwo">
+              <ButtonContainer onClick={() => handleClickTitle(el.id)}>
+                <Typography
+                  textStyle="h3"
+                  color={
+                    currentPlant?.id === el.id ? 'pureBlack' : 'mediumGrey'
+                  }
+                >
+                  {el.commonName.length}
+                </Typography>
+              </ButtonContainer>
+            </Box>
+          ))}
+        </Box>
+      ) : (
+        <Box
+          flexGrow={1}
+          flexShrink={0}
+          alignItems="flex-start"
+          position="relative"
+          flexDirection="column"
+          transition={theme.transitions.medium}
+          style={{
+            transform: `translateY(calc(${
+              isSM ? '40vh' : '45vh'
+            } - ${plants.indexOf(currentPlant)} * ${isSM ? '66px' : '76px'}))`,
+          }}
+        >
+          {plants.map((el: CollectionFromDB) => (
+            <Box key={el.id} mb="twoPointTwo">
+              <ButtonContainer onClick={() => handleClickTitle(el.id)}>
+                <Typography
+                  textStyle={['h3', 'h5', 'h3']}
+                  style={getGradientProps(
+                    plants.indexOf(currentPlant) - plants.indexOf(el)
+                  )}
+                  color={
+                    currentPlant?.id === el.id
+                      ? 'pureBlack'
+                      : plants.indexOf(currentPlant) - plants.indexOf(el) > 3 ||
+                        plants.indexOf(currentPlant) - plants.indexOf(el) < -3
+                      ? 'lightestGrey'
+                      : 'mediumGrey'
+                  }
+                >
+                  {el.commonName.length > 20
+                    ? el.commonName.slice(0, 20) + '...'
+                    : el.commonName}
+                </Typography>
+              </ButtonContainer>
+            </Box>
+          ))}
+        </Box>
+      )}
     </Layout>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const cookies = nookies.get(ctx);
-  const token = await verifyIdToken(cookies.token);
+  try {
+    const cookies = nookies.get(ctx);
+    const token = await verifyIdToken(cookies.token);
 
-  const userDoc = await admin
-    .firestore()
-    .doc(`users/${token.uid}`)
-    .get()
-    .then((res) => res.data());
+    const userDoc = await admin
+      .firestore()
+      .doc(`users/${token.uid}`)
+      .get()
+      .then((res) => res.data());
 
-  return {
-    props: { userDoc: JSON.parse(JSON.stringify(userDoc)) },
-  };
+    return {
+      props: { userDoc: JSON.parse(JSON.stringify(userDoc)) },
+    };
+  } catch (error) {
+    console.log(error);
+    return { props: {} };
+  }
 };
-
-// export const getServerSideProps: GetServerSideProps = async (context: any) => {
-//   try {
-//     const cookies = nookies.get(context);
-//     const token = await verifyIdToken(cookies.token);
-//     return {
-//       props: { session: token },
-//     };
-//   } catch (error) {
-//     context.res.writeHead(302, { location: '/' });
-//     context.res.end();
-//     return { props: {} };
-//   }
-// };
 
 export default Index;

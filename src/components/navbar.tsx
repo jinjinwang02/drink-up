@@ -35,15 +35,15 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
   return (
     <Box
       flexDirection="column"
-      width={['100vw', '100%']}
-      height={['100vh', NAV_DROPDOWN_HEIGHT_MD]}
-      position={['absolute', 'relative']}
+      width="100%"
+      height={['100%', NAV_DROPDOWN_HEIGHT_MD]}
+      position={['fixed', 'relative']}
       backgroundColor="pureWhite"
       justifyContent="space-evenly"
-      mt={['three', 'two']}
+      mt={[NAVBAR_HEIGHT_XS, 'two']}
       border={['none', 'regularBlack']}
       top={[-`${NAVBAR_HEIGHT_XS}`, 'zero']}
-      right={-`${theme.space.one}`}
+      right={0}
       style={{
         transform: !isXS
           ? showDropdown
@@ -54,11 +54,11 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
         cursor: showDropdown ? 'pointer' : 'auto',
       }}
       transition={theme.transitions.medium}
-      zIndex={showDropdown ? 1 : 0}
+      zIndex={showDropdown ? 'navbar' : 0}
     >
       {showDropdown && isXS ? (
         <Box
-          position="absolute"
+          position="fixed"
           onClick={(e: any) => onCloseDropdown(e)}
           top="four"
           left="four"
@@ -92,11 +92,9 @@ const Navbar: React.FC<NavbarProps> = ({
   right,
 }: NavbarProps) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-  const isXS = useMediaQuery();
+  const { isXS } = useMediaQuery();
   const handleCloseDropdown = useCallback((event: any) => {
     const icon = document?.getElementById('userIcon');
-    // don't perform the function if the target is the icon for the dropdown
-    // otherwise menu will be firstly closed by the document event then opened
     if (event.target === icon || icon?.contains(event.target)) return;
     setShowDropdown(false);
   }, []);

@@ -14,18 +14,14 @@ import { NAVBAR_HEIGHT_MD, NAVBAR_HEIGHT_XS } from '../components/navbar';
 const Index: NextPage = () => {
   const router = useRouter();
   const {
-    inputErrors,
     plantCollection,
     plantCollectionWithInputs,
     handleAddOrEditPlants,
   } = usePlantContext();
 
   const handleSubmit = useCallback(() => {
-    handleAddOrEditPlants(plantCollectionWithInputs);
-    if (!inputErrors) {
-      router.push('/add-your-plants');
-    }
-  }, [handleAddOrEditPlants, inputErrors, plantCollectionWithInputs, router]);
+    handleAddOrEditPlants(plantCollectionWithInputs, 'add-your-plants');
+  }, [handleAddOrEditPlants, plantCollectionWithInputs]);
 
   return (
     <Layout
@@ -44,6 +40,7 @@ const Index: NextPage = () => {
         transition={theme.transitions.medium}
         display="grid"
         mt="two"
+        pb="five"
         gridTemplateColumns={[
           '1fr',
           `repeat(auto-fill, minmax(${BOX_WIDTH_MD}px, 1fr))`,

@@ -8,7 +8,7 @@ interface CloudProps {
 }
 
 const Cloud: React.FC<CloudProps> = ({ width, allowXS = true }: CloudProps) => {
-  const isXS = useMediaQuery();
+  const { isXS } = useMediaQuery();
   return (
     <Box width={width}>
       <svg

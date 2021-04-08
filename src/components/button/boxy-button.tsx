@@ -15,7 +15,7 @@ const BoxyButton: React.FC<BoxyButtonProps> = ({
   onNext,
   onBack,
 }: BoxyButtonProps) => {
-  const isXS = useMediaQuery();
+  const { isXS } = useMediaQuery();
   return (
     <Box
       position="fixed"

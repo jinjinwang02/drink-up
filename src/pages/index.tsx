@@ -16,7 +16,7 @@ import { NAVBAR_HEIGHT_MD } from '../components/navbar';
 const Index: React.FC = () => {
   const { user, setLogIn } = useAuthContext();
   const router = useRouter();
-  const isXS = useMediaQuery();
+  const { isXS } = useMediaQuery();
   const [showAuthentication, setShowAuthentication] = useState<boolean>(false);
   useEffect(() => {
     if (user) {
@@ -28,7 +28,7 @@ const Index: React.FC = () => {
       <NextSeo title="Drink up | Homepage" description="" canonical="" />
       <Box
         width="100%"
-        mt={[NAVBAR_HEIGHT_MD, -NAVBAR_HEIGHT_MD]}
+        mt={[NAVBAR_HEIGHT_MD, -NAVBAR_HEIGHT_MD + 20]}
         mb={['ten', 'zero']}
         flexDirection={['column', 'column', 'column', 'row']}
         justifyContent={['center', 'center', 'center', 'space-around']}

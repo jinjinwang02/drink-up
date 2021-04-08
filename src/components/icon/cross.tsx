@@ -2,7 +2,7 @@ import React from 'react';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 const Cross: React.FC = () => {
-  const isXS = useMediaQuery();
+  const { isXS } = useMediaQuery();
   return (
     <svg
       version="1.0"

@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { useAuthContext } from '../context/auth-context';
+import { theme } from '../styles/theme';
 import { Box, BoxProps } from './box/box';
-import { Navbar } from './navbar';
+import { Navbar, NAVBAR_HEIGHT_XS } from './navbar';
 
 interface LayoutProps extends BoxProps {
   children: React.ReactNode;
@@ -32,6 +33,7 @@ const Layout: React.FC<LayoutProps> = ({
       position="relative"
       overflow="hidden"
       px={spacing}
+      transition={theme.transitions.medium}
       {...rest}
     >
       <Navbar isUserLoggedIn={!!user} right={spacing} />
@@ -39,6 +41,7 @@ const Layout: React.FC<LayoutProps> = ({
         width="100%"
         minHeight={hasMinHeight ? '100vh' : 0}
         flexWrap={wrapPage ? 'wrap' : 'noWrap'}
+        mt={!hasMinHeight ? NAVBAR_HEIGHT_XS : 0}
       >
         {children}
       </Box>

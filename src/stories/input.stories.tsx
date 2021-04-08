@@ -18,9 +18,7 @@ export const Input: Story<InputProps> = ({ name, label }) => {
     initialValues: {
       [name]: '',
     },
-    onSubmit: () => {
-      console.log(formik.values[name]);
-    },
+    onSubmit: () => undefined,
   });
 
   return (

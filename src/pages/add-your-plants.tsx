@@ -18,7 +18,6 @@ import { CollectionWithInputs } from '../interfaces';
 const Index: NextPage = () => {
   const router = useRouter();
   const {
-    inputErrors,
     customCollectionWithInputs,
     setCustomCollectionWithInputs,
     handleAddOrEditPlants,
@@ -39,11 +38,11 @@ const Index: NextPage = () => {
       router.push('/dashboard');
       return;
     }
-    handleAddOrEditPlants(customCollectionWithInputs as CollectionWithInputs[]);
-    if (inputErrors) {
-      router.push('/dashboard');
-    }
-  }, [customCollectionWithInputs, handleAddOrEditPlants, inputErrors, router]);
+    handleAddOrEditPlants(
+      customCollectionWithInputs as CollectionWithInputs[],
+      '/dashboard'
+    );
+  }, [customCollectionWithInputs, handleAddOrEditPlants, router]);
 
   useEffect(() => {
     window.scrollTo({
@@ -55,6 +54,9 @@ const Index: NextPage = () => {
   return (
     <Layout
       flexDirection="column"
+      hasMinHeight={false}
+      justifyContent="flex-start"
+      pt={['zero', customCollectionWithInputs.length ? 'one' : 'nine']}
       mb={
         customCollectionWithInputs.length > 1
           ? ['four', 'eight', 'ten']
@@ -69,7 +71,7 @@ const Index: NextPage = () => {
           centered
         />
       </Box>
-      <Box flexDirection="column" alignSelf="flex-start">
+      <Box flexDirection="column" alignSelf="flex-start" mt="three">
         {customCollectionWithInputs.map((el) => (
           <Box key={el.id} mt="two" mb="three">
             <AddPlantBox plantId={el.id} />
@@ -81,14 +83,14 @@ const Index: NextPage = () => {
             <CrossButton onClick={handleDeleteBox} />
           </Box>
         ) : (
-          <>
+          <Box flexDirection="column" mt="four">
             <CloudButton my="three" borderless onClick={handleAddBox}>
               Start!
             </CloudButton>
             <CloudButton my="three" borderless onClick={handleSubmit}>
               Nope I&apos;m done
             </CloudButton>
-          </>
+          </Box>
         )}
       </Box>
       <BoxyButton onBack={() => router.back()} onNext={handleSubmit} />

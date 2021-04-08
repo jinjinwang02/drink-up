@@ -20,7 +20,7 @@ export interface DisplayBoxProps extends CollectionFromDB {
 const TitleBox = ({ commonName }: { commonName: string }) => (
   <Box borderBottom="regularBlack" py="zeroPointEight" width="100%" pl="two">
     <Typography textStyle="copyLBold">{commonName}</Typography>
-    <EditButton ml="one" mb="zeroPointTwo" />
+    <EditButton ml="one" mb="zeroPointThree" />
   </Box>
 );
 
@@ -47,7 +47,7 @@ const ScheduleAndNoteBox = ({
         Every {schedule} day{parseInt(schedule, 10) > 1 ? 's' : ''}
       </Typography>
     </Box>
-    <Box pb="zeroPointSix" flexWrap="wrap">
+    <Box pb="zeroPointTwo" flexWrap="wrap">
       <Typography pt="zeroPointSix" textStyle="bodyM" pr="zeroPointSix">
         My note:
       </Typography>

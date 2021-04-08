@@ -131,6 +131,7 @@ const space = {
   zero: 0,
   zeroPointOne: 1,
   zeroPointTwo: 2,
+  zeroPointThree: 3,
   zeroPointFour: 4,
   zeroPointSix: 6,
   zeroPointEight: 8,
@@ -149,6 +150,7 @@ const space = {
   six: 60,
   seven: 70,
   eight: 80,
+  nine: 90,
   ten: 100,
   twelve: 120,
   calendarHeight: 255,
@@ -156,7 +158,8 @@ const space = {
 
 const zIndices = {
   calendar: 9,
-  boxyButton: 99,
+  boxyButton: 49,
+  navbar: 99,
 };
 
 const breakpoints = ['576px', '768px', '998px', '1200px'];
