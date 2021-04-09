@@ -152,7 +152,9 @@ const space = {
   eight: 80,
   nine: 90,
   ten: 100,
+  eleven: 110,
   twelve: 120,
+  fourteen: 140,
   calendarHeight: 255,
 };
 
@@ -160,6 +162,7 @@ const zIndices = {
   calendar: 9,
   boxyButton: 49,
   navbar: 99,
+  dropdown: 149,
 };
 
 const breakpoints = ['576px', '768px', '998px', '1200px'];
@@ -176,6 +179,7 @@ const colors = {
   pureWhite: 'rgba(255, 255, 255, 1)',
   pureWhiteThirty: 'rgba(255, 255, 255, 0.30)',
   pureBlack: 'rgba(0, 0, 0, 1)',
+  pureBlackTwenty: 'rgba(0, 0, 0, 0.20)',
   darkGrey: 'rgba(121,121,121,1)',
   mediumGrey: 'rgba(190,190,190,1)',
   lightGrey: 'rgba(227,227,227,1)',

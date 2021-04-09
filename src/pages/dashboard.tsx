@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import * as admin from 'firebase-admin';
 import nookies from 'nookies';
 import { NextSeo } from 'next-seo';
@@ -17,6 +17,7 @@ import { getWateringCountdown } from '../utils';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { TitleWithUnderline } from '../components/title-with-underline';
 import { theme } from '../styles/theme';
+import { NAVBAR_HEIGHT_XS } from '../components/navbar';
 
 interface Props {
   userDoc?: UserDoc;
@@ -27,6 +28,7 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
   const plants = useMemo(() => (userDoc?.plants || []) as CollectionFromDB[], [
     userDoc?.plants,
   ]);
+  const [showXSDisplayBox, setShowXSDisplayBox] = useState<boolean>(false);
   const [currentPlant, setCurrentPlant] = useState<CollectionFromDB>(plants[0]);
   const plantsDueTomorrow = useMemo(
     () =>
@@ -39,14 +41,24 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
   const handleClickTitle = useCallback(
     (id: string) => {
       setCurrentPlant(plants.filter((el: CollectionFromDB) => el.id === id)[0]);
+      setShowXSDisplayBox(true);
     },
-    [plants]
+    [plants, setShowXSDisplayBox]
+  );
+
+  const handleDismissDisplayBox = useCallback(
+    (event: any) => {
+      const box = document?.getElementById(currentPlant.id);
+      if (event.target === box || box?.contains(event.target)) return;
+      setShowXSDisplayBox(false);
+    },
+    [currentPlant.id]
   );
 
   const getGradientProps = useCallback((difference) => {
     const sharedProps = {
-      '-webkit-background-clip': 'text',
-      '-webkit-text-fill-color': 'transparent',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
     };
     if (difference === 3) {
       return {
@@ -61,14 +73,25 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (isXS) {
+      document.addEventListener('mouseup', handleDismissDisplayBox);
+    }
+    return () => {
+      document.removeEventListener('mouseup', handleDismissDisplayBox);
+    };
+  }, [handleDismissDisplayBox, isXS]);
+
   return (
     <Layout
-      flexDirection={['column', 'row']}
-      justifyContent={['flex-start', 'space-between']}
       maxWidth="dashboard"
-      hasMinHeight={!isXS}
+      pt={isXS ? NAVBAR_HEIGHT_XS : 'zero'}
+      pb={isXS ? 'five' : 'zero'}
       height={isXS ? '100%' : '100vh'}
+      pageFlexDirection={['column', 'row']}
+      justifyContent={['flex-start', 'space-between']}
       wrapPage={isXS ? true : false}
+      bg={isXS && showXSDisplayBox ? 'pureBlackTwenty' : 'pureWhite'}
     >
       <NextSeo title="Drink up | Dashboard" description="" canonical="" />
       <Box
@@ -128,7 +151,21 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
         </Box>
       </Box>
       {currentPlant ? (
-        <Box mx="one" flexGrow={1} display={['none', 'flex']}>
+        <Box
+          mx="one"
+          height={isXS ? '100vh' : '100%'}
+          flexGrow={1}
+          position={['fixed', 'relative']}
+          top="50%"
+          zIndex={1}
+          display={['flex', 'flex']}
+          style={{
+            transform: isXS ? 'translateY(-50%)' : 'translateY(0)',
+            opacity: showXSDisplayBox ? 1 : 0,
+            visibility: showXSDisplayBox ? 'visible' : 'hidden',
+          }}
+          transition={theme.transitions.medium}
+        >
           <DisplayBox
             id={currentPlant.id}
             commonName={currentPlant.commonName}
@@ -151,15 +188,15 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
       {isXS ? (
         <Box flexGrow={0} flexShrink={0} flexDirection="column">
           {plants.map((el: CollectionFromDB) => (
-            <Box key={el.id} id="title" mb="twoPointTwo">
+            <Box key={el.id} id="title" mb="two">
               <ButtonContainer onClick={() => handleClickTitle(el.id)}>
                 <Typography
-                  textStyle="h3"
+                  textStyle="h5"
                   color={
                     currentPlant?.id === el.id ? 'pureBlack' : 'mediumGrey'
                   }
                 >
-                  {el.commonName.length}
+                  {el.commonName}
                 </Typography>
               </ButtonContainer>
             </Box>
@@ -183,7 +220,7 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
             <Box key={el.id} mb="twoPointTwo">
               <ButtonContainer onClick={() => handleClickTitle(el.id)}>
                 <Typography
-                  textStyle={['h3', 'h5', 'h3']}
+                  textStyle={['h4', 'h5', 'h3']}
                   style={getGradientProps(
                     plants.indexOf(currentPlant) - plants.indexOf(el)
                   )}

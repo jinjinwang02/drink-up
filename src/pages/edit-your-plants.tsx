@@ -3,7 +3,11 @@ import { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
 import { Box } from '../components/box/box';
 import { usePlantContext } from '../context/plant-context';
-import { EditPlantBox, BOX_WIDTH_MD } from '../components/edit-plant-box';
+import {
+  EditPlantBox,
+  BOX_WIDTH_MD,
+  BOX_WIDTH_XS,
+} from '../components/edit-plant-box';
 import { Layout } from '../components/layout';
 import { PageTitleWithBody } from '../components/page-title-with-body';
 import { BoxyButton } from '../components/button/boxy-button';
@@ -37,16 +41,16 @@ const Index: NextPage = () => {
       <PageTitleWithBody title="Edit the details" />
       <Box
         width="100%"
-        transition={theme.transitions.medium}
         display="grid"
-        mt="two"
-        pb="five"
+        alignItems="flex-start"
         gridTemplateColumns={[
-          '1fr',
+          BOX_WIDTH_XS,
           `repeat(auto-fill, minmax(${BOX_WIDTH_MD}px, 1fr))`,
         ]}
         gridRowGap="four"
-        alignItems="flex-start"
+        transition={theme.transitions.medium}
+        mt="two"
+        pb="five"
       >
         {plantCollection.map((plant) => {
           const { id, imageUrl, commonName } = plant;

@@ -139,6 +139,7 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
 }: DisplayBoxProps) => {
   return (
     <BoxWithImage
+      id={id}
       width={[BOX_WIDTH_SM, BOX_WIDTH_MD]}
       topBoxHeight={[BOX_WIDTH_SM, BOX_WIDTH_MD]}
       imageUrl={imageUrl}

@@ -52,46 +52,44 @@ const Index: NextPage = () => {
   }, [customCollectionWithInputs]);
 
   return (
-    <Layout
-      flexDirection="column"
-      hasMinHeight={false}
-      justifyContent="flex-start"
-      pt={['zero', customCollectionWithInputs.length ? 'one' : 'nine']}
-      mb={
-        customCollectionWithInputs.length > 1
-          ? ['four', 'eight', 'ten']
-          : 'zero'
-      }
-    >
+    <Layout>
       <NextSeo title="Drink up | Add Your Plants" description="" canonical="" />
-      <Box width="100%" transition={theme.transitions.medium}>
+      <Box
+        flexDirection="column"
+        pt={customCollectionWithInputs.length ? 'seven' : 'fourteen'}
+        pb="twelve"
+        transition={theme.transitions.medium}
+      >
         <PageTitleWithBody
           title="Add your plants"
           body="If you didn't find your plants, add them here."
           centered
         />
-      </Box>
-      <Box flexDirection="column" alignSelf="flex-start" mt="three">
-        {customCollectionWithInputs.map((el) => (
-          <Box key={el.id} mt="two" mb="three">
-            <AddPlantBox plantId={el.id} />
-          </Box>
-        ))}
-        {customCollectionWithInputs.length ? (
-          <Box mt="one" width="100%" justifyContent="space-around">
-            <AddButton onClick={handleAddBox} />
-            <CrossButton onClick={handleDeleteBox} />
-          </Box>
-        ) : (
-          <Box flexDirection="column" mt="four">
-            <CloudButton my="three" borderless onClick={handleAddBox}>
-              Start!
-            </CloudButton>
-            <CloudButton my="three" borderless onClick={handleSubmit}>
-              Nope I&apos;m done
-            </CloudButton>
-          </Box>
-        )}
+        <Box flexDirection="column">
+          {customCollectionWithInputs.map((el) => (
+            <Box key={el.id} mt="five">
+              <AddPlantBox plantId={el.id} />
+            </Box>
+          ))}
+          {customCollectionWithInputs.length ? (
+            <Box width="100%" justifyContent="space-around" mt="four">
+              <AddButton onClick={handleAddBox} />
+              <CrossButton onClick={handleDeleteBox} />
+            </Box>
+          ) : (
+            <>
+              <Box height="250px" width="200px" />
+              <Box flexDirection="column" position="absolute" width="200px">
+                <CloudButton my="three" borderless onClick={handleAddBox}>
+                  Start!
+                </CloudButton>
+                <CloudButton my="three" borderless onClick={handleSubmit}>
+                  Nope I&apos;m done
+                </CloudButton>
+              </Box>
+            </>
+          )}
+        </Box>
       </Box>
       <BoxyButton onBack={() => router.back()} onNext={handleSubmit} />
     </Layout>

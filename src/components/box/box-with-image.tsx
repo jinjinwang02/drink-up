@@ -4,6 +4,7 @@ import { Box } from './box';
 import { Image } from '../image';
 
 export interface BoxWithImageProps {
+  id?: string;
   imageUrl?: string;
   imageText?: string;
   width: number[] | number;
@@ -20,8 +21,14 @@ const BoxWithImage: React.FC<BoxWithImageProps> = ({
   imageText,
   bottomAccessory,
   invertible,
+  id,
 }: BoxWithImageProps) => (
-  <Box flexDirection={[invertible ? 'row' : 'column', 'column']} width={width}>
+  <Box
+    id={id}
+    flexDirection={[invertible ? 'row' : 'column', 'column']}
+    width={width}
+    bg="pureWhite"
+  >
     <Box
       flexDirection="column"
       width="100%"

@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
 import { useAuthContext } from '../context/auth-context';
-import { theme } from '../styles/theme';
 import { Box, BoxProps } from './box/box';
-import { Navbar, NAVBAR_HEIGHT_XS } from './navbar';
+import { Navbar } from './navbar';
 
 interface LayoutProps extends BoxProps {
   children: React.ReactNode;
   hasMinHeight?: boolean;
   maxWidth?: 'default' | 'dashboard';
   wrapPage?: boolean;
+  pageFlexDirection?: 'column' | 'row' | ('column' | 'row')[];
 }
 
 const Layout: React.FC<LayoutProps> = ({
@@ -16,6 +16,7 @@ const Layout: React.FC<LayoutProps> = ({
   hasMinHeight = true,
   maxWidth = 'default',
   wrapPage = true,
+  pageFlexDirection = 'column',
   ...rest
 }: LayoutProps) => {
   const { user } = useAuthContext();
@@ -33,15 +34,15 @@ const Layout: React.FC<LayoutProps> = ({
       position="relative"
       overflow="hidden"
       px={spacing}
-      transition={theme.transitions.medium}
       {...rest}
     >
       <Navbar isUserLoggedIn={!!user} right={spacing} />
       <Box
         width="100%"
+        flexDirection={pageFlexDirection}
+        justifyContent="flex-start"
         minHeight={hasMinHeight ? '100vh' : 0}
         flexWrap={wrapPage ? 'wrap' : 'noWrap'}
-        mt={!hasMinHeight ? NAVBAR_HEIGHT_XS : 0}
       >
         {children}
       </Box>

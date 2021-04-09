@@ -10,7 +10,7 @@ import { usePlantContext } from '../context/plant-context';
 import { ErrorFields } from './error-fields';
 
 export const BOX_WIDTH_MD = 342;
-const BOX_WIDTH_XS = 275;
+export const BOX_WIDTH_XS = 275;
 
 const TOP_BOX_HEIGHT_MD = 370;
 const TOP_BOX_HEIGHT_XS = 297;

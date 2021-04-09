@@ -51,17 +51,18 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
             : `translateY(-15%)`
           : undefined,
         opacity: showDropdown ? 1 : 0,
+        visibility: showDropdown ? 'visible' : 'hidden',
         cursor: showDropdown ? 'pointer' : 'auto',
       }}
       transition={theme.transitions.medium}
-      zIndex={showDropdown ? 'navbar' : 0}
+      zIndex={showDropdown ? 'dropdown' : 0}
     >
       {showDropdown && isXS ? (
         <Box
           position="fixed"
           onClick={(e: any) => onCloseDropdown(e)}
           top="four"
-          left="four"
+          right="four"
         >
           <Cross />
         </Box>
@@ -108,15 +109,19 @@ const Navbar: React.FC<NavbarProps> = ({
   return (
     <Box
       width="100%"
-      position="absolute"
+      position="fixed"
       top={[NAVBAR_HEIGHT_XS - ICON_HEIGHT, NAVBAR_HEIGHT_MD - ICON_HEIGHT]}
       right={right}
-      mb={['zero', -`${NAV_DROPDOWN_HEIGHT_MD}`]}
+      pr={isXS ? 'onePointSix' : 'zero'}
       justifyContent="flex-end"
+      zIndex="navbar"
     >
       {isUserLoggedIn ? (
         <>
-          <Box flexDirection="column" width={NAV_DROPDOWN_WIDTH_MD}>
+          <Box
+            flexDirection="column"
+            width={isXS ? 'auto' : NAV_DROPDOWN_WIDTH_MD}
+          >
             <UserButton
               id="userIcon"
               onClick={() => setShowDropdown((prev) => !prev)}
@@ -129,13 +134,15 @@ const Navbar: React.FC<NavbarProps> = ({
               isXS={isXS}
             />
           </Box>
-          <Box
-            position="absolute"
-            right="zero"
-            top={-`${theme.space.zeroPointFour}`}
-          >
-            <Logo strokeWidth={2} />
-          </Box>
+          {!isXS ? (
+            <Box
+              position="absolute"
+              right="zero"
+              top={-`${theme.space.zeroPointFour}`}
+            >
+              <Logo strokeWidth={2} />
+            </Box>
+          ) : null}
         </>
       ) : null}
     </Box>
