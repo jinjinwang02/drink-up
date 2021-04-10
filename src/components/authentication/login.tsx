@@ -5,7 +5,6 @@ import { FormikContextType, FormikProvider, useFormik } from 'formik';
 import { Content } from './content';
 import * as Yup from 'yup';
 import { Box } from '../box/box';
-import { Arrow } from '../icon/arrow';
 import { ArrowButton } from '../button/arrow-button';
 
 interface LogInProps {
@@ -97,9 +96,9 @@ const LogIn: React.FC<LogInProps> = ({
               onClick={onPressBack}
               position="absolute"
               top="two"
-              left="20%"
+              left="22%"
             >
-              <Arrow size="small" direction="left" />
+              <ArrowButton size="small" direction="left" />
             </Box>
           ) : null}
           <Content

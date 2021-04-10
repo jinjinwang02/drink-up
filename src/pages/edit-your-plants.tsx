@@ -48,7 +48,7 @@ const Index: NextPage = () => {
           `repeat(auto-fill, minmax(${BOX_WIDTH_MD}px, 1fr))`,
         ]}
         gridRowGap="four"
-        transition={theme.transitions.medium}
+        transition={theme.transitions.basic.medium}
         mt="two"
         pb="five"
       >

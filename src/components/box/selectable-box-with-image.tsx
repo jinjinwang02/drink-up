@@ -49,7 +49,7 @@ const SelectableBoxWithImage: React.FC<SelectableBoxWithImageProps> = ({
           backgroundColor={
             selected || isHovered ? 'transparent' : 'pureWhiteThirty'
           }
-          transition={theme.transitions.medium}
+          transition={theme.transitions.basic.medium}
           position="absolute"
           top={0}
           left={0}

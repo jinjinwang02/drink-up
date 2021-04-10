@@ -35,7 +35,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
   return (
     <Box
       flexDirection="column"
-      width="100%"
+      width={NAV_DROPDOWN_WIDTH_MD}
       height={['100%', NAV_DROPDOWN_HEIGHT_MD]}
       position={['fixed', 'relative']}
       backgroundColor="pureWhite"
@@ -47,14 +47,14 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
       style={{
         transform: !isXS
           ? showDropdown
-            ? `translateY(0%)`
-            : `translateY(-15%)`
+            ? `translateY(0%) scaleY(1)`
+            : `translateY(-15%) scaleY(0.3)`
           : undefined,
+        transformOrigin: 'top',
         opacity: showDropdown ? 1 : 0,
         visibility: showDropdown ? 'visible' : 'hidden',
-        cursor: showDropdown ? 'pointer' : 'auto',
       }}
-      transition={theme.transitions.medium}
+      transition={theme.transitions.curve.slow}
       zIndex={showDropdown ? 'dropdown' : 0}
     >
       {showDropdown && isXS ? (
@@ -63,20 +63,28 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
           onClick={(e: any) => onCloseDropdown(e)}
           top="four"
           right="four"
+          style={{ cursor: 'pointer' }}
         >
           <Cross />
         </Box>
       ) : null}
-      <Box onClick={() => router.push('/dashboard')}>
+      <Box
+        style={{ cursor: 'pointer' }}
+        onClick={() => router.push('/dashboard')}
+      >
         <Typography textStyle="bodyL">Dashboard</Typography>
       </Box>
-      <Box onClick={() => router.push('/browse')}>
+      <Box style={{ cursor: 'pointer' }} onClick={() => router.push('/browse')}>
         <Typography textStyle="bodyL">Browse all plants</Typography>
       </Box>
-      <Box onClick={() => router.push('/find-your-plants')}>
+      <Box
+        style={{ cursor: 'pointer' }}
+        onClick={() => router.push('/find-your-plants')}
+      >
         <Typography textStyle="bodyL">Add plants</Typography>
       </Box>
       <Box
+        style={{ cursor: 'pointer' }}
         onClick={async () => {
           await auth.signOut();
           router.push('/');
@@ -101,14 +109,15 @@ const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   useEffect(() => {
-    document.addEventListener('mouseup', handleCloseDropdown);
+    if (!isXS) {
+      document.addEventListener('mouseup', handleCloseDropdown);
+    }
     return () => {
       document.removeEventListener('mouseup', handleCloseDropdown);
     };
-  }, [handleCloseDropdown]);
+  }, [isXS, handleCloseDropdown]);
   return (
     <Box
-      width="100%"
       position="fixed"
       top={[NAVBAR_HEIGHT_XS - ICON_HEIGHT, NAVBAR_HEIGHT_MD - ICON_HEIGHT]}
       right={right}
@@ -118,15 +127,11 @@ const Navbar: React.FC<NavbarProps> = ({
     >
       {isUserLoggedIn ? (
         <>
-          <Box
-            flexDirection="column"
-            width={isXS ? 'auto' : NAV_DROPDOWN_WIDTH_MD}
-          >
+          <Box flexDirection="column">
             <UserButton
               id="userIcon"
               onClick={() => setShowDropdown((prev) => !prev)}
               zIndex={1}
-              mr={-`${theme.space.two}`}
             />
             <NavDropdown
               showDropdown={showDropdown}

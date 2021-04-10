@@ -18,7 +18,7 @@ const Bin: React.FC = () => {
           transform: isHovered ? 'rotate(-8deg)' : 'rotate(0deg)',
           transformOrigin: 'bottom left',
         }}
-        transition={theme.transitions.medium}
+        transition={theme.transitions.basic.medium}
       >
         <svg
           version="1.0"

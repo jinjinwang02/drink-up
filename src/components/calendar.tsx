@@ -160,7 +160,7 @@ const Calendar: React.FC<CalendarProps> = ({
                   border="transparent"
                   borderRadius="100px"
                   style={{ cursor: !isFutureDate ? 'pointer' : 'not-allowed' }}
-                  transition={theme.transitions.quick}
+                  transition={theme.transitions.curve.medium}
                   css={css({
                     '&:hover': {
                       border: !isFutureDate ? 'inactiveGrey' : undefined,

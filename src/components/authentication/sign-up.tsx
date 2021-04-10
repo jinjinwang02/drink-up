@@ -7,7 +7,6 @@ import { Content } from './content';
 import * as Yup from 'yup';
 import { EmailSchema } from './login';
 import { Box } from '../box/box';
-import { Arrow } from '../icon/arrow';
 import { ArrowButton } from '../button/arrow-button';
 
 interface SignUpProps {
@@ -153,9 +152,9 @@ const SignUp: React.FC<SignUpProps> = ({
               onClick={onPressBack}
               position="absolute"
               top="two"
-              left="35%"
+              left="36%"
             >
-              <Arrow size="small" direction="left" />
+              <ArrowButton size="small" direction="left" />
             </Box>
           ) : null}
           <Content

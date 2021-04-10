@@ -12,7 +12,7 @@ const CrossButton: React.FC<ButtonProps> = (props: ButtonProps) => {
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}
       additionalStyles={{
-        transition: theme.transitions.medium,
+        transition: theme.transitions.curve.medium,
         transform: isHovered ? 'rotate(90deg)' : 'rotate(0deg)',
       }}
     >

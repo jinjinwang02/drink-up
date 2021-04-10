@@ -34,7 +34,7 @@ const CloudButton: React.FC<CloudButtonProps> = ({
             ? 'translate(-50%, 2%) scale(1.05)'
             : 'translate(-50%, 2%)',
         }}
-        transition={theme.transitions.medium}
+        transition={theme.transitions.basic.medium}
         zIndex={-1}
       >
         <Cloud />

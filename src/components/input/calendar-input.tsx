@@ -88,7 +88,7 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
           opacity: currentCalendarId === plantId ? 1 : 0,
           visibility: currentCalendarId === plantId ? 'visible' : 'hidden',
         }}
-        transition={theme.transitions.medium}
+        transition={theme.transitions.curve.slow}
       >
         <Calendar
           previousMonthLimit={1}

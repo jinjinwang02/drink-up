@@ -1,6 +1,5 @@
 import React from 'react';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
-import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
 import { ArrowButton } from './arrow-button';
 
@@ -27,7 +26,6 @@ const BoxyButton: React.FC<BoxyButtonProps> = ({
       border="regularBlack"
       px="four"
       zIndex="boxyButton"
-      transition={theme.transitions.quick}
     >
       {onBack ? (
         <ArrowButton

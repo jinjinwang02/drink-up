@@ -79,7 +79,7 @@ const Input: React.FC<InputProps> = ({
         position="absolute"
         zIndex={-1}
         error={error}
-        transition={theme.transitions.medium}
+        transition={theme.transitions.basic.medium}
         hasInput={formik.values[name].length}
       >
         <Typography

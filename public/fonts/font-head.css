@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'SaolDisplay-Regular';
+  src: url('SaolDisplay-Regular.ttf') format('truetype'),
+    url('SaolDisplay-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Altero-Regular';
+  src: url('Altero-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

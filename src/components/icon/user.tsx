@@ -7,7 +7,7 @@ const User: React.FC = () => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 82.76 87.28"
       height={24}
-      fill="#fff"
+      fill="none"
       stroke="#000"
       strokeWidth={6}
       strokeMiterlimit={10}

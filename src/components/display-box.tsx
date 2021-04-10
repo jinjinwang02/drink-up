@@ -10,17 +10,18 @@ import { DATE_DISPLAY_FORMAT } from './calendar';
 import { Water } from './icon/water';
 import { Typography } from './typography';
 
-const BOX_WIDTH_MD = 272;
-const BOX_WIDTH_SM = 240;
+const BOX_WIDTH = 272;
 
 export interface DisplayBoxProps extends CollectionFromDB {
   onClickWatered: () => void;
 }
 
 const TitleBox = ({ commonName }: { commonName: string }) => (
-  <Box borderBottom="regularBlack" py="zeroPointEight" width="100%" pl="two">
-    <Typography textStyle="copyLBold">{commonName}</Typography>
-    <EditButton ml="one" mb="zeroPointThree" />
+  <Box borderBottom="regularBlack" py="zeroPointEight" width="100%" pl="four">
+    <Typography textAlign="center" textStyle="copyLBold">
+      {commonName}
+    </Typography>
+    <EditButton ml="one" pr="two" mb="zeroPointThree" />
   </Box>
 );
 
@@ -140,8 +141,8 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
   return (
     <BoxWithImage
       id={id}
-      width={[BOX_WIDTH_SM, BOX_WIDTH_MD]}
-      topBoxHeight={[BOX_WIDTH_SM, BOX_WIDTH_MD]}
+      width={BOX_WIDTH}
+      topBoxHeight={BOX_WIDTH}
       imageUrl={imageUrl}
       alt={commonName}
       bottomAccessory={

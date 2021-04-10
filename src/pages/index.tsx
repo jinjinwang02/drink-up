@@ -37,20 +37,21 @@ const Index: React.FC = () => {
       <NextSeo title="Drink up | Homepage" description="" canonical="" />
       <Box
         width="100%"
-        flexDirection={['column', 'column', 'column', 'row']}
-        justifyContent={['center', 'center', 'center', 'space-around']}
+        height={isXS ? '70vh' : 'auto'}
+        flexDirection={isMD ? 'row' : 'column'}
+        justifyContent={isMD ? 'space-around' : 'center'}
         style={
           isXS
             ? {
                 transform: showAuthentication
-                  ? 'translateY(-20%)'
-                  : 'translateY(35%)',
+                  ? 'translateY(10%)'
+                  : 'translateY(45%)',
               }
             : {
-                transform: isMD ? 'translateY(80%)' : 'translateY(30%)',
+                transform: isMD ? 'translateY(90%)' : 'translateY(30%)',
               }
         }
-        transition={theme.transitions.slow}
+        transition={theme.transitions.basic.slow}
       >
         <LandingTitle />
         {isXS && !showAuthentication ? (
@@ -73,8 +74,8 @@ const Index: React.FC = () => {
             style={{
               opacity: showAuthentication ? 1 : 0,
             }}
-            mt={showAuthentication ? 'eight' : 'zero'}
-            transition={theme.transitions.slow}
+            mt={showAuthentication ? 'six' : 'zero'}
+            transition={theme.transitions.basic.slow}
             zIndex={showAuthentication ? 1 : -1}
           >
             <Authentication />

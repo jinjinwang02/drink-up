@@ -15,9 +15,7 @@ import { ButtonContainer } from '../components/button/button-container';
 import { CollectionFromDB } from '../interfaces';
 import { getWateringCountdown } from '../utils';
 import { useMediaQuery } from '../hooks/useMediaQuery';
-import { TitleWithUnderline } from '../components/title-with-underline';
 import { theme } from '../styles/theme';
-import { NAVBAR_HEIGHT_XS } from '../components/navbar';
 
 interface Props {
   userDoc?: UserDoc;
@@ -52,7 +50,7 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
       if (event.target === box || box?.contains(event.target)) return;
       setShowXSDisplayBox(false);
     },
-    [currentPlant.id]
+    [currentPlant?.id]
   );
 
   const getGradientProps = useCallback((difference) => {
@@ -85,13 +83,13 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
   return (
     <Layout
       maxWidth="dashboard"
-      pt={isXS ? NAVBAR_HEIGHT_XS : 'zero'}
+      pt={isXS ? 'five' : 'zero'}
       pb={isXS ? 'five' : 'zero'}
       height={isXS ? '100%' : '100vh'}
       pageFlexDirection={['column', 'row']}
       justifyContent={['flex-start', 'space-between']}
       wrapPage={isXS ? true : false}
-      bg={isXS && showXSDisplayBox ? 'pureBlackTwenty' : 'pureWhite'}
+      bg={isXS && showXSDisplayBox ? 'pureBlackTen' : 'pureWhite'}
     >
       <NextSeo title="Drink up | Dashboard" description="" canonical="" />
       <Box
@@ -116,14 +114,14 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
               : `You haven't added any plants.`}
           </Typography>
         ) : (
-          <TitleWithUnderline>
+          <Typography textStyle="h3">
             {plants.length
               ? `You have ${plants.length} plants.`
               : `You haven't added any plants.`}
-          </TitleWithUnderline>
+          </Typography>
         )}
         <Box
-          mt={['four', 'three']}
+          mt={['one', 'three']}
           mb={['zero', 'four']}
           justifyContent={['center', 'flex-start']}
           flexWrap="wrap"
@@ -156,15 +154,20 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
           height={isXS ? '100vh' : '100%'}
           flexGrow={1}
           position={['fixed', 'relative']}
-          top="50%"
+          top={isXS ? '50%' : 0}
+          left={isXS ? '50%' : 0}
           zIndex={1}
           display={['flex', 'flex']}
-          style={{
-            transform: isXS ? 'translateY(-50%)' : 'translateY(0)',
-            opacity: showXSDisplayBox ? 1 : 0,
-            visibility: showXSDisplayBox ? 'visible' : 'hidden',
-          }}
-          transition={theme.transitions.medium}
+          style={
+            isXS
+              ? {
+                  transform: 'translate(-53%, -50%)',
+                  opacity: showXSDisplayBox ? 1 : 0,
+                  visibility: showXSDisplayBox ? 'visible' : 'hidden',
+                }
+              : undefined
+          }
+          transition={theme.transitions.basic.medium}
         >
           <DisplayBox
             id={currentPlant.id}
@@ -209,7 +212,7 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
           alignItems="flex-start"
           position="relative"
           flexDirection="column"
-          transition={theme.transitions.medium}
+          transition={theme.transitions.basic.medium}
           style={{
             transform: `translateY(calc(${
               isSM ? '40vh' : '45vh'

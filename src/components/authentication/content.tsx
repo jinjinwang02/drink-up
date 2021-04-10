@@ -60,7 +60,7 @@ const Content: React.FC<ContentProps> = ({
             transform: `translateX(${translateX})`,
             opacity: isCurrentStep ? 1 : 0,
           }}
-          transition={theme.transitions.slow}
+          transition={theme.transitions.basic.slow}
           mb="five"
           zIndex={2}
         >

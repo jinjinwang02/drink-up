@@ -8,7 +8,7 @@ export interface BoxWithImageProps {
   imageUrl?: string;
   imageText?: string;
   width: number[] | number;
-  topBoxHeight: number[];
+  topBoxHeight: number[] | number;
   alt?: string;
   bottomAccessory?: React.ReactNode;
   invertible?: boolean;
@@ -56,7 +56,7 @@ const BoxWithImage: React.FC<BoxWithImageProps> = ({
     </Box>
     <Box
       width="100%"
-      height={[invertible ? topBoxHeight[0] : '100%', '100%']}
+      height={[invertible ? topBoxHeight : '100%', '100%']}
       border="regularBlack"
       borderTopWidth={[invertible ? 1 : 0, 0]}
     >

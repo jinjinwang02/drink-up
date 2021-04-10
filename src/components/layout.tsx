@@ -30,7 +30,7 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <Box
       width="100vw"
-      minHeight="100vh"
+      // minHeight="100vh"
       position="relative"
       overflow="hidden"
       px={spacing}

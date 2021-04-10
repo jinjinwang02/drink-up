@@ -38,7 +38,7 @@ const TextWithAnimatedUnderline: React.FC<TextWithAnimatedUnderlineProps> = ({
           transform: isHovered || focused ? 'scaleX(1)' : 'scaleX(0)',
           transformOrigin: isHovered ? 'right' : 'left',
         }}
-        transition={theme.transitions.medium}
+        transition={theme.transitions.curve.medium}
       />
     </Box>
   );

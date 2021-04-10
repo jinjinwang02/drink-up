@@ -30,7 +30,7 @@ const ArrowButton: React.FC<ArrowButtonProps> = ({
       type="submit"
       additionalStyles={{
         transform: props.disabled ? undefined : getTranslate(),
-        transition: theme.transitions.medium,
+        transition: theme.transitions.basic.medium,
       }}
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}

@@ -58,7 +58,7 @@ const Index: NextPage = () => {
         flexDirection="column"
         pt={customCollectionWithInputs.length ? 'seven' : 'fourteen'}
         pb="twelve"
-        transition={theme.transitions.medium}
+        transition={theme.transitions.basic.medium}
       >
         <PageTitleWithBody
           title="Add your plants"

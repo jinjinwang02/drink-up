@@ -179,7 +179,7 @@ const colors = {
   pureWhite: 'rgba(255, 255, 255, 1)',
   pureWhiteThirty: 'rgba(255, 255, 255, 0.30)',
   pureBlack: 'rgba(0, 0, 0, 1)',
-  pureBlackTwenty: 'rgba(0, 0, 0, 0.20)',
+  pureBlackTen: 'rgba(0, 0, 0, 0.10)',
   darkGrey: 'rgba(121,121,121,1)',
   mediumGrey: 'rgba(190,190,190,1)',
   lightGrey: 'rgba(227,227,227,1)',
@@ -197,9 +197,16 @@ const borders = {
 };
 
 const transitions = {
-  quick: 'all 0.1s ease-in-out',
-  medium: 'all 0.3s ease-in-out',
-  slow: 'opacity 0.3s ease-in-out, transform 0.5s ease-in-out',
+  basic: {
+    quick: 'all 0.1s ease-in-out',
+    medium: 'all 0.3s ease-in-out',
+    slow: 'all 0.5s ease-in-out',
+  },
+  curve: {
+    quick: 'all 0.1s cubic-bezier(0.83, 0, 0.17, 1)',
+    medium: 'all 0.3s cubic-bezier(0.83, 0, 0.17, 1)',
+    slow: 'all 0.5s cubic-bezier(0.83, 0, 0.17, 1)',
+  },
 };
 
 const theme = {
@@ -266,7 +273,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     svg line {
-      transition: ${transitions.medium};
+      transition: ${transitions.basic.medium};
     }
 `;
 
