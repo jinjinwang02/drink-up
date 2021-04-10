@@ -30,10 +30,12 @@ interface Props {
 const Index: NextPage<any> = ({ userDoc }: Props) => {
   const { isXS, isSM } = useMediaQuery();
   const nameElements = useRef<React.RefObject<HTMLDivElement>[]>([]);
-
   const plants = useMemo(() => (userDoc?.plants || []) as CollectionFromDB[], [
     userDoc?.plants,
   ]);
+  const [disableTitleAnimation, setDisableTitleAnimation] = useState<boolean>(
+    false
+  );
   const [showXSDisplayBox, setShowXSDisplayBox] = useState<boolean>(false);
   const [currentPlant, setCurrentPlant] = useState<CollectionFromDB>(plants[0]);
   const plantsDueTomorrow = useMemo(
@@ -46,6 +48,7 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
 
   const handleClickTitle = useCallback(
     (id: string) => {
+      setDisableTitleAnimation(true);
       setCurrentPlant(plants.filter((el: CollectionFromDB) => el.id === id)[0]);
       setShowXSDisplayBox(true);
     },
@@ -62,7 +65,7 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
   );
 
   useEffect(() => {
-    if (!isXS) {
+    if (!isXS && !disableTitleAnimation) {
       Array(plants.length)
         .fill(0)
         .map((_el, index) =>
@@ -83,7 +86,7 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
     return () => {
       document.removeEventListener('mouseup', handleDismissDisplayBox);
     };
-  }, [handleDismissDisplayBox, isXS, plants.length]);
+  }, [handleDismissDisplayBox, plants, isXS, disableTitleAnimation]);
 
   return (
     <Layout

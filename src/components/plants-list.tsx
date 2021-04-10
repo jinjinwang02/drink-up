@@ -26,6 +26,7 @@ const PlantsList: React.FC<PlantsListProps> = ({
       const sharedProps = {
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
+        transition: theme.transitions.basic.slow,
       };
       if (difference === 3) {
         return {
