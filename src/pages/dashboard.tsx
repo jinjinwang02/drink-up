@@ -6,16 +6,15 @@ import { GetServerSideProps, NextPage } from 'next';
 import { Layout } from '../components/layout';
 import { Box } from '../components/box/box';
 import { UserDoc } from '../context/auth-context';
-import { Typography } from '../components/typography';
 import { DisplayBox } from '../components/display-box';
 import { Underline } from '../components/icon/underline';
 import { verifyIdToken } from '../firebase/firebase-admin';
-import { ButtonContainer } from '../components/button/button-container';
-
 import { CollectionFromDB } from '../interfaces';
 import { getWateringCountdown } from '../utils';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { theme } from '../styles/theme';
+import { DashboardTitle } from '../components/dashboard-title';
+import { PlantsList } from '../components/plants-list';
 
 interface Props {
   userDoc?: UserDoc;
@@ -53,24 +52,6 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
     [currentPlant?.id]
   );
 
-  const getGradientProps = useCallback((difference) => {
-    const sharedProps = {
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-    };
-    if (difference === 3) {
-      return {
-        background: `-webkit-linear-gradient(${theme.colors.lightestGrey}, ${theme.colors.mediumGrey})`,
-        ...sharedProps,
-      };
-    } else if (difference === -3) {
-      return {
-        background: `-webkit-linear-gradient(${theme.colors.mediumGrey}, ${theme.colors.lightestGrey})`,
-        ...sharedProps,
-      };
-    }
-  }, []);
-
   useEffect(() => {
     if (isXS) {
       document.addEventListener('mouseup', handleDismissDisplayBox);
@@ -83,7 +64,7 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
   return (
     <Layout
       maxWidth="dashboard"
-      pt={isXS ? 'five' : 'zero'}
+      pt={isXS ? 'four' : 'zero'}
       pb={isXS ? 'five' : 'zero'}
       height={isXS ? '100%' : '100vh'}
       pageFlexDirection={['column', 'row']}
@@ -101,53 +82,13 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
         mb={['four', 'zero']}
         maxWidth="520px"
       >
-        <Typography textStyle={['h2', 'h2', 'h2', 'h1']}>
-          Hi {userDoc?.displayName ?? 'there'},
-        </Typography>
-        {!isXS ? (
-          <Typography
-            textStyle={['h2', 'h2', 'h2', 'h1']}
-            mt={['one', 'one', 'two', 'two']}
-          >
-            {plants.length
-              ? `You have ${plants.length} plants.`
-              : `You haven't added any plants.`}
-          </Typography>
-        ) : (
-          <Typography textStyle="h3">
-            {plants.length
-              ? `You have ${plants.length} plants.`
-              : `You haven't added any plants.`}
-          </Typography>
-        )}
-        <Box
-          mt={['one', 'three']}
-          mb={['zero', 'four']}
-          justifyContent={['center', 'flex-start']}
-          flexWrap="wrap"
-        >
-          {plantsDueTomorrow.length ? (
-            <>
-              {plantsDueTomorrow.map((el) => (
-                <Typography key={el.id} textStyle="bodyL">
-                  {el.commonName},&nbsp;
-                </Typography>
-              ))}
-              <Typography textStyle="bodyL">
-                {plantsDueTomorrow.length > 1 ? 'need' : 'needs'} to be
-                watered&nbsp;
-              </Typography>
-              <Typography textStyle="bodyLBold">tomorrow.</Typography>
-            </>
-          ) : plants.length ? (
-            <Typography textStyle="bodyL">
-              All sufficently hydrated :)
-            </Typography>
-          ) : (
-            <Typography textStyle="bodyL">Why not adding some?</Typography>
-          )}
-        </Box>
+        <DashboardTitle
+          displayName={userDoc?.displayName}
+          plantsDueTomorrow={plantsDueTomorrow}
+          plantAmount={plants.length}
+        />
       </Box>
+
       {currentPlant ? (
         <Box
           mx="one"
@@ -180,6 +121,7 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
           />
         </Box>
       ) : null}
+
       <Box
         flexGrow={1}
         flexShrink={0}
@@ -188,63 +130,37 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
       >
         <Underline variant="tertiary" />
       </Box>
-      {isXS ? (
-        <Box flexGrow={0} flexShrink={0} flexDirection="column">
-          {plants.map((el: CollectionFromDB) => (
-            <Box key={el.id} id="title" mb="two">
-              <ButtonContainer onClick={() => handleClickTitle(el.id)}>
-                <Typography
-                  textStyle="h5"
-                  color={
-                    currentPlant?.id === el.id ? 'pureBlack' : 'mediumGrey'
-                  }
-                >
-                  {el.commonName}
-                </Typography>
-              </ButtonContainer>
-            </Box>
-          ))}
-        </Box>
-      ) : (
-        <Box
-          flexGrow={1}
-          flexShrink={0}
-          alignItems="flex-start"
-          position="relative"
-          flexDirection="column"
-          transition={theme.transitions.basic.medium}
-          style={{
-            transform: `translateY(calc(${
-              isSM ? '40vh' : '45vh'
-            } - ${plants.indexOf(currentPlant)} * ${isSM ? '66px' : '76px'}))`,
-          }}
-        >
-          {plants.map((el: CollectionFromDB) => (
-            <Box key={el.id} mb="twoPointTwo">
-              <ButtonContainer onClick={() => handleClickTitle(el.id)}>
-                <Typography
-                  textStyle={['h4', 'h5', 'h3']}
-                  style={getGradientProps(
-                    plants.indexOf(currentPlant) - plants.indexOf(el)
-                  )}
-                  color={
-                    currentPlant?.id === el.id
-                      ? 'pureBlack'
-                      : plants.indexOf(currentPlant) - plants.indexOf(el) > 3 ||
-                        plants.indexOf(currentPlant) - plants.indexOf(el) < -3
-                      ? 'lightestGrey'
-                      : 'mediumGrey'
-                  }
-                >
-                  {el.commonName.length > 20
-                    ? el.commonName.slice(0, 20) + '...'
-                    : el.commonName}
-                </Typography>
-              </ButtonContainer>
-            </Box>
-          ))}
-        </Box>
-      )}
+
+      <Box
+        flexGrow={[0, 1]}
+        flexShrink={0}
+        alignItems={['center', 'flex-start']}
+        position="relative"
+        flexDirection="column"
+        mt={isXS ? 'one' : 'zero'}
+        transition={theme.transitions.basic.medium}
+        style={
+          !isXS
+            ? {
+                transform: `translateY(calc(${
+                  isSM ? '40vh' : '45vh'
+                } - ${plants.indexOf(currentPlant)} * ${
+                  isSM ? '66px' : '76px'
+                }))`,
+              }
+            : undefined
+        }
+      >
+        {plants.map((el: CollectionFromDB) => (
+          <PlantsList
+            key={el.id}
+            plant={el}
+            indexDifference={plants.indexOf(currentPlant) - plants.indexOf(el)}
+            isCurrentPlant={currentPlant === el}
+            onClickTitle={handleClickTitle}
+          />
+        ))}
+      </Box>
     </Layout>
   );
 };
@@ -264,7 +180,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       props: { userDoc: JSON.parse(JSON.stringify(userDoc)) },
     };
   } catch (error) {
-    console.log(error);
+    ctx.res.writeHead(302, { Location: '/' });
+    ctx.res.end();
     return { props: {} };
   }
 };

@@ -35,7 +35,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
   return (
     <Box
       flexDirection="column"
-      width={NAV_DROPDOWN_WIDTH_MD}
+      width={isXS ? '100%' : NAV_DROPDOWN_WIDTH_MD}
       height={['100%', NAV_DROPDOWN_HEIGHT_MD]}
       position={['fixed', 'relative']}
       backgroundColor="pureWhite"
@@ -49,8 +49,10 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
           ? showDropdown
             ? `translateY(0%) scaleY(1)`
             : `translateY(-15%) scaleY(0.3)`
-          : undefined,
-        transformOrigin: 'top',
+          : showDropdown
+          ? `translateY(0)`
+          : `translateY(10%)`,
+        transformOrigin: isXS ? 'bottom' : 'top',
         opacity: showDropdown ? 1 : 0,
         visibility: showDropdown ? 'visible' : 'hidden',
       }}
@@ -118,7 +120,7 @@ const Navbar: React.FC<NavbarProps> = ({
   }, [isXS, handleCloseDropdown]);
   return (
     <Box
-      position="fixed"
+      position={['fixed', 'absolute']}
       top={[NAVBAR_HEIGHT_XS - ICON_HEIGHT, NAVBAR_HEIGHT_MD - ICON_HEIGHT]}
       right={right}
       pr={isXS ? 'onePointSix' : 'zero'}

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useAuthContext } from '../context/auth-context';
 import { Box, BoxProps } from './box/box';
 import { Navbar } from './navbar';
@@ -20,23 +20,19 @@ const Layout: React.FC<LayoutProps> = ({
   ...rest
 }: LayoutProps) => {
   const { user } = useAuthContext();
-  const spacing = useMemo(
-    () =>
-      maxWidth === 'default'
-        ? ['two', 'four', 'six', 'twelve']
-        : ['two', 'four', 'five', 'seven', 'ten'],
-    [maxWidth]
-  );
+  const defaultPx = ['two', 'four', 'six', 'twelve'];
+  const dashboardPx = ['two', 'four', 'five', 'seven', 'ten'];
+  const spacing = maxWidth === 'default' ? defaultPx : dashboardPx;
+
   return (
     <Box
       width="100vw"
-      // minHeight="100vh"
       position="relative"
       overflow="hidden"
       px={spacing}
       {...rest}
     >
-      <Navbar isUserLoggedIn={!!user} right={spacing} />
+      <Navbar isUserLoggedIn={!!user} right={defaultPx} />
       <Box
         width="100%"
         flexDirection={pageFlexDirection}

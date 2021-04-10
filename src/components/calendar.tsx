@@ -173,7 +173,11 @@ const Calendar: React.FC<CalendarProps> = ({
                 >
                   <Typography
                     textAlign="center"
-                    color={month === currentMonth ? 'pureBlack' : 'mediumGrey'}
+                    color={
+                      month === currentMonth && !isFutureDate
+                        ? 'pureBlack'
+                        : 'mediumGrey'
+                    }
                     textStyle={
                       formatedDayWithMonth === formatedToday
                         ? 'bodySBold'
