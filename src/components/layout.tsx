@@ -21,7 +21,7 @@ const Layout: React.FC<LayoutProps> = ({
 }: LayoutProps) => {
   const { user } = useAuthContext();
   const defaultPx = ['two', 'four', 'six', 'twelve'];
-  const dashboardPx = ['two', 'four', 'five', 'seven', 'ten'];
+  const dashboardPx = ['two', 'four', 'five', 'seven', 'nine'];
   const spacing = maxWidth === 'default' ? defaultPx : dashboardPx;
 
   return (

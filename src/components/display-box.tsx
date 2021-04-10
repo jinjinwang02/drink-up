@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { TweenLite, Power3 } from 'gsap';
 import { CollectionFromDB } from '../interfaces';
 import { getWateringCountdown } from '../utils';
 import { Box } from './box/box';
@@ -138,24 +139,36 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
   notes,
   onClickWatered,
 }: DisplayBoxProps) => {
+  const displayBox = useRef(null);
+  useEffect(() => {
+    TweenLite.to(displayBox.current, 0.8, {
+      opacity: 1,
+      y: -20,
+      ease: Power3.easeInOut,
+      duration: 0.4,
+      delay: 1,
+    });
+  }, []);
   return (
-    <BoxWithImage
-      id={id}
-      width={BOX_WIDTH}
-      topBoxHeight={BOX_WIDTH}
-      imageUrl={imageUrl}
-      alt={commonName}
-      bottomAccessory={
-        <Content
-          id={id}
-          commonName={commonName}
-          schedule={schedule}
-          lastWateredOn={lastWateredOn}
-          notes={notes}
-          onClickWatered={onClickWatered}
-        />
-      }
-    />
+    <Box ref={displayBox} style={{ opacity: 0 }}>
+      <BoxWithImage
+        id={id}
+        width={BOX_WIDTH}
+        topBoxHeight={BOX_WIDTH}
+        imageUrl={imageUrl}
+        alt={commonName}
+        bottomAccessory={
+          <Content
+            id={id}
+            commonName={commonName}
+            schedule={schedule}
+            lastWateredOn={lastWateredOn}
+            notes={notes}
+            onClickWatered={onClickWatered}
+          />
+        }
+      />
+    </Box>
   );
 };
 

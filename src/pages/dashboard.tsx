@@ -1,5 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import * as admin from 'firebase-admin';
+import { TweenLite, Power3 } from 'gsap';
 import nookies from 'nookies';
 import { NextSeo } from 'next-seo';
 import { GetServerSideProps, NextPage } from 'next';
@@ -22,6 +29,8 @@ interface Props {
 
 const Index: NextPage<any> = ({ userDoc }: Props) => {
   const { isXS, isSM } = useMediaQuery();
+  const nameElements = useRef<React.RefObject<HTMLDivElement>[]>([]);
+
   const plants = useMemo(() => (userDoc?.plants || []) as CollectionFromDB[], [
     userDoc?.plants,
   ]);
@@ -53,13 +62,28 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
   );
 
   useEffect(() => {
+    if (!isXS) {
+      Array(plants.length)
+        .fill(0)
+        .map((_el, index) =>
+          TweenLite.from(nameElements.current[index], 0.8, {
+            opacity: 0,
+            y: -10,
+            x: 40,
+            duration: 0.5,
+            ease: Power3.easeInOut,
+            delay: index * 0.2 + 1,
+          })
+        );
+    }
+
     if (isXS) {
       document.addEventListener('mouseup', handleDismissDisplayBox);
     }
     return () => {
       document.removeEventListener('mouseup', handleDismissDisplayBox);
     };
-  }, [handleDismissDisplayBox, isXS]);
+  }, [handleDismissDisplayBox, isXS, plants.length]);
 
   return (
     <Layout
@@ -152,13 +176,21 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
         }
       >
         {plants.map((el: CollectionFromDB) => (
-          <PlantsList
+          <Box
             key={el.id}
-            plant={el}
-            indexDifference={plants.indexOf(currentPlant) - plants.indexOf(el)}
-            isCurrentPlant={currentPlant === el}
-            onClickTitle={handleClickTitle}
-          />
+            ref={(el: React.RefObject<HTMLDivElement>) =>
+              nameElements.current.push(el)
+            }
+          >
+            <PlantsList
+              plant={el}
+              indexDifference={
+                plants.indexOf(currentPlant) - plants.indexOf(el)
+              }
+              isCurrentPlant={currentPlant === el}
+              onClickTitle={handleClickTitle}
+            />
+          </Box>
         ))}
       </Box>
     </Layout>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {
   LayoutProps,
   layout,
@@ -51,20 +51,22 @@ const StyledBox = styled.div<BoxProps>(
   })
 );
 
-const Box: React.FC<React.ComponentProps<typeof StyledBox>> = ({
-  children,
-  ...rest
-}: React.ComponentProps<typeof StyledBox>) => (
-  <StyledBox
-    display="flex"
-    flexDirection="row"
-    justifyContent="center"
-    alignItems="center"
-    position="relative"
-    {...rest}
-  >
-    {children}
-  </StyledBox>
+const Box: React.FC<React.ComponentProps<typeof StyledBox>> = forwardRef(
+  ({ children, ...rest }: React.ComponentProps<typeof StyledBox>, ref) => (
+    <StyledBox
+      ref={ref}
+      display="flex"
+      flexDirection="row"
+      justifyContent="center"
+      alignItems="center"
+      position="relative"
+      {...rest}
+    >
+      {children}
+    </StyledBox>
+  )
 );
+
+Box.displayName = 'Box';
 
 export { Box };

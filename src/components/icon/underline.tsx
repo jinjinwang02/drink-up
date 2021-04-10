@@ -1,4 +1,17 @@
 import React, { useMemo } from 'react';
+import styled, { keyframes } from 'styled-components';
+
+export const pathAnimation = keyframes`
+  to {
+    stroke-dashoffset: 0;
+  }
+`;
+
+const StyledTertiaryUnderline = styled.path`
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: ${pathAnimation} 2s cubic-bezier(0.83, 0, 0.17, 1) forwards 1.6s;
+`;
 
 export interface UnderlineProps {
   variant: 'primary' | 'secondary' | 'tertiary';
@@ -57,7 +70,7 @@ const Underline: React.FC<UnderlineProps> = ({
             strokeWidth={2}
             height="99vh"
           >
-            <path d="M5.05.38C35.26,73.05.22,107.8,5.05,61.61S36,137.78,25,283.87s-4.88,304.51-4.88,304.51.87,37.7-14.79,61.1,15.6-75.07,23.43-66.86,1.55,40.86-12,116.3,19.9,64.24,19.9,64.24" />
+            <StyledTertiaryUnderline d="M5.05.38C35.26,73.05.22,107.8,5.05,61.61S36,137.78,25,283.87s-4.88,304.51-4.88,304.51.87,37.7-14.79,61.1,15.6-75.07,23.43-66.86,1.55,40.86-12,116.3,19.9,64.24,19.9,64.24" />
           </svg>
         );
     }
