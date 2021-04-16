@@ -51,7 +51,6 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
             <Input
               plantId={plantId}
               name="imageUrl"
-              formik={formik}
               inputTextAlign="left"
               placeholder="https://"
               placeholderSize={placeholderSize}
@@ -67,7 +66,6 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
             <Input
               plantId={plantId}
               name="commonName"
-              formik={formik}
               placeholder="e.g. Devils ivy"
               inputTextAlign="left"
               placeholderSize={placeholderSize}
@@ -83,7 +81,6 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
             <NumberInput
               plantId={plantId}
               name="schedule"
-              formik={formik}
               startText="Every"
               endText="Day(s)"
               placeholder="e.g. 7"
@@ -101,7 +98,6 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
             <CalendarInput
               plantId={plantId}
               name="lastWateredOn"
-              formik={formik}
               placeholder="Click to select date"
               placeholderSize={placeholderSize}
             />
@@ -116,7 +112,6 @@ const PlantInfo: React.FC<PlantInfoProps> = ({
             <Input
               plantId={plantId}
               name="notes"
-              formik={formik}
               placeholder="e.g. likes soil to be gently moist"
               inputTextAlign="left"
               placeholderSize={placeholderSize}

@@ -8,7 +8,6 @@ export interface NumberInputProps extends InputProps {
 }
 
 const NumberInput: React.FC<NumberInputProps> = ({
-  formik,
   startText,
   endText,
   plantId,
@@ -25,7 +24,6 @@ const NumberInput: React.FC<NumberInputProps> = ({
         plantId={plantId}
         type="number"
         name={name}
-        formik={formik}
         inputTextAlign="center"
         placeholder={placeholder}
         placeholderSize={placeholderSize}

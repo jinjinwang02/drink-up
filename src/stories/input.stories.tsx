@@ -24,7 +24,7 @@ export const Input: Story<InputProps> = ({ name, label }) => {
   return (
     <Box width={300}>
       <FormikProvider value={formik}>
-        <InputComponent name={name} label={label} formik={formik} />
+        <InputComponent name={name} label={label} />
       </FormikProvider>
     </Box>
   );
