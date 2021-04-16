@@ -21,6 +21,7 @@ const Layout: React.FC<LayoutProps> = ({
   showNavbar = true,
   ...rest
 }: LayoutProps) => {
+  //
   const { user } = useAuthContext();
   const defaultPx = ['two', 'four', 'six', 'twelve'];
   const dashboardPx = ['two', 'four', 'five', 'seven', 'nine'];
