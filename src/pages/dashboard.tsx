@@ -6,7 +6,9 @@ import React, {
   useState,
 } from 'react';
 import * as admin from 'firebase-admin';
-import { TweenLite, Power3 } from 'gsap';
+import { TweenLite, Power3, gsap } from 'gsap';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import { CSSPlugin } from 'gsap/CSSPlugin';
 import nookies from 'nookies';
 import { NextSeo } from 'next-seo';
 import { GetServerSideProps, NextPage } from 'next';
@@ -22,6 +24,8 @@ import { useMediaQuery } from '../hooks/useMediaQuery';
 import { theme } from '../styles/theme';
 import { DashboardTitle } from '../components/dashboard-title';
 import { PlantsList } from '../components/plants-list';
+
+gsap.registerPlugin(MotionPathPlugin, CSSPlugin);
 
 interface Props {
   userDoc?: UserDoc;
