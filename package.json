@@ -9,7 +9,8 @@
     "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook -s ./public",
     "lint": "eslint . --ext=.ts,.tsx",
-    "type-check": "tsc -p tsconfig.json --noEmit"
+    "type-check": "tsc -p tsconfig.json --noEmit",
+    "prepare": "husky install"
   },
   "dependencies": {
     "csstype": "^3.0.7",
