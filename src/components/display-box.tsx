@@ -1,8 +1,6 @@
 import dayjs from 'dayjs';
 import React, { useEffect, useRef } from 'react';
-import { TweenLite, Power3, gsap } from 'gsap';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-import { CSSPlugin } from 'gsap/CSSPlugin';
+import { TweenLite, Power3 } from 'gsap';
 import { CollectionFromDB } from '../interfaces';
 import { getWateringCountdown } from '../utils';
 import { Box } from './box/box';
@@ -12,8 +10,6 @@ import { EditButton } from './button/edit-button';
 import { DATE_DISPLAY_FORMAT } from './calendar';
 import { Water } from './icon/water';
 import { Typography } from './typography';
-
-gsap.registerPlugin(MotionPathPlugin, CSSPlugin);
 
 const BOX_WIDTH = 272;
 

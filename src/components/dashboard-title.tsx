@@ -1,14 +1,10 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import { gsap, TweenLite, Power3 } from 'gsap';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-import { CSSPlugin } from 'gsap/CSSPlugin';
+import { TweenLite, Power3 } from 'gsap';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { CollectionFromDB } from '../interfaces';
 import { Box } from './box/box';
 import { Typography } from './typography';
 import { theme } from '../styles/theme';
-
-gsap.registerPlugin(MotionPathPlugin, CSSPlugin);
 
 interface DashboardTitleProps {
   displayName?: string;
