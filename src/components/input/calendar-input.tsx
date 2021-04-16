@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect } from 'react';
+import { useField } from 'formik';
 import { usePlantContext } from '../../context/plant-context';
 import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
@@ -10,7 +12,6 @@ export interface CalendarInputProps extends Omit<InputProps, 'plantId'> {
 }
 
 const CalendarInput: React.FC<CalendarInputProps> = ({
-  formik,
   plantId,
   name,
   placeholder,
@@ -21,6 +22,7 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
     setCurrentCalendarId,
     handleSetInput,
   } = usePlantContext();
+  const [_field, _meta, helper] = useField(name);
   const handleOpenCalendar = useCallback(
     (id: string) => {
       setCurrentCalendarId(id);
@@ -53,11 +55,11 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
 
   const handleSelectDate = useCallback(
     (lastWateredOn: string) => {
-      formik.setFieldValue(name, lastWateredOn);
+      helper.setValue(lastWateredOn);
       setCurrentCalendarId(null);
       handleSetInput(plantId, 'lastWateredOn', lastWateredOn);
     },
-    [formik, name, setCurrentCalendarId, handleSetInput, plantId]
+    [helper, setCurrentCalendarId, handleSetInput, plantId]
   );
 
   return (
@@ -70,7 +72,6 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
         <Input
           plantId={plantId}
           name={name}
-          formik={formik}
           inputTextAlign="left"
           placeholder={placeholder}
           placeholderSize={placeholderSize}
