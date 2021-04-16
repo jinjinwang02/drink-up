@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import nookies from 'nookies';
 import { GetServerSideProps, NextPage } from 'next';
 import { NextSeo } from 'next-seo';
 import { firebaseClient } from '../firebase/firebase-client';
@@ -15,6 +16,7 @@ import { PageTitleWithBody } from '../components/page-title-with-body';
 import { Typography } from '../components/typography';
 import { BoxyButton } from '../components/button/boxy-button';
 import { NAVBAR_HEIGHT_MD, NAVBAR_HEIGHT_XS } from '../components/navbar';
+import { verifyIdToken } from '../firebase/firebase-admin';
 
 interface Props {
   collection: Collection[];
@@ -102,22 +104,32 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const { firestore } = firebaseClient();
-  const collectionRef = firestore.collection('plants');
-  const collection: Collection[] = [];
-  await collectionRef.get().then((data) =>
-    data.forEach((doc) =>
-      collection.push({
-        id: doc.id,
-        ...(doc.data() as { commonName: string; imageUrl: string }),
-      })
-    )
-  );
-
-  return {
-    props: { collection: collection },
-  };
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const cookies = nookies.get(ctx);
+    await verifyIdToken(cookies.token);
+    const { firestore } = firebaseClient();
+    const collectionRef = firestore.collection('plants');
+    const collection: Collection[] = [];
+    await collectionRef.get().then((data) =>
+      data.forEach((doc) =>
+        collection.push({
+          id: doc.id,
+          ...(doc.data() as { commonName: string; imageUrl: string }),
+        })
+      )
+    );
+    return {
+      props: { collection },
+    };
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 };
 
 export default Index;

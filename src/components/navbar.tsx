@@ -56,7 +56,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
         opacity: showDropdown ? 1 : 0,
         visibility: showDropdown ? 'visible' : 'hidden',
       }}
-      transition={theme.transitions.curve.slow}
+      transition={theme.transitions.curve.medium}
       zIndex={showDropdown ? 'dropdown' : 0}
     >
       {showDropdown && isXS ? (

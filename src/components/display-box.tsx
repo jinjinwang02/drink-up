@@ -150,7 +150,7 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
     });
   }, []);
   return (
-    <Box ref={displayBox} style={{ opacity: 0 }}>
+    <Box ref={displayBox} mt="two" style={{ opacity: 0 }}>
       <BoxWithImage
         id={id}
         width={BOX_WIDTH}

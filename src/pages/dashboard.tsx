@@ -204,20 +204,21 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     const cookies = nookies.get(ctx);
     const token = await verifyIdToken(cookies.token);
-
     const userDoc = await admin
       .firestore()
       .doc(`users/${token.uid}`)
       .get()
       .then((res) => res.data());
-
     return {
       props: { userDoc: JSON.parse(JSON.stringify(userDoc)) },
     };
   } catch (error) {
-    ctx.res.writeHead(302, { Location: '/' });
-    ctx.res.end();
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
   }
 };
 

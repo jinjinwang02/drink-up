@@ -27,7 +27,7 @@ const ArrowButton: React.FC<ArrowButtonProps> = ({
   return (
     <ButtonContainer
       {...props}
-      type="submit"
+      type={props.type || 'submit'}
       additionalStyles={{
         transform: props.disabled ? undefined : getTranslate(),
         transition: theme.transitions.basic.medium,

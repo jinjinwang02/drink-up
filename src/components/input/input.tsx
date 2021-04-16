@@ -1,4 +1,4 @@
-import { Field, FormikContextType } from 'formik';
+import { Field, useField } from 'formik';
 import React from 'react';
 import styled from 'styled-components';
 import { usePlantContext } from '../../context/plant-context';
@@ -18,7 +18,7 @@ const InputField = styled(Field)`
 
 const InputLabel = styled(Box)`
   transform: ${(props) =>
-    props.hasInput
+    (props.hasInput && props.isLabel) || !props.isLabel
       ? 'scale(0.8) translateY(35px)'
       : 'scale(1) translateY(-5px)'};
   ${InputField}:focus + & {
@@ -27,7 +27,6 @@ const InputLabel = styled(Box)`
 `;
 
 export interface InputProps {
-  formik: FormikContextType<any>;
   plantId?: string;
   name: string;
   type?: string;
@@ -38,7 +37,6 @@ export interface InputProps {
 }
 
 const Input: React.FC<InputProps> = ({
-  formik,
   plantId,
   name,
   type = 'text',
@@ -48,12 +46,12 @@ const Input: React.FC<InputProps> = ({
   placeholderSize,
 }: InputProps) => {
   const { handleSetInput } = usePlantContext();
-  const error = formik.errors[name];
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_field, meta] = useField(name);
   return (
     <Box flexDirection="column" width="100%" position="relative">
       <InputField
-        onBlur={() => handleSetInput(plantId, name, formik.values[name])}
+        onBlur={() => handleSetInput(plantId, name, meta.value)}
         onKeyDown={(e: KeyboardEvent) => blockInvalidChar(e, type)}
         name={name}
         disabled={name === 'lastWateredOn'}
@@ -78,16 +76,17 @@ const Input: React.FC<InputProps> = ({
       <InputLabel
         position="absolute"
         zIndex={-1}
-        error={error}
+        error={meta.error}
         transition={theme.transitions.basic.medium}
-        hasInput={formik.values[name].length}
+        hasInput={meta.value.length}
+        isLabel={!meta.error}
       >
         <Typography
           textStyle="bodyL"
           textAlign="center"
-          color={error ? 'red' : 'darkGrey'}
+          color={meta.error ? 'red' : 'darkGrey'}
         >
-          {error ? error : label}
+          {meta.error ? meta.error : label}
         </Typography>
       </InputLabel>
     </Box>

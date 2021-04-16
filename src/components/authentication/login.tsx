@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import 'firebase/auth';
 import { firebaseClient } from '../../firebase/firebase-client';
-import { FormikContextType, FormikProvider, useFormik } from 'formik';
+import { Form, FormikContextType, FormikProvider, useFormik } from 'formik';
 import { Content } from './content';
 import * as Yup from 'yup';
 import { Box } from '../box/box';
@@ -88,7 +88,7 @@ const LogIn: React.FC<LogInProps> = ({
 
   return (
     <FormikProvider value={getCurrentFormik(step) as FormikContextType<any>}>
-      <form onSubmit={getCurrentFormik(step)?.handleSubmit}>
+      <Form onSubmit={getCurrentFormik(step)?.handleSubmit}>
         <Box position="relative" height="100%" width="100%">
           {step !== 1 && !isLoading ? (
             <Box
@@ -98,14 +98,13 @@ const LogIn: React.FC<LogInProps> = ({
               top="two"
               left="22%"
             >
-              <ArrowButton size="small" direction="left" />
+              <ArrowButton size="small" direction="left" type="button" />
             </Box>
           ) : null}
           <Content
             text="Log in to check on your plants"
             name="email"
             label="Email"
-            formik={emailFormik}
             step={step}
             isLogin
             isCurrentStep={step === 1}
@@ -115,7 +114,6 @@ const LogIn: React.FC<LogInProps> = ({
             name="password"
             label="Password"
             type="password"
-            formik={passwordFormik}
             step={step}
             isLogin
             isCurrentStep={step === 2}
@@ -125,7 +123,7 @@ const LogIn: React.FC<LogInProps> = ({
             {!isLoading ? <ArrowButton /> : null}
           </Box>
         </Box>
-      </form>
+      </Form>
     </FormikProvider>
   );
 };

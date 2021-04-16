@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import 'firebase/auth';
 import { useRouter } from 'next/router';
 import { firebaseClient } from '../../firebase/firebase-client';
-import { FormikContextType, FormikProvider, useFormik } from 'formik';
+import { Form, FormikContextType, FormikProvider, useFormik } from 'formik';
 import { Content } from './content';
 import * as Yup from 'yup';
 import { EmailSchema } from './login';
@@ -144,7 +144,7 @@ const SignUp: React.FC<SignUpProps> = ({
 
   return (
     <FormikProvider value={getCurrentFormik(step) as FormikContextType<any>}>
-      <form onSubmit={getCurrentFormik(step)?.handleSubmit}>
+      <Form onSubmit={getCurrentFormik(step)?.handleSubmit}>
         <Box position="relative" height="100%" width="100%">
           {step !== 1 && !isLoading ? (
             <Box
@@ -154,14 +154,13 @@ const SignUp: React.FC<SignUpProps> = ({
               top="two"
               left="36%"
             >
-              <ArrowButton size="small" direction="left" />
+              <ArrowButton size="small" direction="left" type="button" />
             </Box>
           ) : null}
           <Content
             text="Sign up to keep your plants well and hydrated"
             name="email"
             label="Email"
-            formik={emailFormik}
             step={step}
             isCurrentStep={step === 1}
           />
@@ -169,7 +168,6 @@ const SignUp: React.FC<SignUpProps> = ({
             text="How would you like to called?"
             name="displayName"
             label="Display Name"
-            formik={displayNameFormik}
             step={step}
             isCurrentStep={step === 2}
           />
@@ -178,7 +176,6 @@ const SignUp: React.FC<SignUpProps> = ({
             name="password"
             label="Password"
             type="password"
-            formik={passwordFormik}
             step={step}
             isCurrentStep={step === 3}
           />
@@ -187,7 +184,6 @@ const SignUp: React.FC<SignUpProps> = ({
             name="passwordConfirmation"
             label="Confirm Password"
             type="password"
-            formik={passwordConfirmationFormik}
             step={step}
             isCurrentStep={step === 4}
             isLoading={isLoading}
@@ -196,7 +192,7 @@ const SignUp: React.FC<SignUpProps> = ({
             {!isLoading ? <ArrowButton /> : null}
           </Box>
         </Box>
-      </form>
+      </Form>
     </FormikProvider>
   );
 };

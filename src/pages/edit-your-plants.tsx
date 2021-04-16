@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
-import { NextPage } from 'next';
+import nookies from 'nookies';
+import { GetServerSideProps, NextPage } from 'next';
 import { NextSeo } from 'next-seo';
 import { Box } from '../components/box/box';
 import { usePlantContext } from '../context/plant-context';
@@ -14,6 +15,7 @@ import { BoxyButton } from '../components/button/boxy-button';
 import { useRouter } from 'next/router';
 import { theme } from '../styles/theme';
 import { NAVBAR_HEIGHT_MD, NAVBAR_HEIGHT_XS } from '../components/navbar';
+import { verifyIdToken } from '../firebase/firebase-admin';
 
 const Index: NextPage = () => {
   const router = useRouter();
@@ -70,6 +72,21 @@ const Index: NextPage = () => {
       <BoxyButton onBack={() => router.back()} onNext={handleSubmit} />
     </Layout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const cookies = nookies.get(ctx);
+    await verifyIdToken(cookies.token);
+    return { props: {} };
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 };
 
 export default Index;

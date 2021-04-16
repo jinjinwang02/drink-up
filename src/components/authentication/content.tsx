@@ -1,4 +1,3 @@
-import { FormikContextType } from 'formik';
 import React from 'react';
 import { theme } from '../../styles/theme';
 import { Box } from '../box/box';
@@ -12,7 +11,6 @@ interface ContentProps {
   text: string;
   name: string;
   label: string;
-  formik: FormikContextType<any>;
   type?: string;
   isLogin?: boolean;
   isLoading?: boolean;
@@ -27,7 +25,6 @@ const Content: React.FC<ContentProps> = ({
   name,
   label,
   type,
-  formik,
 }: ContentProps) => {
   const totalSteps = isLogin ? 2 : 4;
   // login starts at position translateX(50%) and step 2 translateX(-50%)
@@ -74,7 +71,7 @@ const Content: React.FC<ContentProps> = ({
               {text}
             </Typography>
           </Box>
-          <Input name={name} label={label} type={type} formik={formik} />
+          <Input name={name} label={label} type={type} />
         </Box>
       )}
     </Box>

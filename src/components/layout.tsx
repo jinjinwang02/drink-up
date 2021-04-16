@@ -9,6 +9,7 @@ interface LayoutProps extends BoxProps {
   maxWidth?: 'default' | 'dashboard';
   wrapPage?: boolean;
   pageFlexDirection?: 'column' | 'row' | ('column' | 'row')[];
+  showNavbar?: boolean;
 }
 
 const Layout: React.FC<LayoutProps> = ({
@@ -17,6 +18,7 @@ const Layout: React.FC<LayoutProps> = ({
   maxWidth = 'default',
   wrapPage = true,
   pageFlexDirection = 'column',
+  showNavbar = true,
   ...rest
 }: LayoutProps) => {
   const { user } = useAuthContext();
@@ -32,7 +34,7 @@ const Layout: React.FC<LayoutProps> = ({
       px={spacing}
       {...rest}
     >
-      <Navbar isUserLoggedIn={!!user} right={defaultPx} />
+      {showNavbar ? <Navbar isUserLoggedIn={!!user} right={defaultPx} /> : null}
       <Box
         width="100%"
         flexDirection={pageFlexDirection}
