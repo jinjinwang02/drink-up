@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
-import nookies from 'nookies';
+import { destroyCookie, parseCookies } from 'nookies';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { firebaseClient } from '../firebase/firebase-client';
@@ -31,6 +31,7 @@ export const AuthProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }: AuthContextProviderProps) => {
   const { auth, firestore } = firebaseClient();
+  const cookies = parseCookies();
   const [isLogIn, setLogIn] = useState<boolean>(true);
 
   const [user, setUser] = useState<firebase.User | null>(null);
@@ -39,21 +40,21 @@ export const AuthProvider: React.FC<AuthContextProviderProps> = ({
     firebase.firestore.DocumentData | undefined
   >();
   useEffect(() => {
-    return auth.onIdTokenChanged(async (user) => {
-      if (!user) {
-        setUser(null);
-        nookies.destroy(undefined, 'token');
-        return;
-      }
-      const token = await user.getIdToken();
-      setUser(user);
-      nookies.set(undefined, 'token', token, { maxAge: 2 * 60 * 60 });
-      const ref = firestore.doc(`users/${user?.uid}`);
-      setUserRef(ref);
-      const doc = await ref.get().then((res) => res.data());
-      setUserDoc(doc);
-    });
-  }, [auth, firestore]);
+    if (cookies.token) {
+      return auth.onIdTokenChanged(async (user) => {
+        if (!user) {
+          setUser(null);
+          destroyCookie(undefined, 'token');
+          return;
+        }
+        setUser(user);
+        const ref = firestore.doc(`users/${user?.uid}`);
+        setUserRef(ref);
+        const doc = await ref.get().then((res) => res.data());
+        setUserDoc(doc);
+      });
+    }
+  }, [auth, cookies.token, firestore]);
 
   return (
     <AuthContext.Provider value={{ user, userRef, userDoc, isLogIn, setLogIn }}>

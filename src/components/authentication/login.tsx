@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import 'firebase/auth';
+import nookies from 'nookies';
 import { firebaseClient } from '../../firebase/firebase-client';
 import { useRouter } from 'next/router';
 import { Form, FormikContextType, FormikProvider, useFormik } from 'formik';
@@ -7,7 +8,6 @@ import { Content } from './content';
 import * as Yup from 'yup';
 import { Box } from '../box/box';
 import { ArrowButton } from '../button/arrow-button';
-import { useAuthContext } from '../../context/auth-context';
 
 interface LogInProps {
   step: number;
@@ -28,7 +28,6 @@ const LogIn: React.FC<LogInProps> = ({
   onPressNext,
 }: LogInProps) => {
   const { auth } = firebaseClient();
-  const { user } = useAuthContext();
   const router = useRouter();
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -72,19 +71,23 @@ const LogIn: React.FC<LogInProps> = ({
     async (email: string, password: string) => {
       try {
         setLoading(true);
-        await auth.signInWithEmailAndPassword(email, password);
+        await auth
+          .signInWithEmailAndPassword(email, password)
+          .then(({ user }) => {
+            user?.getIdTokenResult().then(({ token }) => {
+              nookies.set(undefined, 'token', token, {
+                maxAge: 2 * 24 * 60 * 60,
+              });
+            });
+          });
       } catch (error) {
         setLoading(false);
         passwordFormik.setFieldError('password', error.message);
       } finally {
-        // serverside redirect on dashboard means token needs
-        // to be set before changing route
-        if (user) {
-          router.push('/dashboard');
-        }
+        router.push('/dashboard');
       }
     },
-    [auth, passwordFormik, router, user]
+    [auth, router, passwordFormik]
   );
 
   const getCurrentFormik = (step: number) => {

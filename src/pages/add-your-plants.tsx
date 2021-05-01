@@ -54,7 +54,7 @@ const Index: NextPage = () => {
     });
   }, [customCollectionWithInputs]);
 
-  const props = useSpring({
+  const yPositionProps = useSpring({
     from: { y: 140 },
     to: { y: customCollectionWithInputs.length ? 70 : 140 },
   });
@@ -62,7 +62,7 @@ const Index: NextPage = () => {
   return (
     <Layout>
       <NextSeo title="Drink up | Add Your Plants" description="" canonical="" />
-      <AnimatedBox flexDirection="column" pb="eighteen" style={props}>
+      <AnimatedBox flexDirection="column" pb="eighteen" style={yPositionProps}>
         <PageTitleWithBody
           title="Add your plants"
           body="If you didn't find your plants, add them here."

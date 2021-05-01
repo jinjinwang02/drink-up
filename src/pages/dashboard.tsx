@@ -7,7 +7,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import { Layout } from '../components/layout';
 import { Box } from '../components/box/box';
 import { UserDoc } from '../context/auth-context';
-import { DisplayBox } from '../components/display-box';
+import { DisplayBox, EmptyDisplayBox } from '../components/display-box';
 import { Underline } from '../components/icon/underline';
 import { verifyIdToken } from '../firebase/firebase-admin';
 import { CollectionFromDB } from '../interfaces';
@@ -21,16 +21,16 @@ interface Props {
   userDoc?: UserDoc;
 }
 
-const Index: NextPage<any> = ({ userDoc }: Props) => {
-  const { isXS, isSM, isMD } = useMediaQuery();
+const Index: NextPage<Props> = ({ userDoc }: Props) => {
+  const { isXS, isSM, isLG } = useMediaQuery();
   const plants = useMemo(() => (userDoc?.plants || []) as CollectionFromDB[], [
     userDoc?.plants,
   ]);
+  const [currentPlant, setCurrentPlant] = useState<CollectionFromDB>(plants[0]);
   const [disableTitleAnimation, setDisableTitleAnimation] = useState<boolean>(
     false
   );
   const [showXSDisplayBox, setShowXSDisplayBox] = useState<boolean>(false);
-  const [currentPlant, setCurrentPlant] = useState<CollectionFromDB>(plants[0]);
   const plantsDueTomorrow = useMemo(
     () =>
       plants.filter(
@@ -57,33 +57,39 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
     [currentPlant?.id]
   );
 
-  const plantListTrails = useTrail(plants.length, {
+  const userPlantListTrails = useTrail(plants.length, {
     from: { opacity: 0, y: -10, x: 40 },
     to: { opacity: 1, y: 0, x: 0 },
-    delay: isXS || isSM || isMD ? 800 : 1600,
+    delay: isLG ? 1600 : 800,
   });
 
   const plantListTransformProps = useSpring({
     to: {
-      transform: `translateY(calc(${isSM ? '40vh' : '50vh'} - ${plants.indexOf(
-        currentPlant
-      )} * ${isSM ? '66px' : '76px'}))`,
+      transform: `translateY(calc(50vh - ${plants.indexOf(currentPlant)} * ${
+        isSM ? '66px' : '76px'
+      }))`,
     },
   });
 
-  const xsDisplayBoxProps = useSpring({
+  const xsDisplayBoxOpacityProps = useSpring({
     from: { opacity: 0 },
-    to: { opacity: showXSDisplayBox ? 1 : 0 },
+    to: { opacity: showXSDisplayBox || !currentPlant ? 1 : 0 },
   });
 
   useEffect(() => {
-    if (isXS) {
+    if (isXS && currentPlant) {
       document.addEventListener('mouseup', handleDismissDisplayBox);
     }
     return () => {
       document.removeEventListener('mouseup', handleDismissDisplayBox);
     };
-  }, [handleDismissDisplayBox, plants, isXS, disableTitleAnimation]);
+  }, [
+    handleDismissDisplayBox,
+    plants,
+    isXS,
+    disableTitleAnimation,
+    currentPlant,
+  ]);
 
   return (
     <Layout
@@ -92,19 +98,19 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
       pb={isXS ? 'five' : 'zero'}
       height={isXS ? '100%' : '100vh'}
       pageFlexDirection={['column', 'row']}
-      justifyContent={['flex-start', 'space-between']}
+      justifyContent={['flex-start', 'center']}
       wrapPage={isXS ? true : false}
       bg={isXS && showXSDisplayBox ? 'pureBlackTen' : 'pureWhite'}
     >
       <NextSeo title="Drink up | Dashboard" description="" canonical="" />
       <Box
-        flexGrow={[0, 2]}
+        flexGrow={[0, currentPlant ? 2 : 1]}
         flexShrink={1}
         flexDirection="column"
         alignItems={['center', 'flex-start']}
-        display={['flex', 'none', 'none', 'flex']}
+        display={currentPlant ? ['flex', 'none', 'none', 'flex'] : 'flex'}
         mb={['four', 'zero']}
-        maxWidth="520px"
+        maxWidth={currentPlant ? '520px' : '100%'}
       >
         <DashboardTitle
           displayName={userDoc?.displayName}
@@ -113,24 +119,24 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
         />
       </Box>
 
-      {currentPlant ? (
-        <AnimatedBox
-          mx="one"
-          height={isXS ? '100vh' : '100%'}
-          flexGrow={1}
-          position={['fixed', 'relative']}
-          top={isXS ? '50%' : 0}
-          left={isXS ? '50%' : 0}
-          zIndex={isXS && showXSDisplayBox ? 1 : 0}
-          style={
-            isXS
-              ? {
-                  ...xsDisplayBoxProps,
-                  transform: 'translate(-53%, -50%)',
-                }
-              : undefined
-          }
-        >
+      <AnimatedBox
+        mx="two"
+        height={isXS ? '100vh' : '100%'}
+        flexGrow={1}
+        position={['fixed', 'relative']}
+        top={isXS ? '50%' : 0}
+        left={isXS ? '50%' : 0}
+        zIndex={isXS && showXSDisplayBox ? 1 : 0}
+        style={
+          isXS
+            ? {
+                ...xsDisplayBoxOpacityProps,
+                transform: 'translate(-53%, -50%)',
+              }
+            : undefined
+        }
+      >
+        {currentPlant ? (
           <DisplayBox
             id={currentPlant.id}
             commonName={currentPlant.commonName}
@@ -140,14 +146,16 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
             notes={currentPlant.notes}
             onClickWatered={() => null}
           />
-        </AnimatedBox>
-      ) : null}
+        ) : (
+          <EmptyDisplayBox />
+        )}
+      </AnimatedBox>
 
       <Box
         flexGrow={1}
         flexShrink={0}
         mx={['zero', 'zero', 'one', 'two']}
-        display={['none', 'flex']}
+        display={currentPlant ? ['none', 'flex'] : 'none'}
       >
         <Underline variant="tertiary" />
       </Box>
@@ -156,12 +164,11 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
         flexGrow={[0, 1]}
         flexShrink={0}
         alignItems={['center', 'flex-start']}
-        position="relative"
         flexDirection="column"
         mt={isXS ? 'one' : 'zero'}
         style={!isXS ? plantListTransformProps : undefined}
       >
-        {plantListTrails.map((props, index) => (
+        {userPlantListTrails.map((props, index) => (
           <AnimatedBox style={props} key={plants[index].id}>
             <PlantsList
               plant={plants[index]}
@@ -185,8 +192,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       .doc(`users/${token.uid}`)
       .get()
       .then((res) => res.data());
+
     return {
-      props: { userDoc: JSON.parse(JSON.stringify(userDoc)) },
+      props: {
+        userDoc: JSON.parse(JSON.stringify(userDoc)),
+      },
     };
   } catch (error) {
     return {

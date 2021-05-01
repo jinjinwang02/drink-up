@@ -17,7 +17,7 @@ const CloudButton: React.FC<CloudButtonProps> = ({
   ...props
 }: CloudButtonProps) => {
   const [isHovered, setHovered] = useState<boolean>(false);
-  const translateProps = useSpring({
+  const transformProps = useSpring({
     to: {
       transform: isHovered
         ? 'translate(-50%, 2%) scale(1.05)'
@@ -36,7 +36,7 @@ const CloudButton: React.FC<CloudButtonProps> = ({
         position="absolute"
         width="110%"
         left="50%"
-        style={translateProps}
+        style={transformProps}
         zIndex={-1}
       >
         <Cloud />

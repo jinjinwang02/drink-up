@@ -37,10 +37,12 @@ const Layout: React.FC<LayoutProps> = ({
       {showNavbar ? <Navbar isUserLoggedIn={!!user} right={defaultPx} /> : null}
       <Box
         width="100%"
+        maxWidth={maxWidth === 'default' ? '1200px' : '1440px'}
         flexDirection={pageFlexDirection}
         justifyContent="flex-start"
         minHeight={hasMinHeight ? '100vh' : 0}
         flexWrap={wrapPage ? 'wrap' : 'noWrap'}
+        position="relative"
       >
         {children}
       </Box>

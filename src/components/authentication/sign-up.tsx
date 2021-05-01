@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import 'firebase/auth';
+import nookies from 'nookies';
 import { useRouter } from 'next/router';
 import { firebaseClient } from '../../firebase/firebase-client';
 import { Form, FormikContextType, FormikProvider, useFormik } from 'formik';
@@ -8,7 +9,6 @@ import * as Yup from 'yup';
 import { EmailSchema } from './login';
 import { Box } from '../box/box';
 import { ArrowButton } from '../button/arrow-button';
-import { useAuthContext } from '../../context/auth-context';
 
 interface SignUpProps {
   step: number;
@@ -31,7 +31,6 @@ const SignUp: React.FC<SignUpProps> = ({
   onPressNext,
 }: SignUpProps) => {
   const { auth, firestore } = firebaseClient();
-  const { user } = useAuthContext();
   const router = useRouter();
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -110,6 +109,11 @@ const SignUp: React.FC<SignUpProps> = ({
           email,
           password
         );
+        user?.getIdTokenResult().then(({ token }) => {
+          nookies.set(undefined, 'token', token, {
+            maxAge: 2 * 24 * 60 * 60,
+          });
+        });
         const userRef = await firestore.doc(`users/${user?.uid}`).get();
         if (!userRef.exists) {
           await firestore.collection('users').doc(user?.uid).set({
@@ -125,12 +129,10 @@ const SignUp: React.FC<SignUpProps> = ({
           error.message
         );
       } finally {
-        if (user) {
-          router.push('/find-your-plants');
-        }
+        router.push('/find-your-plants');
       }
     },
-    [auth, firestore, user, passwordConfirmationFormik, router]
+    [auth, firestore, passwordConfirmationFormik, router]
   );
 
   const getCurrentFormik = (step: number) => {

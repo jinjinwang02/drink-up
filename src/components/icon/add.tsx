@@ -1,7 +1,11 @@
 import React from 'react';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 
-const Add: React.FC = () => {
+export interface AddProps {
+  size?: 'sm' | 'md';
+}
+
+const Add: React.FC<AddProps> = ({ size = 'md' }: AddProps) => {
   const { isXS } = useMediaQuery();
   return (
     <svg
@@ -9,8 +13,8 @@ const Add: React.FC = () => {
       viewBox="0 0 66.23 66.23"
       fill="none"
       stroke="#000"
-      height={isXS ? 24 : 29}
-      width={isXS ? 24 : 29}
+      height={isXS ? 24 : size === 'sm' ? 20 : 29}
+      width={isXS ? 24 : size === 'sm' ? 20 : 29}
     >
       <circle strokeWidth={2} cx="33.12" cy="33.12" r="32.11" />
       <line strokeWidth={3} x1="15.61" y1="33.68" x2="50.62" y2="33.68" />

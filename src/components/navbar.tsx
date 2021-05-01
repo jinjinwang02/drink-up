@@ -50,7 +50,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
 }: NavDropdownProps) => {
   const { auth } = firebaseClient();
   const router = useRouter();
-  const xsProps = useSpring({
+  const xsTransformProps = useSpring({
     from: {
       x: 500,
       opacity: 0,
@@ -61,7 +61,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
       opacity: showDropdown ? 1 : 0,
     },
   });
-  const smProps = useSpring({
+  const smTransformProps = useSpring({
     from: {
       transform: 'scaleY(0.3)',
       y: -20,
@@ -87,7 +87,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
       border={['none', 'regularBlack']}
       top={[-`${NAVBAR_HEIGHT_XS}`, 'zero']}
       right={0}
-      style={isXS ? xsProps : smProps}
+      style={isXS ? xsTransformProps : smTransformProps}
       zIndex="dropdown"
     >
       {isXS ? (

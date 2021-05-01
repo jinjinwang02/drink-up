@@ -1,8 +1,10 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react/types-6-0';
 import { Box } from '../components/box/box';
-import { AddButton as AddButtonComponent } from '../components/button/add-button';
-import { ButtonProps } from '../interfaces';
+import {
+  AddButton as AddButtonComponent,
+  AddButtonProps,
+} from '../components/button/add-button';
 
 export default {
   title: 'Components/Button/Add Button',
@@ -13,7 +15,7 @@ export default {
   },
 } as Meta;
 
-export const AddButton: Story<ButtonProps> = (args) => (
+export const AddButton: Story<AddButtonProps> = (args) => (
   <Box>
     <AddButtonComponent {...args} />
   </Box>

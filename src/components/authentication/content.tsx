@@ -31,7 +31,7 @@ const Content: React.FC<ContentProps> = ({
   // login starts at position translateX(50%) and step 2 translateX(-50%)
   // signup starts at position translateX(150%) and step 2 translateX(50%)
   const translateX = `${(0.5 * (totalSteps - 1) - 1 * (step - 1)) * 100}%`;
-  const translateProps = useSpring({
+  const slideProps = useSpring({
     to: {
       transform: `translateX(${translateX})`,
       opacity: isCurrentStep ? 1 : 0,
@@ -54,7 +54,7 @@ const Content: React.FC<ContentProps> = ({
         <AnimatedBox
           flexDirection="column"
           width="100%"
-          style={translateProps}
+          style={slideProps}
           mb="five"
           zIndex={2}
         >

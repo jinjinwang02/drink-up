@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { useSpring } from 'react-spring';
-import { useMediaQuery } from '../hooks/useMediaQuery';
 import { CollectionFromDB } from '../interfaces';
 import { AnimatedBox } from './box/animatedBox';
 import { Typography } from './typography';
@@ -16,12 +15,11 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
   plantsDueTomorrow,
   plantAmount,
 }: DashboardTitleProps) => {
-  const { isXS } = useMediaQuery();
   const plantList = useMemo(
     () => plantsDueTomorrow.map((el) => el.commonName),
     [plantsDueTomorrow]
   );
-  const props = useSpring({
+  const fadeInProps = useSpring({
     from: { opacity: 0, y: 40 },
     to: { opacity: 1, y: 0 },
   });
@@ -32,25 +30,17 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
   });
   return (
     <>
-      <AnimatedBox style={props}>
-        <Typography textStyle={['h2', 'h2', 'h2', 'h1']}>
+      <AnimatedBox style={fadeInProps}>
+        <Typography textStyle={['h2', 'h2', 'h2', 'h1']} mb="one">
           Hi {displayName ?? 'there'},
         </Typography>
       </AnimatedBox>
-      <AnimatedBox style={props} mb="two">
-        {!isXS ? (
-          <Typography textStyle={['h2', 'h2', 'h2', 'h1']}>
-            {plantAmount
-              ? `You have ${plantAmount} plants.`
-              : `You haven't added any plants.`}
-          </Typography>
-        ) : (
-          <Typography textStyle="h3">
-            {plantAmount
-              ? `You have ${plantAmount} plants.`
-              : `You haven't added any plants.`}
-          </Typography>
-        )}
+      <AnimatedBox style={fadeInProps} mb="two">
+        <Typography textStyle={['h3', 'h2', 'h2', 'h1']}>
+          {plantAmount
+            ? `You have ${plantAmount} plants.`
+            : `You haven't added any plants.`}
+        </Typography>
       </AnimatedBox>
       <AnimatedBox
         style={footerProps}

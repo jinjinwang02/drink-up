@@ -18,7 +18,7 @@ const TextWithAnimatedUnderline: React.FC<TextWithAnimatedUnderlineProps> = ({
   onClick,
 }: TextWithAnimatedUnderlineProps) => {
   const [isHovered, setHovered] = useState<boolean>(false);
-  const props = useSpring({
+  const scaleProps = useSpring({
     from: { transform: 'scaleX(0)' },
     to: {
       transform: isHovered || focused ? 'scaleX(1)' : 'scaleX(0)',
@@ -41,7 +41,7 @@ const TextWithAnimatedUnderline: React.FC<TextWithAnimatedUnderlineProps> = ({
         zIndex={-1}
         width="120%"
         backgroundColor={backgroundColor}
-        style={props}
+        style={scaleProps}
       />
     </Box>
   );

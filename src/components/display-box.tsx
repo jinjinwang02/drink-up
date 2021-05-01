@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useSpring } from 'react-spring';
 import { useMediaQuery } from '../hooks/useMediaQuery';
@@ -7,6 +8,7 @@ import { getWateringCountdown } from '../utils';
 import { AnimatedBox } from './box/animatedBox';
 import { Box } from './box/box';
 import { BoxWithImage } from './box/box-with-image';
+import { AddButton } from './button/add-button';
 import { CircleButton } from './button/circle-button';
 import { EditButton } from './button/edit-button';
 import { DATE_DISPLAY_FORMAT } from './calendar';
@@ -16,7 +18,7 @@ import { Typography } from './typography';
 const BOX_WIDTH = 272;
 
 export interface DisplayBoxProps extends CollectionFromDB {
-  onClickWatered: () => void;
+  onClickWatered?: () => void;
 }
 
 const TitleBox = ({ commonName }: { commonName: string }) => (
@@ -96,7 +98,7 @@ const SubmitBox = ({
   onClickWatered,
 }: {
   isWateredToday: boolean;
-  onClickWatered: () => void;
+  onClickWatered?: () => void;
 }) => (
   <Box pt="zeroPointEight" pb="zeroPointSix" alignItems="center">
     <CircleButton
@@ -142,14 +144,14 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
   onClickWatered,
 }: DisplayBoxProps) => {
   const { isMD } = useMediaQuery();
-  const props = useSpring({
+  const fadeInProps = useSpring({
     from: { opacity: 0, y: 20 },
     to: { opacity: 1, y: 0 },
     delay: isMD ? 0 : 800,
   });
 
   return (
-    <AnimatedBox style={props}>
+    <AnimatedBox style={fadeInProps}>
       <BoxWithImage
         id={id}
         width={BOX_WIDTH}
@@ -171,4 +173,36 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
   );
 };
 
-export { DisplayBox };
+const EmptyDisplayBox: React.FC = () => {
+  const router = useRouter();
+  const { isMD } = useMediaQuery();
+  const fadeInProps = useSpring({
+    from: { opacity: 0, y: 20 },
+    to: { opacity: 1, y: 0 },
+    delay: isMD ? 0 : 800,
+  });
+  return (
+    <AnimatedBox style={fadeInProps}>
+      <BoxWithImage
+        width={BOX_WIDTH}
+        topBoxHeight={BOX_WIDTH}
+        bottomAccessory={
+          <Box py="zeroPointEight" width="100%">
+            <Typography textAlign="center" textStyle="copyLBold" pl="four">
+              Your first plant
+            </Typography>
+            <AddButton
+              onClick={() => router.push('/find-your-plants')}
+              size="sm"
+              ml="one"
+              pr="two"
+              mb="zeroPointTwo"
+            />
+          </Box>
+        }
+      />
+    </AnimatedBox>
+  );
+};
+
+export { DisplayBox, EmptyDisplayBox };

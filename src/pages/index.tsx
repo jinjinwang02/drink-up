@@ -28,7 +28,7 @@ const Index: React.FC = () => {
     setShowAuthentication(true);
   }, [setLogIn]);
 
-  const authenticationBoxProps = useSpring({
+  const authenticationBoxFadeInProps = useSpring({
     from: { opacity: 0, y: 100 },
     to: {
       opacity: showAuthentication ? 1 : 0,
@@ -72,7 +72,7 @@ const Index: React.FC = () => {
         ) : null}
         {isXS ? (
           <AnimatedBox
-            style={authenticationBoxProps}
+            style={authenticationBoxFadeInProps}
             zIndex={showAuthentication ? 1 : -1}
           >
             <Authentication />
