@@ -1,17 +1,5 @@
 import React, { useMemo } from 'react';
-import styled, { keyframes } from 'styled-components';
-
-export const pathAnimation = keyframes`
-  to {
-    stroke-dashoffset: 0;
-  }
-`;
-
-const StyledTertiaryUnderline = styled.path`
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: ${pathAnimation} 2s cubic-bezier(0.83, 0, 0.17, 1) forwards 1.6s;
-`;
+import { useSpring, animated } from 'react-spring';
 
 export interface UnderlineProps {
   variant: 'primary' | 'secondary' | 'tertiary';
@@ -22,6 +10,12 @@ const Underline: React.FC<UnderlineProps> = ({
   variant,
   width,
 }: UnderlineProps) => {
+  const props = useSpring({
+    config: { duration: 800, mass: 5, tension: 2000, friction: 200 },
+    from: { x: 1004 },
+    to: { x: 0 },
+    delay: 2200,
+  });
   const underline = useMemo(() => {
     switch (variant) {
       case 'primary':
@@ -62,19 +56,21 @@ const Underline: React.FC<UnderlineProps> = ({
         );
       case 'tertiary':
         return (
-          <svg
+          <animated.svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 37.02 764.75"
             fill="none"
             stroke="#000"
             strokeWidth={2}
             height="99vh"
+            strokeDashoffset={props.x}
+            strokeDasharray={1004}
           >
-            <StyledTertiaryUnderline d="M5.05.38C35.26,73.05.22,107.8,5.05,61.61S36,137.78,25,283.87s-4.88,304.51-4.88,304.51.87,37.7-14.79,61.1,15.6-75.07,23.43-66.86,1.55,40.86-12,116.3,19.9,64.24,19.9,64.24" />
-          </svg>
+            <path d="M5.05.38C35.26,73.05.22,107.8,5.05,61.61S36,137.78,25,283.87s-4.88,304.51-4.88,304.51.87,37.7-14.79,61.1,15.6-75.07,23.43-66.86,1.55,40.86-12,116.3,19.9,64.24,19.9,64.24" />
+          </animated.svg>
         );
     }
-  }, [variant, width]);
+  }, [props.x, variant, width]);
 
   return <>{underline}</>;
 };

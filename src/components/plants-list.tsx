@@ -19,7 +19,7 @@ const PlantsList: React.FC<PlantsListProps> = ({
   isCurrentPlant,
   onClickTitle,
 }: PlantsListProps) => {
-  const isXS = useMediaQuery();
+  const { isXS } = useMediaQuery();
   const getGradientProps = useCallback(
     (difference) => {
       if (isXS) return undefined;

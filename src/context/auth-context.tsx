@@ -47,11 +47,11 @@ export const AuthProvider: React.FC<AuthContextProviderProps> = ({
       }
       const token = await user.getIdToken();
       setUser(user);
+      nookies.set(undefined, 'token', token, { maxAge: 2 * 60 * 60 });
       const ref = firestore.doc(`users/${user?.uid}`);
       setUserRef(ref);
       const doc = await ref.get().then((res) => res.data());
       setUserDoc(doc);
-      nookies.set(undefined, 'token', token, { maxAge: 2 * 60 * 60 });
     });
   }, [auth, firestore]);
 

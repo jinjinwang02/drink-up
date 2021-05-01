@@ -155,6 +155,7 @@ const space = {
   eleven: 110,
   twelve: 120,
   fourteen: 140,
+  eighteen: 180,
   calendarHeight: 255,
 };
 

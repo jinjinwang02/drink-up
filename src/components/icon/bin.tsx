@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
-import { theme } from '../../styles/theme';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { Box } from '../box/box';
+import { useSpring } from '@react-spring/core';
+import { AnimatedBox } from '../box/animatedBox';
 
 const Bin: React.FC = () => {
   const { isXS } = useMediaQuery();
   const [isHovered, setHovered] = useState<boolean>(false);
+  const rotateProps = useSpring({
+    to: {
+      transform: isHovered ? 'rotate(-8deg)' : 'rotate(0deg)',
+      transformOrigin: 'bottom left',
+    },
+  });
   return (
     <Box
       flexDirection="column"
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}
     >
-      <Box
-        mb="zeroPointOne"
-        style={{
-          transform: isHovered ? 'rotate(-8deg)' : 'rotate(0deg)',
-          transformOrigin: 'bottom left',
-        }}
-        transition={theme.transitions.basic.medium}
-      >
+      <AnimatedBox mb="zeroPointOne" style={rotateProps}>
         <svg
           version="1.0"
           xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@ const Bin: React.FC = () => {
         >
           <path d="M.38,4H13L16.54.38h18L38.1,4H50.67v7.18H.38Z" />
         </svg>
-      </Box>
+      </AnimatedBox>
       <Box>
         <svg
           version="1.0"

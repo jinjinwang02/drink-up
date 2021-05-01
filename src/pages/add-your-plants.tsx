@@ -10,12 +10,13 @@ import { Box } from '../components/box/box';
 import { BoxyButton } from '../components/button/boxy-button';
 import { AddButton } from '../components/button/add-button';
 import { CloudButton } from '../components/button/cloud-button';
-import { theme } from '../styles/theme';
 import { CrossButton } from '../components/button/cross-button';
 import { generateId } from '../utils';
 import { usePlantContext } from '../context/plant-context';
 import { CollectionWithInputs } from '../interfaces';
 import { verifyIdToken } from '../firebase/firebase-admin';
+import { AnimatedBox } from '../components/box/animatedBox';
+import { useSpring } from '@react-spring/core';
 
 const Index: NextPage = () => {
   const router = useRouter();
@@ -53,15 +54,15 @@ const Index: NextPage = () => {
     });
   }, [customCollectionWithInputs]);
 
+  const props = useSpring({
+    from: { y: 140 },
+    to: { y: customCollectionWithInputs.length ? 70 : 140 },
+  });
+
   return (
     <Layout>
       <NextSeo title="Drink up | Add Your Plants" description="" canonical="" />
-      <Box
-        flexDirection="column"
-        pt={customCollectionWithInputs.length ? 'seven' : 'fourteen'}
-        pb="twelve"
-        transition={theme.transitions.basic.medium}
-      >
+      <AnimatedBox flexDirection="column" pb="eighteen" style={props}>
         <PageTitleWithBody
           title="Add your plants"
           body="If you didn't find your plants, add them here."
@@ -92,7 +93,7 @@ const Index: NextPage = () => {
             </>
           )}
         </Box>
-      </Box>
+      </AnimatedBox>
       <BoxyButton onBack={() => router.back()} onNext={handleSubmit} />
     </Layout>
   );

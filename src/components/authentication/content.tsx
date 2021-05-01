@@ -1,5 +1,6 @@
+import { useSpring } from '@react-spring/core';
 import React from 'react';
-import { theme } from '../../styles/theme';
+import { AnimatedBox } from '../box/animatedBox';
 import { Box } from '../box/box';
 import { Logo } from '../icon/logo';
 import { Input } from '../input/input';
@@ -30,7 +31,12 @@ const Content: React.FC<ContentProps> = ({
   // login starts at position translateX(50%) and step 2 translateX(-50%)
   // signup starts at position translateX(150%) and step 2 translateX(50%)
   const translateX = `${(0.5 * (totalSteps - 1) - 1 * (step - 1)) * 100}%`;
-
+  const translateProps = useSpring({
+    to: {
+      transform: `translateX(${translateX})`,
+      opacity: isCurrentStep ? 1 : 0,
+    },
+  });
   return (
     <Box
       flexDirection="column"
@@ -41,23 +47,14 @@ const Content: React.FC<ContentProps> = ({
       position="relative"
     >
       {isLoading ? (
-        <Box
-          width="100%"
-          style={{
-            transform: `translateX(${translateX})`,
-          }}
-        >
+        <Box width="100%" style={{ transform: `translateX(${translateX})` }}>
           <Logo animated />
         </Box>
       ) : (
-        <Box
+        <AnimatedBox
           flexDirection="column"
           width="100%"
-          style={{
-            transform: `translateX(${translateX})`,
-            opacity: isCurrentStep ? 1 : 0,
-          }}
-          transition={theme.transitions.basic.slow}
+          style={translateProps}
           mb="five"
           zIndex={2}
         >
@@ -72,7 +69,7 @@ const Content: React.FC<ContentProps> = ({
             </Typography>
           </Box>
           <Input name={name} label={label} type={type} />
-        </Box>
+        </AnimatedBox>
       )}
     </Box>
   );

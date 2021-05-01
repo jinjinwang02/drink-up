@@ -13,7 +13,6 @@ import { Layout } from '../components/layout';
 import { PageTitleWithBody } from '../components/page-title-with-body';
 import { BoxyButton } from '../components/button/boxy-button';
 import { useRouter } from 'next/router';
-import { theme } from '../styles/theme';
 import { NAVBAR_HEIGHT_MD, NAVBAR_HEIGHT_XS } from '../components/navbar';
 import { verifyIdToken } from '../firebase/firebase-admin';
 
@@ -50,7 +49,6 @@ const Index: NextPage = () => {
           `repeat(auto-fill, minmax(${BOX_WIDTH_MD}px, 1fr))`,
         ]}
         gridRowGap="four"
-        transition={theme.transitions.basic.medium}
         mt="two"
         pb="five"
       >

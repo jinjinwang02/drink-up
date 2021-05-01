@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo, useRef } from 'react';
-import { TweenLite, Power3 } from 'gsap';
+import React, { useMemo } from 'react';
+import { useSpring } from 'react-spring';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { CollectionFromDB } from '../interfaces';
-import { Box } from './box/box';
+import { AnimatedBox } from './box/animatedBox';
 import { Typography } from './typography';
-import { theme } from '../styles/theme';
 
 interface DashboardTitleProps {
   displayName?: string;
@@ -22,53 +21,41 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
     () => plantsDueTomorrow.map((el) => el.commonName),
     [plantsDueTomorrow]
   );
-  const titlePartOne = useRef(null);
-  const titlePartTwo = useRef(null);
-  const titleFooter = useRef(null);
-  useEffect(() => {
-    TweenLite.to([titlePartOne.current, titlePartTwo.current], 0.8, {
-      y: -40,
-      ease: Power3.easeInOut,
-    });
-    TweenLite.to(titleFooter.current, 0.8, {
-      opacity: 1,
-      ease: Power3.easeInOut,
-      delay: 0.4,
-    });
-  }, []);
+  const props = useSpring({
+    from: { opacity: 0, y: 40 },
+    to: { opacity: 1, y: 0 },
+  });
+  const footerProps = useSpring({
+    from: { opacity: 0, y: 20 },
+    to: { opacity: 1, y: 0 },
+    delay: 200,
+  });
   return (
     <>
-      <Typography
-        mt="two"
-        textStyle={['h2', 'h2', 'h2', 'h1']}
-        ref={titlePartOne}
-      >
-        Hi {displayName ?? 'there'},
-      </Typography>
-      {!isXS ? (
-        <Typography
-          textStyle={['h2', 'h2', 'h2', 'h1']}
-          mt={['one', 'one', 'two', 'two']}
-          ref={titlePartTwo}
-        >
-          {plantAmount
-            ? `You have ${plantAmount} plants.`
-            : `You haven't added any plants.`}
+      <AnimatedBox style={props}>
+        <Typography textStyle={['h2', 'h2', 'h2', 'h1']}>
+          Hi {displayName ?? 'there'},
         </Typography>
-      ) : (
-        <Typography textStyle="h3" ref={titlePartTwo}>
-          {plantAmount
-            ? `You have ${plantAmount} plants.`
-            : `You haven't added any plants.`}
-        </Typography>
-      )}
-      <Box
-        ref={titleFooter}
-        mt={-theme.space.one}
-        mb={['zero', 'four']}
+      </AnimatedBox>
+      <AnimatedBox style={props} mb="two">
+        {!isXS ? (
+          <Typography textStyle={['h2', 'h2', 'h2', 'h1']}>
+            {plantAmount
+              ? `You have ${plantAmount} plants.`
+              : `You haven't added any plants.`}
+          </Typography>
+        ) : (
+          <Typography textStyle="h3">
+            {plantAmount
+              ? `You have ${plantAmount} plants.`
+              : `You haven't added any plants.`}
+          </Typography>
+        )}
+      </AnimatedBox>
+      <AnimatedBox
+        style={footerProps}
         justifyContent={['center', 'flex-start']}
         flexWrap="wrap"
-        style={{ opacity: 0 }}
       >
         {plantsDueTomorrow.length ? (
           <>
@@ -93,7 +80,7 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
         ) : (
           <Typography textStyle="bodyL">Why not adding some?</Typography>
         )}
-      </Box>
+      </AnimatedBox>
     </>
   );
 };

@@ -1,12 +1,6 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import * as admin from 'firebase-admin';
-import { TweenLite, Power3 } from 'gsap';
+import { useSpring, useTrail } from 'react-spring';
 import nookies from 'nookies';
 import { NextSeo } from 'next-seo';
 import { GetServerSideProps, NextPage } from 'next';
@@ -19,17 +13,16 @@ import { verifyIdToken } from '../firebase/firebase-admin';
 import { CollectionFromDB } from '../interfaces';
 import { getWateringCountdown } from '../utils';
 import { useMediaQuery } from '../hooks/useMediaQuery';
-import { theme } from '../styles/theme';
 import { DashboardTitle } from '../components/dashboard-title';
 import { PlantsList } from '../components/plants-list';
+import { AnimatedBox } from '../components/box/animatedBox';
 
 interface Props {
   userDoc?: UserDoc;
 }
 
 const Index: NextPage<any> = ({ userDoc }: Props) => {
-  const { isXS, isSM } = useMediaQuery();
-  const nameElements = useRef<React.RefObject<HTMLDivElement>[]>([]);
+  const { isXS, isSM, isMD } = useMediaQuery();
   const plants = useMemo(() => (userDoc?.plants || []) as CollectionFromDB[], [
     userDoc?.plants,
   ]);
@@ -64,22 +57,26 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
     [currentPlant?.id]
   );
 
-  useEffect(() => {
-    if (!isXS && !disableTitleAnimation) {
-      Array(plants.length)
-        .fill(0)
-        .map((_el, index) =>
-          TweenLite.from(nameElements.current[index], 0.8, {
-            opacity: 0,
-            y: -10,
-            x: 40,
-            duration: 0.5,
-            ease: Power3.easeInOut,
-            delay: index * 0.2 + 1,
-          })
-        );
-    }
+  const plantListTrails = useTrail(plants.length, {
+    from: { opacity: 0, y: -10, x: 40 },
+    to: { opacity: 1, y: 0, x: 0 },
+    delay: isXS || isSM || isMD ? 800 : 1600,
+  });
 
+  const plantListTransformProps = useSpring({
+    to: {
+      transform: `translateY(calc(${isSM ? '40vh' : '50vh'} - ${plants.indexOf(
+        currentPlant
+      )} * ${isSM ? '66px' : '76px'}))`,
+    },
+  });
+
+  const xsDisplayBoxProps = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: showXSDisplayBox ? 1 : 0 },
+  });
+
+  useEffect(() => {
     if (isXS) {
       document.addEventListener('mouseup', handleDismissDisplayBox);
     }
@@ -117,25 +114,22 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
       </Box>
 
       {currentPlant ? (
-        <Box
+        <AnimatedBox
           mx="one"
           height={isXS ? '100vh' : '100%'}
           flexGrow={1}
           position={['fixed', 'relative']}
           top={isXS ? '50%' : 0}
           left={isXS ? '50%' : 0}
-          zIndex={1}
-          display={['flex', 'flex']}
+          zIndex={isXS && showXSDisplayBox ? 1 : 0}
           style={
             isXS
               ? {
+                  ...xsDisplayBoxProps,
                   transform: 'translate(-53%, -50%)',
-                  opacity: showXSDisplayBox ? 1 : 0,
-                  visibility: showXSDisplayBox ? 'visible' : 'hidden',
                 }
               : undefined
           }
-          transition={theme.transitions.basic.medium}
         >
           <DisplayBox
             id={currentPlant.id}
@@ -146,7 +140,7 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
             notes={currentPlant.notes}
             onClickWatered={() => null}
           />
-        </Box>
+        </AnimatedBox>
       ) : null}
 
       <Box
@@ -158,44 +152,26 @@ const Index: NextPage<any> = ({ userDoc }: Props) => {
         <Underline variant="tertiary" />
       </Box>
 
-      <Box
+      <AnimatedBox
         flexGrow={[0, 1]}
         flexShrink={0}
         alignItems={['center', 'flex-start']}
         position="relative"
         flexDirection="column"
         mt={isXS ? 'one' : 'zero'}
-        transition={theme.transitions.basic.medium}
-        style={
-          !isXS
-            ? {
-                transform: `translateY(calc(${
-                  isSM ? '40vh' : '45vh'
-                } - ${plants.indexOf(currentPlant)} * ${
-                  isSM ? '66px' : '76px'
-                }))`,
-              }
-            : undefined
-        }
+        style={!isXS ? plantListTransformProps : undefined}
       >
-        {plants.map((el: CollectionFromDB) => (
-          <Box
-            key={el.id}
-            ref={(el: React.RefObject<HTMLDivElement>) =>
-              nameElements.current.push(el)
-            }
-          >
+        {plantListTrails.map((props, index) => (
+          <AnimatedBox style={props} key={plants[index].id}>
             <PlantsList
-              plant={el}
-              indexDifference={
-                plants.indexOf(currentPlant) - plants.indexOf(el)
-              }
-              isCurrentPlant={currentPlant === el}
+              plant={plants[index]}
+              indexDifference={plants.indexOf(currentPlant) - index}
+              isCurrentPlant={currentPlant === plants[index]}
               onClickTitle={handleClickTitle}
             />
-          </Box>
+          </AnimatedBox>
         ))}
-      </Box>
+      </AnimatedBox>
     </Layout>
   );
 };

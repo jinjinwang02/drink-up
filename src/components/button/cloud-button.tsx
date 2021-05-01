@@ -1,7 +1,7 @@
+import { useSpring } from '@react-spring/core';
 import React, { useState } from 'react';
 import { ButtonProps } from '../../interfaces';
-import { theme } from '../../styles/theme';
-import { Box } from '../box/box';
+import { AnimatedBox } from '../box/animatedBox';
 import { Cloud } from '../icon/cloud';
 import { Typography } from '../typography';
 import { ButtonContainer } from './button-container';
@@ -17,6 +17,13 @@ const CloudButton: React.FC<CloudButtonProps> = ({
   ...props
 }: CloudButtonProps) => {
   const [isHovered, setHovered] = useState<boolean>(false);
+  const translateProps = useSpring({
+    to: {
+      transform: isHovered
+        ? 'translate(-50%, 2%) scale(1.05)'
+        : 'translate(-50%, 2%) scale(1)',
+    },
+  });
   return (
     <ButtonContainer
       {...props}
@@ -25,20 +32,15 @@ const CloudButton: React.FC<CloudButtonProps> = ({
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}
     >
-      <Box
+      <AnimatedBox
         position="absolute"
         width="110%"
         left="50%"
-        style={{
-          transform: isHovered
-            ? 'translate(-50%, 2%) scale(1.05)'
-            : 'translate(-50%, 2%)',
-        }}
-        transition={theme.transitions.basic.medium}
+        style={translateProps}
         zIndex={-1}
       >
         <Cloud />
-      </Box>
+      </AnimatedBox>
       <Typography
         py={['zeroPointTwo', 'zero']}
         px={borderless ? 'four' : ['zeroPointSix', 'one']}

@@ -1,8 +1,10 @@
 import dayjs from 'dayjs';
-import React, { useEffect, useRef } from 'react';
-import { TweenLite, Power3 } from 'gsap';
+import React from 'react';
+import { useSpring } from 'react-spring';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import { CollectionFromDB } from '../interfaces';
 import { getWateringCountdown } from '../utils';
+import { AnimatedBox } from './box/animatedBox';
 import { Box } from './box/box';
 import { BoxWithImage } from './box/box-with-image';
 import { CircleButton } from './button/circle-button';
@@ -139,18 +141,15 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
   notes,
   onClickWatered,
 }: DisplayBoxProps) => {
-  const displayBox = useRef(null);
-  useEffect(() => {
-    TweenLite.to(displayBox.current, 0.8, {
-      opacity: 1,
-      y: -20,
-      ease: Power3.easeInOut,
-      duration: 0.4,
-      delay: 1,
-    });
-  }, []);
+  const { isMD } = useMediaQuery();
+  const props = useSpring({
+    from: { opacity: 0, y: 20 },
+    to: { opacity: 1, y: 0 },
+    delay: isMD ? 0 : 800,
+  });
+
   return (
-    <Box ref={displayBox} mt="two" style={{ opacity: 0 }}>
+    <AnimatedBox style={props}>
       <BoxWithImage
         id={id}
         width={BOX_WIDTH}
@@ -168,7 +167,7 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
           />
         }
       />
-    </Box>
+    </AnimatedBox>
   );
 };
 

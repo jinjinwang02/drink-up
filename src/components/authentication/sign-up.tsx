@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { EmailSchema } from './login';
 import { Box } from '../box/box';
 import { ArrowButton } from '../button/arrow-button';
+import { useAuthContext } from '../../context/auth-context';
 
 interface SignUpProps {
   step: number;
@@ -30,6 +31,7 @@ const SignUp: React.FC<SignUpProps> = ({
   onPressNext,
 }: SignUpProps) => {
   const { auth, firestore } = firebaseClient();
+  const { user } = useAuthContext();
   const router = useRouter();
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -68,7 +70,7 @@ const SignUp: React.FC<SignUpProps> = ({
     initialValues: initialValues,
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: async (value) => {
+    onSubmit: (value) => {
       if (value.passwordConfirmation === passwordFormik.values.password) {
         handleSignUp(
           emailFormik.values.email,
@@ -117,16 +119,18 @@ const SignUp: React.FC<SignUpProps> = ({
           });
         }
       } catch (error) {
+        setLoading(false);
         passwordConfirmationFormik.setFieldError(
           'passwordConfirmation',
           error.message
         );
       } finally {
-        setLoading(false);
-        router.push('/find-your-plants');
+        if (user) {
+          router.push('/find-your-plants');
+        }
       }
     },
-    [auth, firestore, passwordConfirmationFormik, router]
+    [auth, firestore, user, passwordConfirmationFormik, router]
   );
 
   const getCurrentFormik = (step: number) => {

@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import 'firebase/auth';
 import { firebaseClient } from '../../firebase/firebase-client';
+import { useRouter } from 'next/router';
 import { Form, FormikContextType, FormikProvider, useFormik } from 'formik';
 import { Content } from './content';
 import * as Yup from 'yup';
 import { Box } from '../box/box';
 import { ArrowButton } from '../button/arrow-button';
+import { useAuthContext } from '../../context/auth-context';
 
 interface LogInProps {
   step: number;
@@ -26,6 +28,8 @@ const LogIn: React.FC<LogInProps> = ({
   onPressNext,
 }: LogInProps) => {
   const { auth } = firebaseClient();
+  const { user } = useAuthContext();
+  const router = useRouter();
   const [isLoading, setLoading] = useState<boolean>(false);
 
   const initialValues = {
@@ -72,9 +76,15 @@ const LogIn: React.FC<LogInProps> = ({
       } catch (error) {
         setLoading(false);
         passwordFormik.setFieldError('password', error.message);
+      } finally {
+        // serverside redirect on dashboard means token needs
+        // to be set before changing route
+        if (user) {
+          router.push('/dashboard');
+        }
       }
     },
-    [auth, passwordFormik]
+    [auth, passwordFormik, router, user]
   );
 
   const getCurrentFormik = (step: number) => {

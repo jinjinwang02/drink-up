@@ -1,8 +1,10 @@
+import { useSpring } from 'react-spring';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { firebaseClient } from '../firebase/firebase-client';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { theme } from '../styles/theme';
+import { AnimatedBox } from './box/animatedBox';
 import { Box } from './box/box';
 import { UserButton } from './button/user-button';
 import { Cross } from './icon/cross';
@@ -14,6 +16,22 @@ export const NAVBAR_HEIGHT_XS = 58;
 const ICON_HEIGHT = 28;
 const NAV_DROPDOWN_HEIGHT_MD = 130;
 const NAV_DROPDOWN_WIDTH_MD = 125;
+
+interface NavDropdownItemProps {
+  children: string;
+  cursorStyle: string;
+  onClick: () => void;
+}
+
+const NavDropdownItem = ({
+  children,
+  cursorStyle,
+  onClick,
+}: NavDropdownItemProps) => (
+  <Box style={{ cursor: cursorStyle }} onClick={onClick}>
+    <Typography textStyle="bodyL">{children}</Typography>
+  </Box>
+);
 
 interface NavbarProps {
   isUserLoggedIn?: boolean;
@@ -32,8 +50,33 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
 }: NavDropdownProps) => {
   const { auth } = firebaseClient();
   const router = useRouter();
+  const xsProps = useSpring({
+    from: {
+      x: 500,
+      opacity: 0,
+    },
+    to: {
+      transformOrigin: 'bottom',
+      x: showDropdown ? 0 : 500,
+      opacity: showDropdown ? 1 : 0,
+    },
+  });
+  const smProps = useSpring({
+    from: {
+      transform: 'scaleY(0.3)',
+      y: -20,
+      opacity: 0,
+    },
+    to: {
+      transformOrigin: 'top',
+      transform: 'scaleY(1)',
+      y: showDropdown ? 0 : -20,
+      opacity: showDropdown ? 1 : 0,
+    },
+  });
+  const cursorStyle = showDropdown ? 'pointer' : 'default';
   return (
-    <Box
+    <AnimatedBox
       flexDirection="column"
       width={isXS ? '100%' : NAV_DROPDOWN_WIDTH_MD}
       height={['100%', NAV_DROPDOWN_HEIGHT_MD]}
@@ -44,57 +87,48 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
       border={['none', 'regularBlack']}
       top={[-`${NAVBAR_HEIGHT_XS}`, 'zero']}
       right={0}
-      style={{
-        transform: !isXS
-          ? showDropdown
-            ? `translateY(0%) scaleY(1)`
-            : `translateY(-15%) scaleY(0.3)`
-          : showDropdown
-          ? `translateY(0)`
-          : `translateY(10%)`,
-        transformOrigin: isXS ? 'bottom' : 'top',
-        opacity: showDropdown ? 1 : 0,
-        visibility: showDropdown ? 'visible' : 'hidden',
-      }}
-      transition={theme.transitions.curve.medium}
-      zIndex={showDropdown ? 'dropdown' : 0}
+      style={isXS ? xsProps : smProps}
+      zIndex="dropdown"
     >
-      {showDropdown && isXS ? (
+      {isXS ? (
         <Box
           position="fixed"
           onClick={(e: any) => onCloseDropdown(e)}
           top="four"
           right="four"
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: cursorStyle }}
         >
           <Cross />
         </Box>
       ) : null}
-      <Box
-        style={{ cursor: 'pointer' }}
+      <NavDropdownItem
+        cursorStyle={cursorStyle}
         onClick={() => router.push('/dashboard')}
       >
-        <Typography textStyle="bodyL">Dashboard</Typography>
-      </Box>
-      <Box style={{ cursor: 'pointer' }} onClick={() => router.push('/browse')}>
-        <Typography textStyle="bodyL">Browse all plants</Typography>
-      </Box>
-      <Box
-        style={{ cursor: 'pointer' }}
+        Dashboard
+      </NavDropdownItem>
+      <NavDropdownItem
+        cursorStyle={cursorStyle}
+        onClick={() => router.push('/browse')}
+      >
+        Browse all plants
+      </NavDropdownItem>
+      <NavDropdownItem
+        cursorStyle={cursorStyle}
         onClick={() => router.push('/find-your-plants')}
       >
-        <Typography textStyle="bodyL">Add plants</Typography>
-      </Box>
-      <Box
-        style={{ cursor: 'pointer' }}
+        Add plants
+      </NavDropdownItem>
+      <NavDropdownItem
+        cursorStyle={cursorStyle}
         onClick={async () => {
           await auth.signOut();
           router.push('/');
         }}
       >
-        <Typography textStyle="bodyL">Log out</Typography>
-      </Box>
-    </Box>
+        Log out
+      </NavDropdownItem>
+    </AnimatedBox>
   );
 };
 
