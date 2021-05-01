@@ -10,7 +10,7 @@ const Underline: React.FC<UnderlineProps> = ({
   variant,
   width,
 }: UnderlineProps) => {
-  const xPositionProps = useSpring({
+  const strokeDashOffsetProps = useSpring({
     config: { duration: 800, mass: 5, tension: 2000, friction: 200 },
     from: { x: 1004 },
     to: { x: 0 },
@@ -63,14 +63,14 @@ const Underline: React.FC<UnderlineProps> = ({
             stroke="#000"
             strokeWidth={2}
             height="99vh"
-            strokeDashoffset={xPositionProps.x}
+            strokeDashoffset={strokeDashOffsetProps.x}
             strokeDasharray={1004}
           >
             <path d="M5.05.38C35.26,73.05.22,107.8,5.05,61.61S36,137.78,25,283.87s-4.88,304.51-4.88,304.51.87,37.7-14.79,61.1,15.6-75.07,23.43-66.86,1.55,40.86-12,116.3,19.9,64.24,19.9,64.24" />
           </animated.svg>
         );
     }
-  }, [xPositionProps.x, variant, width]);
+  }, [strokeDashOffsetProps.x, variant, width]);
 
   return <>{underline}</>;
 };

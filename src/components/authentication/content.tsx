@@ -48,7 +48,7 @@ const Content: React.FC<ContentProps> = ({
     >
       {isLoading ? (
         <Box width="100%" style={{ transform: `translateX(${translateX})` }}>
-          <Logo animated />
+          <Logo isAnimated />
         </Box>
       ) : (
         <AnimatedBox
