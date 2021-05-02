@@ -60,7 +60,7 @@ const Index: NextPage<Props> = ({ userDoc }: Props) => {
   const userPlantListTrails = useTrail(plants.length, {
     from: { opacity: 0, y: -10, x: 40 },
     to: { opacity: 1, y: 0, x: 0 },
-    delay: isLG ? 1600 : 800,
+    delay: isLG ? 1600 : 900,
   });
 
   const plantListTransformProps = useSpring({

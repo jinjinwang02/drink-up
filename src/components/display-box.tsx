@@ -145,9 +145,9 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
 }: DisplayBoxProps) => {
   const { isMD } = useMediaQuery();
   const fadeInProps = useSpring({
-    from: { opacity: 0, y: 20 },
-    to: { opacity: 1, y: 0 },
-    delay: isMD ? 0 : 800,
+    from: { opacity: 0, x: -20 },
+    to: { opacity: 1, x: 0 },
+    delay: isMD ? 0 : 900,
   });
 
   return (
@@ -177,9 +177,9 @@ const EmptyDisplayBox: React.FC = () => {
   const router = useRouter();
   const { isMD } = useMediaQuery();
   const fadeInProps = useSpring({
-    from: { opacity: 0, y: 20 },
-    to: { opacity: 1, y: 0 },
-    delay: isMD ? 0 : 800,
+    from: { opacity: 0, x: -20 },
+    to: { opacity: 1, x: 0 },
+    delay: isMD ? 0 : 900,
   });
   return (
     <AnimatedBox style={fadeInProps}>

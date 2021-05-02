@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAuthContext } from '../context/auth-context';
 import { Box, BoxProps } from './box/box';
 import { Navbar } from './navbar';
 
@@ -21,7 +20,6 @@ const Layout: React.FC<LayoutProps> = ({
   showNavbar = true,
   ...rest
 }: LayoutProps) => {
-  const { user } = useAuthContext();
   const defaultPx = ['two', 'four', 'six', 'twelve'];
   const dashboardPx = ['two', 'four', 'five', 'seven', 'nine'];
   const spacing = maxWidth === 'default' ? defaultPx : dashboardPx;
@@ -34,7 +32,7 @@ const Layout: React.FC<LayoutProps> = ({
       px={spacing}
       {...rest}
     >
-      {showNavbar ? <Navbar isUserLoggedIn={!!user} right={defaultPx} /> : null}
+      {showNavbar ? <Navbar right={defaultPx} /> : null}
       <Box
         width="100%"
         maxWidth={maxWidth === 'default' ? '1200px' : '1440px'}

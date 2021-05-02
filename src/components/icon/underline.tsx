@@ -10,11 +10,17 @@ const Underline: React.FC<UnderlineProps> = ({
   variant,
   width,
 }: UnderlineProps) => {
-  const strokeDashOffsetProps = useSpring({
+  const secondaryStrokeDashOffsetProps = useSpring({
+    config: { duration: 600, mass: 5, tension: 2000, friction: 200 },
+    from: { x: 216 },
+    to: { x: 0 },
+    delay: 800,
+  });
+  const tertiaryStrokeDashOffsetProps = useSpring({
     config: { duration: 800, mass: 5, tension: 2000, friction: 200 },
     from: { x: 1004 },
     to: { x: 0 },
-    delay: 2200,
+    delay: 2400,
   });
   const underline = useMemo(() => {
     switch (variant) {
@@ -38,7 +44,7 @@ const Underline: React.FC<UnderlineProps> = ({
         );
       case 'secondary':
         return (
-          <svg
+          <animated.svg
             version="1.0"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 169.9 15.7"
@@ -47,12 +53,14 @@ const Underline: React.FC<UnderlineProps> = ({
             stroke="#000"
             strokeWidth={0.5}
             preserveAspectRatio="none"
+            strokeDashoffset={secondaryStrokeDashOffsetProps.x}
+            strokeDasharray={216}
           >
             <path
               d="M0,9.8c0,0,8,3.5,36.7,2.1s63.1-2.1,63.1-2.1s12.2-1.3,10.6-0.4c-0.4,0.2-2.4,0.8-6.8,1.7
      c-17.8,3.6-5.1-1.2,2.4-2.3c7.5-1.1,26.6,2.9,36.9,1.1s12.3-3.9,12.3-3.9s-11.1,0-1.4,2.8c9.7,2.8,16.2-1,16.2-1"
             />
-          </svg>
+          </animated.svg>
         );
       case 'tertiary':
         return (
@@ -63,14 +71,19 @@ const Underline: React.FC<UnderlineProps> = ({
             stroke="#000"
             strokeWidth={2}
             height="99vh"
-            strokeDashoffset={strokeDashOffsetProps.x}
+            strokeDashoffset={tertiaryStrokeDashOffsetProps.x}
             strokeDasharray={1004}
           >
             <path d="M5.05.38C35.26,73.05.22,107.8,5.05,61.61S36,137.78,25,283.87s-4.88,304.51-4.88,304.51.87,37.7-14.79,61.1,15.6-75.07,23.43-66.86,1.55,40.86-12,116.3,19.9,64.24,19.9,64.24" />
           </animated.svg>
         );
     }
-  }, [strokeDashOffsetProps.x, variant, width]);
+  }, [
+    secondaryStrokeDashOffsetProps.x,
+    tertiaryStrokeDashOffsetProps.x,
+    variant,
+    width,
+  ]);
 
   return <>{underline}</>;
 };

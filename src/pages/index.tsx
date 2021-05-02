@@ -28,12 +28,17 @@ const Index: React.FC = () => {
     setShowAuthentication(true);
   }, [setLogIn]);
 
-  const authenticationBoxFadeInProps = useSpring({
+  const authenticationBoxXSFadeInProps = useSpring({
     from: { opacity: 0, y: 100 },
     to: {
       opacity: showAuthentication ? 1 : 0,
       y: showAuthentication ? 40 : 100,
     },
+  });
+  const authenticationBoxSMFadeInProps = useSpring({
+    from: { opacity: 0, x: -50 },
+    to: { opacity: 1, x: 0 },
+    delay: 1800,
   });
   const containerProps = useSpring({
     from: { y: 200 },
@@ -72,13 +77,15 @@ const Index: React.FC = () => {
         ) : null}
         {isXS ? (
           <AnimatedBox
-            style={authenticationBoxFadeInProps}
+            style={authenticationBoxXSFadeInProps}
             zIndex={showAuthentication ? 1 : -1}
           >
             <Authentication />
           </AnimatedBox>
         ) : (
-          <Authentication />
+          <AnimatedBox style={authenticationBoxSMFadeInProps}>
+            <Authentication />
+          </AnimatedBox>
         )}
       </AnimatedBox>
     </Layout>

@@ -132,10 +132,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
   );
 };
 
-const Navbar: React.FC<NavbarProps> = ({
-  isUserLoggedIn,
-  right,
-}: NavbarProps) => {
+const Navbar: React.FC<NavbarProps> = ({ right }: NavbarProps) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const { isXS } = useMediaQuery();
   const handleCloseDropdown = useCallback((event: any) => {
@@ -161,30 +158,26 @@ const Navbar: React.FC<NavbarProps> = ({
       justifyContent="flex-end"
       zIndex="navbar"
     >
-      {isUserLoggedIn ? (
-        <>
-          <Box flexDirection="column">
-            <UserButton
-              id="userIcon"
-              onClick={() => setShowDropdown((prev) => !prev)}
-              zIndex={1}
-            />
-            <NavDropdown
-              showDropdown={showDropdown}
-              onCloseDropdown={handleCloseDropdown}
-              isXS={isXS}
-            />
-          </Box>
-          {!isXS ? (
-            <Box
-              position="absolute"
-              right="zero"
-              top={-`${theme.space.zeroPointFour}`}
-            >
-              <Logo strokeWidth={2} />
-            </Box>
-          ) : null}
-        </>
+      <Box flexDirection="column">
+        <UserButton
+          id="userIcon"
+          onClick={() => setShowDropdown((prev) => !prev)}
+          zIndex={1}
+        />
+        <NavDropdown
+          showDropdown={showDropdown}
+          onCloseDropdown={handleCloseDropdown}
+          isXS={isXS}
+        />
+      </Box>
+      {!isXS ? (
+        <Box
+          position="absolute"
+          right="zero"
+          top={-`${theme.space.zeroPointFour}`}
+        >
+          <Logo strokeWidth={2} />
+        </Box>
       ) : null}
     </Box>
   );

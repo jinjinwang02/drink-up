@@ -19,23 +19,25 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
     () => plantsDueTomorrow.map((el) => el.commonName),
     [plantsDueTomorrow]
   );
-  const fadeInProps = useSpring({
+  const titleFadeInProps = useSpring({
+    config: { mass: 5, tension: 2000, friction: 200 },
     from: { opacity: 0, y: 40 },
     to: { opacity: 1, y: 0 },
   });
-  const footerProps = useSpring({
+  const footerFadeInProps = useSpring({
+    config: { mass: 5, tension: 2000, friction: 200 },
     from: { opacity: 0, y: 20 },
     to: { opacity: 1, y: 0 },
     delay: 200,
   });
   return (
     <>
-      <AnimatedBox style={fadeInProps}>
+      <AnimatedBox style={titleFadeInProps}>
         <Typography textStyle={['h2', 'h2', 'h2', 'h1']} mb="one">
           Hi {displayName ?? 'there'},
         </Typography>
       </AnimatedBox>
-      <AnimatedBox style={fadeInProps} mb="two">
+      <AnimatedBox style={titleFadeInProps} mb="two">
         <Typography textStyle={['h3', 'h2', 'h2', 'h1']}>
           {plantAmount
             ? `You have ${plantAmount} plants.`
@@ -43,7 +45,7 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
         </Typography>
       </AnimatedBox>
       <AnimatedBox
-        style={footerProps}
+        style={footerFadeInProps}
         justifyContent={['center', 'flex-start']}
         flexWrap="wrap"
       >
