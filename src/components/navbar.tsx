@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { firebaseClient } from '../firebase/firebase-client';
 import { useMediaQuery } from '../hooks/useMediaQuery';
-import { theme } from '../styles/theme';
+import { theme } from '../theme';
 import { AnimatedBox } from './box/animatedBox';
 import { Box } from './box/box';
 import { UserButton } from './button/user-button';

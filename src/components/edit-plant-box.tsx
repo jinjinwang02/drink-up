@@ -1,5 +1,5 @@
 import React from 'react';
-import { theme } from '../styles/theme';
+import { theme } from '../theme';
 import { Box } from './box/box';
 import { BoxWithImage } from './box/box-with-image';
 import { PlantInfo } from './plant-info';

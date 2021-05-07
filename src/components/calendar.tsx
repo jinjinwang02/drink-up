@@ -6,7 +6,7 @@ import { Box } from './box/box';
 import { Typography } from './typography';
 import { ArrowButton } from './button/arrow-button';
 import { css } from '@styled-system/css';
-import { theme } from '../styles/theme';
+import { theme } from '../theme';
 
 dayjs.locale({
   ...en,

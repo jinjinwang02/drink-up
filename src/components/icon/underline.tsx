@@ -11,10 +11,9 @@ const Underline: React.FC<UnderlineProps> = ({
   width,
 }: UnderlineProps) => {
   const secondaryStrokeDashOffsetProps = useSpring({
-    config: { duration: 600, mass: 5, tension: 2000, friction: 200 },
     from: { x: 216 },
     to: { x: 0 },
-    delay: 800,
+    delay: 1800,
   });
   const tertiaryStrokeDashOffsetProps = useSpring({
     config: { duration: 800, mass: 5, tension: 2000, friction: 200 },

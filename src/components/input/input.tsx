@@ -2,7 +2,7 @@ import { Field, useField } from 'formik';
 import React from 'react';
 import styled from 'styled-components';
 import { usePlantContext } from '../../context/plant-context';
-import { theme } from '../../styles/theme';
+import { theme } from '../../theme';
 import { blockInvalidChar } from '../../utils';
 import { Box } from '../box/box';
 import { Typography } from '../typography';

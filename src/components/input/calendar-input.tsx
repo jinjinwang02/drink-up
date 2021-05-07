@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useField } from 'formik';
 import { usePlantContext } from '../../context/plant-context';
-import { theme } from '../../styles/theme';
+import { theme } from '../../theme';
 import { Box } from '../box/box';
 import { Calendar } from '../calendar';
 import { Input, InputProps } from '../input/input';

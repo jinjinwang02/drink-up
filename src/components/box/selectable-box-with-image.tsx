@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Typography } from '../typography';
 import { Box } from './box';
 import { Image } from '../image';
-import { theme } from '../../styles/theme';
+import { theme } from '../../theme';
 
 export const BOX_WIDTH_MD = 220;
 const BOX_HEIGHT_MD = 246;

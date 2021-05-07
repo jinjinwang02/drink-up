@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Arrow, ArrowProps } from '../icon/arrow';
-import { theme } from '../../styles/theme';
+import { theme } from '../../theme';
 import { ButtonProps } from '../../interfaces';
 import { ButtonContainer } from './button-container';
 

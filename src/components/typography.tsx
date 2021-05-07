@@ -17,7 +17,7 @@ import {
   zIndex,
 } from 'styled-system';
 import styled, { CSSProperties } from 'styled-components';
-import { theme, Theme } from '../styles/theme';
+import { theme, Theme } from '../theme';
 
 export interface TypographyProps
   extends LayoutProps,

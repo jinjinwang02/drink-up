@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { CollectionFromDB } from '../interfaces';
-import { theme } from '../styles/theme';
+import { theme } from '../theme';
 import { Box } from './box/box';
 import { ButtonContainer } from './button/button-container';
 import { Typography } from './typography';

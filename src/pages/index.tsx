@@ -12,6 +12,7 @@ import { LandingTitle } from '../components/landing-title';
 import { GetServerSideProps } from 'next';
 import { verifyIdToken } from '../firebase/firebase-admin';
 import { AnimatedBox } from '../components/box/animatedBox';
+import { theme } from '../theme';
 
 const Index: React.FC = () => {
   const { setLogIn } = useAuthContext();
@@ -36,18 +37,36 @@ const Index: React.FC = () => {
     },
   });
   const authenticationBoxSMFadeInProps = useSpring({
-    from: { opacity: 0, x: -50 },
-    to: { opacity: 1, x: 0 },
-    delay: 1800,
+    from: { opacity: 0, y: 20 },
+    to: { opacity: 1, y: 0 },
+    delay: 800,
   });
   const containerProps = useSpring({
     from: { y: 200 },
     to: { y: showAuthentication ? 0 : 200 },
   });
+  const pageBorderBoxProps = useSpring({
+    from: {
+      height: '100vh',
+      width: '100vw',
+      border: theme.borders.transparent,
+    },
+    to: { height: '94vh', width: '97vw', border: theme.borders.regularBlack },
+    delay: 2500,
+  });
 
   return (
     <Layout hasMinHeight={!isXS} showNavbar={false}>
       <NextSeo title="Drink up | Homepage" description="" canonical="" />
+      <AnimatedBox
+        display={['none', 'block']}
+        height="94vh"
+        width="97vw"
+        position="absolute"
+        top="50%"
+        left="50%"
+        style={{ ...pageBorderBoxProps, transform: 'translate(-50%, -50%)' }}
+      />
       <AnimatedBox
         width="100%"
         height={isXS ? '70vh' : 'auto'}
