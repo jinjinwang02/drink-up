@@ -104,7 +104,7 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
   const addPlantEntries = useCallback(
     async (plants: CollectionWithInputs[]) => {
       const plantWithIdAsKey = plants.map((el) => ({
-        [el.id]: { ...el, createdAt: new Date() },
+        [el.id]: { ...el, createdAt: new Date().toISOString() },
       }));
       const plantObjects = Object.assign({}, ...plantWithIdAsKey);
       await firestore
@@ -120,7 +120,7 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
         ['plants.' + newPlantEntry.id]: {
           ...newPlantEntry,
           createdAt: newPlantEntry.createdAt,
-          updatedAt: new Date(),
+          updatedAt: new Date().toISOString(),
         },
       });
     },

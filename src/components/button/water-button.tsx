@@ -1,38 +1,39 @@
 import React from 'react';
 import { ButtonProps } from '../../interfaces';
+import { theme } from '../../theme';
 import { Box } from '../box/box';
 import { Water } from '../icon/water';
 import { ButtonContainer } from './button-container';
 
-export interface CircleBoxProps extends Omit<ButtonProps, 'onClick'> {
+export interface WaterButtonProps extends Omit<ButtonProps, 'onClick'> {
   onClick: () => void;
   isChecked: boolean;
   isSubmitting?: boolean;
 }
 
-const CircleButton: React.FC<CircleBoxProps> = ({
+const WaterButton: React.FC<WaterButtonProps> = ({
   isChecked,
   isSubmitting,
   onClick,
   ...props
-}: CircleBoxProps) => (
+}: WaterButtonProps) => (
   <ButtonContainer
     {...props}
     onClick={onClick}
     disabled={isSubmitting || isChecked}
   >
-    {isChecked ? (
-      <Box px="zeroPointFour">
+    <Box px="zeroPointThree">
+      {isChecked ? (
         <Water width={12} />
-      </Box>
-    ) : isSubmitting ? (
-      <Box px="zeroPointFour">
-        <Water width={12} isAnimated />
-      </Box>
-    ) : (
-      <Box border="blue" height={20} width={20} borderRadius={20} />
-    )}
+      ) : (
+        <Water
+          width={12}
+          fill={isSubmitting ? theme.colors.pastelBlue : theme.colors.pureWhite}
+          isAnimated={isSubmitting}
+        />
+      )}
+    </Box>
   </ButtonContainer>
 );
 
-export { CircleButton };
+export { WaterButton };

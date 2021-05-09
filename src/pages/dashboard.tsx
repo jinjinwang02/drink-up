@@ -81,21 +81,21 @@ const Index: NextPage<Props> = ({ userDoc, plantDoc }: Props) => {
           .get()
           .then((res) => res.data())
           .then((data) => {
-            console.log(data?.plants[plant.id]);
-            setCurrentPlant(data?.plants[plant.id]);
-            setAllPlants((prev) => {
-              const rest = prev.filter((el) => el.id !== plant.id);
-              const updatedPlants = [
-                ...rest,
-                data?.plants[plant.id],
-              ].sort((a, b) => sortCollectionByCommonName(a, b));
-              return updatedPlants;
-            });
+            setTimeout(() => {
+              setCurrentPlant(data?.plants[plant.id]);
+              setAllPlants((prev) => {
+                const rest = prev.filter((el) => el.id !== plant.id);
+                const updatedPlants = [
+                  ...rest,
+                  data?.plants[plant.id],
+                ].sort((a, b) => sortCollectionByCommonName(a, b));
+                return updatedPlants;
+              });
+              setSubmitting(false);
+            }, 1000);
           });
       } catch (err) {
         console.log(err);
-      } finally {
-        setSubmitting(false);
       }
     },
     [firestore, handleEditPlants, user?.uid]

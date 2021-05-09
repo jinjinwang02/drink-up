@@ -1,7 +1,11 @@
 import React from 'react';
 import { useSpring, animated } from 'react-spring';
+import { theme } from '../../theme';
+import { AnimatedBox } from '../box/animatedBox';
+import { Box } from '../box/box';
 
 interface WaterProps {
+  fill?: string;
   width?: number;
   isAnimated?: boolean;
 }
@@ -11,40 +15,72 @@ const path =
 
 const Water: React.FC<WaterProps> = ({
   width = 10,
+  fill = theme.colors.pastelBlue,
   isAnimated,
 }: WaterProps) => {
-  const strokeProps = useSpring({
-    config: { duration: 800 },
-    from: { x: 154 },
-    to: { x: 0 },
-  });
   const fillProps = useSpring({
-    delay: 1000,
+    // config: { duration: 2000 },
+    delay: 200,
     from: { fill: '#fff' },
     to: { fill: '#87bdd1' },
   });
+
+  const rippleOneProps = useSpring({
+    config: { duration: 300 },
+    from: { opacity: 0, transform: 'scale(0.5)' },
+    to: isAnimated && [
+      { opacity: 1, transform: 'scale(1)' },
+      { opacity: 0, transform: 'scale(1.6)' },
+    ],
+  });
+
+  const rippleTwoProps = useSpring({
+    delay: 200,
+    config: { duration: 300 },
+    from: { opacity: 0, transform: 'scale(0.5)' },
+    to: isAnimated && [
+      { opacity: 1, transform: 'scale(1)' },
+      { opacity: 0, transform: 'scale(1.2)' },
+    ],
+  });
   return isAnimated ? (
-    <animated.svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 39.13 67.95"
-      width={width}
-      stroke="#87bdd1"
-      strokeMiterlimit={10}
-      strokeDasharray={154}
-      fill={fillProps.fill}
-    >
-      <animated.path
-        strokeDashoffset={strokeProps.x}
-        strokeWidth={4}
-        d={path}
+    <Box width="100%" height="100%">
+      <animated.svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 39.13 67.95"
+        fill={fillProps.fill}
+        width={width}
+        stroke="#87bdd1"
+      >
+        <path d={path} strokeWidth={4} />
+      </animated.svg>
+      <AnimatedBox
+        top="-1px"
+        position="absolute"
+        zIndex={1}
+        height={24}
+        width={24}
+        border="thickerBlue"
+        borderRadius={20}
+        style={rippleOneProps}
       />
-    </animated.svg>
+      <AnimatedBox
+        top="-1px"
+        position="absolute"
+        zIndex={1}
+        height={24}
+        width={24}
+        border="thinBlue"
+        borderRadius={20}
+        style={rippleTwoProps}
+      />
+    </Box>
   ) : (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 39.13 67.95"
       width={width}
-      fill="#87bdd1"
+      fill={fill}
       stroke="#87bdd1"
       strokeMiterlimit={10}
       strokeDasharray={154}

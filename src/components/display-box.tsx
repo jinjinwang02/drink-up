@@ -9,7 +9,7 @@ import { AnimatedBox } from './box/animatedBox';
 import { Box } from './box/box';
 import { BoxWithImage } from './box/box-with-image';
 import { AddButton } from './button/add-button';
-import { CircleButton } from './button/circle-button';
+import { WaterButton } from './button/water-button';
 import { EditButton } from './button/edit-button';
 import { DATE_DISPLAY_FORMAT } from './calendar';
 import { Water } from './icon/water';
@@ -47,7 +47,7 @@ const ScheduleAndNoteBox = ({
     overflow="hidden"
   >
     <Box pr="zeroPointTwo">
-      <Box pr="zeroPointSix">
+      <Box pr="zeroPointEight">
         <Water />
       </Box>
       <Typography textStyle="bodyM">
@@ -76,14 +76,14 @@ const LastWateredOnBox = ({ lastWateredOn }: { lastWateredOn: string }) => (
 
 const NextWateringDateBox = ({ countDown }: { countDown: number }) => (
   <Box borderBottom="regularBlack" width="100%" pt="zeroPointSix" pb="one">
-    <Typography textStyle="bodyM" pr="zeroPointSix">
+    <Typography textStyle="bodyM" pr="zeroPointFive">
       Next watering date is
     </Typography>
     {countDown === 0 ? (
       <Typography textStyle="bodyMBold">Today!</Typography>
     ) : (
       <>
-        <Typography textStyle="bodyMBold" pr="zeroPointSix">
+        <Typography textStyle="bodyMBold" pr="zeroPointFive">
           {countDown > 0 ? countDown : -countDown}
         </Typography>
         <Typography textStyle="bodyM">
@@ -104,7 +104,7 @@ const SubmitBox = ({
   isSubmitting?: boolean;
 }) => (
   <Box pt="zeroPointEight" pb="zeroPointSix" alignItems="center">
-    <CircleButton
+    <WaterButton
       pr="one"
       pb="zeroPointFour"
       isChecked={isWateredToday}

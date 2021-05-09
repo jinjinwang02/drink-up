@@ -133,6 +133,7 @@ const space = {
   zeroPointTwo: 2,
   zeroPointThree: 3,
   zeroPointFour: 4,
+  zeroPointFive: 5,
   zeroPointSix: 6,
   zeroPointSeven: 7,
   zeroPointEight: 8,
@@ -194,7 +195,8 @@ const borders = {
   regularBlack: `1px solid ${colors.pureBlack}`,
   inactiveGrey: `1px solid ${colors.lightGrey}`,
   mediumGrey: `1px solid ${colors.mediumGrey}`,
-  blue: `2px solid ${colors.pastelBlue}`,
+  thickerBlue: `2px solid ${colors.pastelBlue}`,
+  thinBlue: `1px solid ${colors.pastelBlue}`,
   transparent: '1px solid transparent',
 };
 

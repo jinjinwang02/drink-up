@@ -119,7 +119,7 @@ const SignUp: React.FC<SignUpProps> = ({
           await firestore.collection('users').doc(user?.uid).set({
             email,
             displayName,
-            createdAt: new Date(),
+            createdAt: new Date().toISOString(),
           });
         }
       } catch (error) {
