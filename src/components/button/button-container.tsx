@@ -26,7 +26,7 @@ const ButtonContainer: React.FC<ButtonContainerProps> = ({
     style={{
       ...additionalStyles,
       outline: 'none',
-      cursor: disabled ? 'not-allowed' : 'pointer',
+      cursor: disabled ? 'default' : 'pointer',
     }}
     {...props}
   >

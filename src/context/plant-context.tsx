@@ -5,10 +5,9 @@ import {
   CollectionWithInputs,
   CustomCollectionWithInputs,
 } from '../interfaces';
-import { firebaseClient } from '../firebase/firebase-client';
 import { useAuthContext } from './auth-context';
 import { getPlantInputErrorMessage } from '../utils';
-import { useRouter } from 'next/router';
+import { firebaseClient } from '../firebase/firebase-client';
 
 const REQUIRED_FIELDS: (keyof CollectionWithInputs)[] = [
   'id',
@@ -37,7 +36,8 @@ interface PlantContextProps {
   setCustomCollectionWithInputs: (
     value: React.SetStateAction<CustomCollectionWithInputs[]>
   ) => void;
-  handleAddOrEditPlants: (inputs: CollectionWithInputs[], href: string) => void;
+  handleAddPlants: (inputs: CollectionWithInputs[]) => void;
+  handleEditPlants: (inputs: CollectionWithInputs[]) => void;
   handleSetInput: (id: string | undefined, name: string, value: string) => void;
 }
 
@@ -51,16 +51,16 @@ const PlantContext = createContext<PlantContextProps>({
   setPlantCollection: () => null,
   setPlantCollectionWithInputs: () => null,
   setCustomCollectionWithInputs: () => null,
-  handleAddOrEditPlants: () => null,
+  handleAddPlants: () => null,
+  handleEditPlants: () => null,
   handleSetInput: () => null,
 });
 
 export const PlantProvider: React.FC<PlantContextProviderProps> = ({
   children,
 }: PlantContextProviderProps) => {
-  const router = useRouter();
-  const { userRef, userDoc } = useAuthContext();
-  const { firestoreFieldValue } = firebaseClient();
+  const { firestore } = firebaseClient();
+  const { user } = useAuthContext();
   const [plantCollection, setPlantCollection] = useState<Collection[]>([]);
   const [plantCollectionWithInputs, setPlantCollectionWithInputs] = useState<
     CollectionWithInputs[]
@@ -101,39 +101,34 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
     [customCollectionWithInputs, plantCollectionWithInputs]
   );
 
-  const addPlantEntry = useCallback(
-    async (plant: CollectionWithInputs) => {
-      await userRef?.update({
-        plants: firestoreFieldValue.arrayUnion({
-          ...plant,
-          createdAt: new Date(),
-        }),
-      });
+  const addPlantEntries = useCallback(
+    async (plants: CollectionWithInputs[]) => {
+      const plantWithIdAsKey = plants.map((el) => ({
+        [el.id]: { ...el, createdAt: new Date() },
+      }));
+      const plantObjects = Object.assign({}, ...plantWithIdAsKey);
+      await firestore
+        .doc(`users/${user?.uid}`)
+        ?.set({ plants: plantObjects }, { merge: true });
     },
-    [firestoreFieldValue, userRef]
+    [firestore, user?.uid]
   );
 
   const updatePlantEntry = useCallback(
-    async (
-      existingPlantEntry: CollectionWithInputs,
-      plant: CollectionWithInputs
-    ) => {
-      await userRef?.update({
-        plants: firestoreFieldValue.arrayRemove(existingPlantEntry),
-      });
-      await userRef?.update({
-        plants: firestoreFieldValue.arrayUnion({
-          ...plant,
-          createdAt: existingPlantEntry.createdAt,
+    async (newPlantEntry: CollectionWithInputs) => {
+      await firestore.doc(`users/${user?.uid}`).update({
+        ['plants.' + newPlantEntry.id]: {
+          ...newPlantEntry,
+          createdAt: newPlantEntry.createdAt,
           updatedAt: new Date(),
-        }),
+        },
       });
     },
-    [firestoreFieldValue, userRef]
+    [firestore, user?.uid]
   );
 
-  const handleAddOrEditPlants = useCallback(
-    async (plantInputs: CollectionWithInputs[], href: string) => {
+  const handleAddPlants = useCallback(
+    async (plantInputs: CollectionWithInputs[]) => {
       setInputErrors(null);
       let errorCount = 0;
       for (const input of plantInputs) {
@@ -151,25 +146,37 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
         }
       }
       if (!errorCount) {
-        const existingPlants = userDoc?.plants as CollectionWithInputs[] | [];
-        const existingPlantsIds = existingPlants?.map(
-          (el: CollectionWithInputs) => el.id
-        );
-        await Promise.all(
-          plantInputs.map(async (plant) => {
-            if (!existingPlantsIds?.includes(plant.id)) {
-              addPlantEntry(plant);
-            } else {
-              const existingPlantEntry = existingPlants?.filter(
-                (el) => el.id === plant.id
-              )[0];
-              updatePlantEntry(existingPlantEntry, plant);
-            }
-          })
-        ).then(() => router.push(href));
+        await addPlantEntries(plantInputs);
       }
     },
-    [addPlantEntry, router, updatePlantEntry, userDoc?.plants]
+    [addPlantEntries]
+  );
+
+  const handleEditPlants = useCallback(
+    async (plantInputs: CollectionWithInputs[]) => {
+      setInputErrors(null);
+      let errorCount = 0;
+      for (const input of plantInputs) {
+        for (const field of REQUIRED_FIELDS) {
+          if (!input[field]) {
+            errorCount += 1;
+            setInputErrors((prev: any) => ({
+              ...prev,
+              [input.id]: [
+                ...(prev && prev[input.id] ? prev[input.id] : []),
+                { name: field, errorMessage: getPlantInputErrorMessage(field) },
+              ],
+            }));
+          }
+        }
+      }
+      if (!errorCount) {
+        await Promise.all(
+          plantInputs.map(async (plant) => await updatePlantEntry(plant))
+        );
+      }
+    },
+    [updatePlantEntry]
   );
 
   return (
@@ -185,7 +192,8 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
         setPlantCollectionWithInputs,
         setCustomCollectionWithInputs,
         handleSetInput,
-        handleAddOrEditPlants,
+        handleAddPlants,
+        handleEditPlants,
       }}
     >
       {children}

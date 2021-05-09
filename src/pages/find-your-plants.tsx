@@ -17,6 +17,7 @@ import { Typography } from '../components/typography';
 import { BoxyButton } from '../components/button/boxy-button';
 import { NAVBAR_HEIGHT_MD, NAVBAR_HEIGHT_XS } from '../components/navbar';
 import { verifyIdToken } from '../firebase/firebase-admin';
+import { generateId } from '../utils';
 
 interface Props {
   collection: Collection[];
@@ -114,7 +115,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     await collectionRef.get().then((data) =>
       data.forEach((doc) =>
         collection.push({
-          id: doc.id,
+          id: doc.id + '-' + generateId(),
           ...(doc.data() as { commonName: string; imageUrl: string }),
         })
       )
@@ -123,6 +124,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       props: { collection },
     };
   } catch (error) {
+    console.log(error);
     return {
       redirect: {
         destination: '/',

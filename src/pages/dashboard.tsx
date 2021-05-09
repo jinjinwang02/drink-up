@@ -6,46 +6,56 @@ import { NextSeo } from 'next-seo';
 import { GetServerSideProps, NextPage } from 'next';
 import { Layout } from '../components/layout';
 import { Box } from '../components/box/box';
-import { UserDoc } from '../context/auth-context';
 import { DisplayBox, EmptyDisplayBox } from '../components/display-box';
 import { Underline } from '../components/icon/underline';
 import { verifyIdToken } from '../firebase/firebase-admin';
 import { CollectionFromDB } from '../interfaces';
-import { getWateringCountdown } from '../utils';
+import { getWateringCountdown, sortCollectionByCommonName } from '../utils';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { DashboardTitle } from '../components/dashboard-title';
 import { PlantsList } from '../components/plants-list';
 import { AnimatedBox } from '../components/box/animatedBox';
+import dayjs from 'dayjs';
+import { DATE_DISPLAY_FORMAT } from '../components/calendar';
+import { usePlantContext } from '../context/plant-context';
+import { useAuthContext, UserDoc } from '../context/auth-context';
+import { firebaseClient } from '../firebase/firebase-client';
 
 interface Props {
-  userDoc?: UserDoc;
+  userDoc: UserDoc;
+  plantDoc: CollectionFromDB[];
 }
 
-const Index: NextPage<Props> = ({ userDoc }: Props) => {
+const Index: NextPage<Props> = ({ userDoc, plantDoc }: Props) => {
+  const { firestore } = firebaseClient();
   const { isXS, isSM, isLG } = useMediaQuery();
-  const plants = useMemo(() => (userDoc?.plants || []) as CollectionFromDB[], [
-    userDoc?.plants,
-  ]);
-  const [currentPlant, setCurrentPlant] = useState<CollectionFromDB>(plants[0]);
-  const [disableTitleAnimation, setDisableTitleAnimation] = useState<boolean>(
-    false
+  const { user } = useAuthContext();
+  const { handleEditPlants } = usePlantContext();
+  const [currentPlant, setCurrentPlant] = useState<CollectionFromDB>(
+    plantDoc[0]
   );
+  const [allPlants, setAllPlants] = useState<CollectionFromDB[]>(plantDoc);
   const [showXSDisplayBox, setShowXSDisplayBox] = useState<boolean>(false);
+  const [isSubmitting, setSubmitting] = useState<boolean>(false);
   const plantsDueTomorrow = useMemo(
     () =>
-      plants.filter(
+      plantDoc.filter(
         (el) => getWateringCountdown(el.lastWateredOn, el.schedule) === 1
       ),
-    [plants]
+    [plantDoc]
   );
+  const plantNameList = useMemo(() => allPlants.map((el) => el.commonName), [
+    allPlants,
+  ]);
 
   const handleClickTitle = useCallback(
     (id: string) => {
-      setDisableTitleAnimation(true);
-      setCurrentPlant(plants.filter((el: CollectionFromDB) => el.id === id)[0]);
+      setCurrentPlant(
+        allPlants.filter((el: CollectionFromDB) => el.id === id)[0]
+      );
       setShowXSDisplayBox(true);
     },
-    [plants, setShowXSDisplayBox]
+    [allPlants, setShowXSDisplayBox]
   );
 
   const handleDismissDisplayBox = useCallback(
@@ -57,20 +67,53 @@ const Index: NextPage<Props> = ({ userDoc }: Props) => {
     [currentPlant?.id]
   );
 
-  const userPlantListTrails = useTrail(plants.length, {
+  const handleClickWatered = useCallback(
+    async (plant: CollectionFromDB) => {
+      const updatedEntry = {
+        ...plant,
+        lastWateredOn: dayjs().format(DATE_DISPLAY_FORMAT),
+      };
+      setSubmitting(true);
+      handleEditPlants([updatedEntry]);
+      try {
+        await firestore
+          .doc(`users/${user?.uid}`)
+          .get()
+          .then((res) => res.data())
+          .then((data) => {
+            console.log(data?.plants[plant.id]);
+            setCurrentPlant(data?.plants[plant.id]);
+            setAllPlants((prev) => {
+              const rest = prev.filter((el) => el.id !== plant.id);
+              const updatedPlants = [
+                ...rest,
+                data?.plants[plant.id],
+              ].sort((a, b) => sortCollectionByCommonName(a, b));
+              return updatedPlants;
+            });
+          });
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [firestore, handleEditPlants, user?.uid]
+  );
+
+  const userPlantListTrails = useTrail(plantNameList.length, {
     from: { opacity: 0, y: -10, x: 40 },
     to: { opacity: 1, y: 0, x: 0 },
     delay: isLG ? 1600 : 900,
   });
-
   const plantListTransformProps = useSpring({
     to: {
-      transform: `translateY(calc(50vh - ${plants.indexOf(currentPlant)} * ${
-        isSM ? '66px' : '76px'
-      }))`,
+      transform: `translateY(${
+        ((plantNameList.length - 1) / 2) * (isSM ? 66 : 75) -
+        plantNameList.indexOf(currentPlant.commonName) * (isSM ? 66 : 76)
+      }px)`,
     },
   });
-
   const xsDisplayBoxOpacityProps = useSpring({
     from: { opacity: 0 },
     to: { opacity: showXSDisplayBox || !currentPlant ? 1 : 0 },
@@ -83,13 +126,7 @@ const Index: NextPage<Props> = ({ userDoc }: Props) => {
     return () => {
       document.removeEventListener('mouseup', handleDismissDisplayBox);
     };
-  }, [
-    handleDismissDisplayBox,
-    plants,
-    isXS,
-    disableTitleAnimation,
-    currentPlant,
-  ]);
+  }, [handleDismissDisplayBox, isXS, currentPlant]);
 
   return (
     <Layout
@@ -115,7 +152,7 @@ const Index: NextPage<Props> = ({ userDoc }: Props) => {
         <DashboardTitle
           displayName={userDoc?.displayName}
           plantsDueTomorrow={plantsDueTomorrow}
-          plantAmount={plants.length}
+          plantAmount={plantNameList.length}
         />
       </Box>
 
@@ -144,7 +181,8 @@ const Index: NextPage<Props> = ({ userDoc }: Props) => {
             schedule={currentPlant.schedule}
             imageUrl={currentPlant.imageUrl}
             notes={currentPlant.notes}
-            onClickWatered={() => null}
+            isSubmitting={isSubmitting}
+            onClickWatered={() => handleClickWatered(currentPlant)}
           />
         ) : (
           <EmptyDisplayBox />
@@ -154,7 +192,8 @@ const Index: NextPage<Props> = ({ userDoc }: Props) => {
       <Box
         flexGrow={1}
         flexShrink={0}
-        mx={['zero', 'zero', 'one', 'two']}
+        ml={['zero', 'zero', 'one', 'two']}
+        mr={['zero', 'zero', 'one', 'threePointFive']}
         display={currentPlant ? ['none', 'flex'] : 'none'}
       >
         <Underline variant="tertiary" />
@@ -169,11 +208,13 @@ const Index: NextPage<Props> = ({ userDoc }: Props) => {
         style={!isXS ? plantListTransformProps : undefined}
       >
         {userPlantListTrails.map((props, index) => (
-          <AnimatedBox style={props} key={plants[index].id}>
+          <AnimatedBox style={props} key={plantDoc[index].id}>
             <PlantsList
-              plant={plants[index]}
-              indexDifference={plants.indexOf(currentPlant) - index}
-              isCurrentPlant={currentPlant === plants[index]}
+              plant={plantDoc[index]}
+              indexDifference={
+                plantNameList.indexOf(currentPlant.commonName) - index
+              }
+              isCurrentPlant={currentPlant.id === plantDoc[index].id}
               onClickTitle={handleClickTitle}
             />
           </AnimatedBox>
@@ -192,10 +233,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       .doc(`users/${token.uid}`)
       .get()
       .then((res) => res.data());
-
+    const plantDoc = (Object.values(
+      JSON.parse(JSON.stringify(userDoc?.plants))
+    ) as CollectionFromDB[]).sort((a, b) => sortCollectionByCommonName(a, b));
     return {
       props: {
         userDoc: JSON.parse(JSON.stringify(userDoc)),
+        plantDoc: plantDoc,
       },
     };
   } catch (error) {

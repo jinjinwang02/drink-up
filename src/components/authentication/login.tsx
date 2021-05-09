@@ -76,7 +76,7 @@ const LogIn: React.FC<LogInProps> = ({
           .then(({ user }) => {
             user?.getIdTokenResult().then(({ token }) => {
               nookies.set(undefined, 'token', token, {
-                maxAge: 2 * 24 * 60 * 60,
+                maxAge: 24 * 60 * 60,
               });
             });
           });

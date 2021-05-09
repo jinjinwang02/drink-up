@@ -134,6 +134,7 @@ const space = {
   zeroPointThree: 3,
   zeroPointFour: 4,
   zeroPointSix: 6,
+  zeroPointSeven: 7,
   zeroPointEight: 8,
   one: 10,
   onePointTwo: 12,

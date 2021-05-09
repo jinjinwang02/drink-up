@@ -21,12 +21,13 @@ const Index: NextPage = () => {
   const {
     plantCollection,
     plantCollectionWithInputs,
-    handleAddOrEditPlants,
+    handleAddPlants,
   } = usePlantContext();
 
   const handleSubmit = useCallback(() => {
-    handleAddOrEditPlants(plantCollectionWithInputs, 'add-your-plants');
-  }, [handleAddOrEditPlants, plantCollectionWithInputs]);
+    handleAddPlants(plantCollectionWithInputs);
+    router.push('/add-your-plants');
+  }, [handleAddPlants, router, plantCollectionWithInputs]);
 
   return (
     <Layout

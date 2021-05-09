@@ -23,7 +23,7 @@ const Index: NextPage = () => {
   const {
     customCollectionWithInputs,
     setCustomCollectionWithInputs,
-    handleAddOrEditPlants,
+    handleAddPlants,
   } = usePlantContext();
 
   const handleAddBox = useCallback(() => {
@@ -36,16 +36,14 @@ const Index: NextPage = () => {
     );
   }, [customCollectionWithInputs.length, setCustomCollectionWithInputs]);
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback(() => {
     if (!customCollectionWithInputs.length) {
       router.push('/dashboard');
       return;
     }
-    handleAddOrEditPlants(
-      customCollectionWithInputs as CollectionWithInputs[],
-      '/dashboard'
-    );
-  }, [customCollectionWithInputs, handleAddOrEditPlants, router]);
+    handleAddPlants(customCollectionWithInputs as CollectionWithInputs[]);
+    router.push('/dashboard');
+  }, [customCollectionWithInputs, handleAddPlants, router]);
 
   useEffect(() => {
     window.scrollTo({

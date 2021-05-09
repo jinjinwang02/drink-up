@@ -57,8 +57,8 @@ const PlantsList: React.FC<PlantsListProps> = ({
               : 'mediumGrey'
           }
         >
-          {plant.commonName.length > 20
-            ? plant.commonName.slice(0, 20) + '...'
+          {plant.commonName.length > 18
+            ? plant.commonName.slice(0, 18) + '...'
             : plant.commonName}
         </Typography>
       </ButtonContainer>

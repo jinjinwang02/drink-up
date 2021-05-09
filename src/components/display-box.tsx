@@ -18,7 +18,8 @@ import { Typography } from './typography';
 const BOX_WIDTH = 272;
 
 export interface DisplayBoxProps extends CollectionFromDB {
-  onClickWatered?: () => void;
+  onClickWatered: () => void;
+  isSubmitting?: boolean;
 }
 
 const TitleBox = ({ commonName }: { commonName: string }) => (
@@ -96,16 +97,19 @@ const NextWateringDateBox = ({ countDown }: { countDown: number }) => (
 const SubmitBox = ({
   isWateredToday,
   onClickWatered,
+  isSubmitting,
 }: {
   isWateredToday: boolean;
-  onClickWatered?: () => void;
+  onClickWatered: () => void;
+  isSubmitting?: boolean;
 }) => (
   <Box pt="zeroPointEight" pb="zeroPointSix" alignItems="center">
     <CircleButton
       pr="one"
       pb="zeroPointFour"
-      checked={isWateredToday}
+      isChecked={isWateredToday}
       onClick={onClickWatered}
+      isSubmitting={isSubmitting}
     />
     <Typography textStyle="copyLBold">I watered it today</Typography>
   </Box>
@@ -116,6 +120,7 @@ const Content = ({
   lastWateredOn,
   schedule,
   notes,
+  isSubmitting,
   onClickWatered,
 }: DisplayBoxProps) => {
   const countDown = getWateringCountdown(lastWateredOn, schedule);
@@ -127,6 +132,7 @@ const Content = ({
       <LastWateredOnBox lastWateredOn={lastWateredOn} />
       <NextWateringDateBox countDown={countDown} />
       <SubmitBox
+        isSubmitting={isSubmitting}
         isWateredToday={isWateredToday}
         onClickWatered={onClickWatered}
       />
@@ -141,6 +147,7 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
   lastWateredOn,
   schedule,
   notes,
+  isSubmitting,
   onClickWatered,
 }: DisplayBoxProps) => {
   const { isMD } = useMediaQuery();
@@ -165,6 +172,7 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
             schedule={schedule}
             lastWateredOn={lastWateredOn}
             notes={notes}
+            isSubmitting={isSubmitting}
             onClickWatered={onClickWatered}
           />
         }

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { CollectionWithInputs } from './interfaces';
+import { CollectionFromDB, CollectionWithInputs } from './interfaces';
 
 export const getPlantInputErrorMessage: (
   field: keyof CollectionWithInputs
@@ -43,4 +43,13 @@ export const getWateringCountdown: (
     'day'
   );
   return dayjs(nextWateringDate).diff(dayjs(), 'day') + 1;
+};
+
+export const sortCollectionByCommonName: (
+  a: CollectionFromDB,
+  b: CollectionFromDB
+) => 1 | -1 | 0 = (a, b) => {
+  if (a.commonName < b.commonName) return -1;
+  if (a.commonName > b.commonName) return 1;
+  return 0;
 };

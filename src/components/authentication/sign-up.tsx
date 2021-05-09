@@ -111,7 +111,7 @@ const SignUp: React.FC<SignUpProps> = ({
         );
         user?.getIdTokenResult().then(({ token }) => {
           nookies.set(undefined, 'token', token, {
-            maxAge: 2 * 24 * 60 * 60,
+            maxAge: 24 * 60 * 60,
           });
         });
         const userRef = await firestore.doc(`users/${user?.uid}`).get();

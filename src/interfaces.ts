@@ -11,12 +11,15 @@ export interface CollectionWithInputs extends Collection {
   lastWateredOn?: string;
   notes?: string;
   createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface CollectionFromDB extends Collection {
   schedule: string;
   lastWateredOn: string;
   notes?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface CustomCollectionWithInputs

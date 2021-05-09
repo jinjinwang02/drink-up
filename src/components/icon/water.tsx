@@ -42,12 +42,14 @@ const Water: React.FC<WaterProps> = ({
   ) : (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 43.13 67.95"
+      viewBox="0 0 39.13 67.95"
+      width={width}
       fill="#87bdd1"
       stroke="#87bdd1"
-      width={width}
+      strokeMiterlimit={10}
+      strokeDasharray={154}
     >
-      <path d={path} />
+      <path d={path} strokeWidth={4} />
     </svg>
   );
 };

@@ -16,7 +16,6 @@ const firebaseConfig = {
 export const firebaseClient: () => {
   auth: firebase.auth.Auth;
   firestore: firebase.firestore.Firestore;
-  firestoreFieldValue: typeof firebase.firestore.FieldValue;
 } = () => {
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
@@ -24,7 +23,6 @@ export const firebaseClient: () => {
     firebase.app();
   }
   const firestore = firebase.firestore();
-  const firestoreFieldValue = firebase.firestore.FieldValue;
   const auth = firebase.auth();
-  return { auth, firestore, firestoreFieldValue };
+  return { auth, firestore };
 };
