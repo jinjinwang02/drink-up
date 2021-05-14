@@ -37,7 +37,7 @@ interface PlantContextProps {
     value: React.SetStateAction<CustomCollectionWithInputs[]>
   ) => void;
   handleAddPlants: (inputs: CollectionWithInputs[]) => void;
-  handleEditPlants: (inputs: CollectionWithInputs[]) => void;
+  handleEditPlants: (inputs: CollectionWithInputs[], cb: () => void) => void;
   handleSetInput: (id: string | undefined, name: string, value: string) => void;
 }
 
@@ -153,7 +153,7 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
   );
 
   const handleEditPlants = useCallback(
-    async (plantInputs: CollectionWithInputs[]) => {
+    async (plantInputs: CollectionWithInputs[], cb: () => void) => {
       setInputErrors(null);
       let errorCount = 0;
       for (const input of plantInputs) {
@@ -173,7 +173,9 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
       if (!errorCount) {
         await Promise.all(
           plantInputs.map(async (plant) => await updatePlantEntry(plant))
-        );
+        )
+          .then(() => cb())
+          .catch((err) => console.log(err));
       }
     },
     [updatePlantEntry]

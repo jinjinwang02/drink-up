@@ -8,15 +8,21 @@ import { TitleWithUnderline } from './title-with-underline';
 import { Typography } from './typography';
 
 const LandingTitle: React.FC = () => {
-  const { isXS } = useMediaQuery();
+  const { isXS, isLG } = useMediaQuery();
   const titleFadeInProps = useSpring({
-    from: { opacity: 0, y: 40 },
-    to: { opacity: 1, y: 0 },
+    from: { opacity: 0, y: 40, x: isLG ? '24vw' : '0' },
+    to: [
+      { opacity: 1, y: 0, x: isLG ? '24vw' : '0' },
+      { opacity: 1, y: 0, x: '0' },
+    ],
   });
   const footerFadeInProps = useSpring({
-    from: { opacity: 0, y: 20 },
-    to: { opacity: 1, y: 0 },
-    delay: 250,
+    from: { opacity: 0, y: 30, x: isLG ? '16vw' : '0' },
+    to: [
+      { opacity: 1, y: 0, x: isLG ? '16vw' : '0' },
+      { opacity: 1, y: 0, x: '0' },
+    ],
+    delay: isLG ? 0 : 300,
   });
   return (
     <Box
@@ -36,9 +42,15 @@ const LandingTitle: React.FC = () => {
         </Box>
       </AnimatedBox>
       <AnimatedBox style={footerFadeInProps}>
-        <TitleWithUnderline variant="secondary">
-          A water reminder for your plants.
-        </TitleWithUnderline>
+        {isLG ? (
+          <TitleWithUnderline variant="secondary">
+            A water reminder for your plants.
+          </TitleWithUnderline>
+        ) : (
+          <Typography textStyle={['copyXL', 'h4', 'h2', 'h2']}>
+            A water reminder for your plants.
+          </Typography>
+        )}
       </AnimatedBox>
     </Box>
   );

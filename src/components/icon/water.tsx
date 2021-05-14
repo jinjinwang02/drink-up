@@ -19,7 +19,6 @@ const Water: React.FC<WaterProps> = ({
   isAnimated,
 }: WaterProps) => {
   const fillProps = useSpring({
-    // config: { duration: 2000 },
     delay: 200,
     from: { fill: '#fff' },
     to: { fill: '#87bdd1' },
@@ -32,6 +31,7 @@ const Water: React.FC<WaterProps> = ({
       { opacity: 1, transform: 'scale(1)' },
       { opacity: 0, transform: 'scale(1.6)' },
     ],
+    reset: isAnimated,
   });
 
   const rippleTwoProps = useSpring({
@@ -42,6 +42,7 @@ const Water: React.FC<WaterProps> = ({
       { opacity: 1, transform: 'scale(1)' },
       { opacity: 0, transform: 'scale(1.2)' },
     ],
+    reset: isAnimated,
   });
   return isAnimated ? (
     <Box width="100%" height="100%">

@@ -51,7 +51,7 @@ const Index: NextPage = () => {
         ]}
         gridRowGap="four"
         mt="two"
-        pb="five"
+        pb="eight"
       >
         {plantCollection.map((plant) => {
           const { id, imageUrl, commonName } = plant;

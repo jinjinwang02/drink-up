@@ -1,23 +1,30 @@
 import React, { useMemo } from 'react';
 import { useSpring } from 'react-spring';
 import { CollectionFromDB } from '../interfaces';
+import { getPlantNamesInSentence } from '../utils';
 import { AnimatedBox } from './box/animatedBox';
 import { Typography } from './typography';
 
 interface DashboardTitleProps {
   displayName?: string;
   plantsDueTomorrow: CollectionFromDB[];
+  plantsDueInThePast: CollectionFromDB[];
   plantAmount?: number;
 }
 
 const DashboardTitle: React.FC<DashboardTitleProps> = ({
   displayName,
   plantsDueTomorrow,
+  plantsDueInThePast,
   plantAmount,
 }: DashboardTitleProps) => {
-  const plantList = useMemo(
+  const plantDueTomorrowList = useMemo(
     () => plantsDueTomorrow.map((el) => el.commonName),
     [plantsDueTomorrow]
+  );
+  const plantsDueInThePastList = useMemo(
+    () => plantsDueInThePast.map((el) => el.commonName),
+    [plantsDueInThePast]
   );
   const primaryTitleFadeInProps = useSpring({
     from: { opacity: 0, y: 40 },
@@ -26,12 +33,12 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
   const secondaryTitleFadeInProps = useSpring({
     from: { opacity: 0, y: 40 },
     to: { opacity: 1, y: 0 },
-    delay: 200,
+    delay: 100,
   });
   const footerFadeInProps = useSpring({
     from: { opacity: 0, y: 20 },
     to: { opacity: 1, y: 0 },
-    delay: 400,
+    delay: 200,
   });
   return (
     <>
@@ -52,29 +59,39 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
         justifyContent={['center', 'flex-start']}
         flexWrap="wrap"
       >
-        {plantsDueTomorrow.length ? (
+        {plantDueTomorrowList.length ? (
           <>
             <Typography textStyle="bodyL" mr="zeroPointSix">
-              {plantList.length > 2
-                ? plantList.slice(0, plantList.length - 2).join(', ') +
-                  ', ' +
-                  plantList
-                    .slice(plantList.length - 2, plantList.length)
-                    .join(' and ')
-                : plantList.join(' and ')}
+              {getPlantNamesInSentence(plantDueTomorrowList)}
             </Typography>
-
             <Typography textStyle="bodyL">
               {plantsDueTomorrow.length > 1 ? ' need' : 'needs'} to be
               watered&nbsp;
             </Typography>
             <Typography textStyle="bodyLBold">tomorrow.</Typography>
           </>
-        ) : plantAmount ? (
-          <Typography textStyle="bodyL">All sufficently hydrated :)</Typography>
-        ) : (
-          <Typography textStyle="bodyL">Why not adding some?</Typography>
-        )}
+        ) : null}
+
+        {plantsDueInThePastList.length ? (
+          <>
+            <Typography textStyle="bodyL" mr="zeroPointSix">
+              {getPlantNamesInSentence(plantsDueInThePastList)}
+            </Typography>
+            <Typography textStyle="bodyLBold" color="warningRed">
+              missed the watering date!
+            </Typography>
+          </>
+        ) : null}
+
+        {!plantDueTomorrowList.length && !plantsDueInThePast.length ? (
+          plantAmount ? (
+            <Typography textStyle="bodyL">
+              All sufficently hydrated :)
+            </Typography>
+          ) : (
+            <Typography textStyle="bodyL">Why not adding some?</Typography>
+          )
+        ) : null}
       </AnimatedBox>
     </>
   );

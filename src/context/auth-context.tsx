@@ -31,16 +31,18 @@ export const AuthProvider: React.FC<AuthContextProviderProps> = ({
 
   const [user, setUser] = useState<firebase.User | null>(null);
   useEffect(() => {
-    return auth.onIdTokenChanged(async (user) => {
-      if (!user) {
-        setUser(null);
-        destroyCookie(undefined, 'token');
-        return;
-      }
-      const token = await user.getIdToken();
-      nookies.set(undefined, 'token', token, { maxAge: 24 * 60 * 60 });
-      setUser(user);
-    });
+    if (cookies.token) {
+      return auth.onIdTokenChanged(async (user) => {
+        if (!user) {
+          setUser(null);
+          destroyCookie(undefined, 'token');
+          return;
+        }
+        const token = await user.getIdToken();
+        nookies.set(undefined, 'token', token, { maxAge: 24 * 60 * 60 });
+        setUser(user);
+      });
+    }
   }, [auth, cookies.token, firestore]);
 
   return (

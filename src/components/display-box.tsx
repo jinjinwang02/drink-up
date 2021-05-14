@@ -67,7 +67,7 @@ const ScheduleAndNoteBox = ({
 
 const LastWateredOnBox = ({ lastWateredOn }: { lastWateredOn: string }) => (
   <Box borderBottom="regularBlack" width="100%" pt="zeroPointEight" pb="one">
-    <Typography textStyle="bodyM" pr="zeroPointSix">
+    <Typography textStyle="bodyM" pr="zeroPointFive">
       Last watered on
     </Typography>
     <Typography textStyle="bodyMBold">{lastWateredOn}</Typography>
@@ -79,15 +79,19 @@ const NextWateringDateBox = ({ countDown }: { countDown: number }) => (
     <Typography textStyle="bodyM" pr="zeroPointFive">
       Next watering date is
     </Typography>
-    {countDown === 0 ? (
+    {countDown === 1 ? (
       <Typography textStyle="bodyMBold">Today!</Typography>
     ) : (
       <>
-        <Typography textStyle="bodyMBold" pr="zeroPointFive">
-          {countDown > 0 ? countDown : -countDown}
+        <Typography
+          textStyle="bodyMBold"
+          pr="zeroPointFour"
+          color={countDown < 0 ? 'warningRed' : 'pureBlack'}
+        >
+          {countDown > 1 ? countDown : -countDown}
         </Typography>
         <Typography textStyle="bodyM">
-          days {countDown > 0 ? 'away' : 'ago'}
+          days {countDown > 1 ? 'away' : 'ago'}
         </Typography>
       </>
     )}
@@ -152,9 +156,9 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
 }: DisplayBoxProps) => {
   const { isMD } = useMediaQuery();
   const fadeInProps = useSpring({
-    from: { opacity: 0, x: -20 },
+    from: { opacity: 0, x: -30 },
     to: { opacity: 1, x: 0 },
-    delay: isMD ? 0 : 900,
+    delay: isMD ? 0 : 800,
   });
 
   return (

@@ -53,3 +53,13 @@ export const sortCollectionByCommonName: (
   if (a.commonName > b.commonName) return 1;
   return 0;
 };
+
+export const getPlantNamesInSentence: (plants: string[]) => string = (
+  plants
+) => {
+  return plants.length > 2
+    ? plants.slice(0, plants.length - 2).join(', ') +
+        ', ' +
+        plants.slice(plants.length - 2, plants.length).join(' and ')
+    : plants.join(' and ');
+};
