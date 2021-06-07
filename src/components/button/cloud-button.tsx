@@ -39,7 +39,7 @@ const CloudButton: React.FC<CloudButtonProps> = ({
         style={transformProps}
         zIndex={-1}
       >
-        <Cloud />
+        <Cloud width="100%" />
       </AnimatedBox>
       <Typography
         py={['zeroPointTwo', 'zero']}

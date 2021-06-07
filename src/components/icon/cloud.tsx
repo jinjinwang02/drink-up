@@ -4,7 +4,7 @@ import { Box } from '../box/box';
 
 interface CloudProps {
   allowXS?: boolean;
-  width?: number | number[];
+  width?: number | number[] | string;
 }
 
 const Cloud: React.FC<CloudProps> = ({ width, allowXS = true }: CloudProps) => {
