@@ -10,6 +10,7 @@ export interface BoxWithImageProps {
   width: number[] | number;
   topBoxHeight: number[] | number;
   alt?: string;
+  topRightAccessory?: React.ReactNode;
   bottomAccessory?: React.ReactNode;
   invertible?: boolean;
 }
@@ -19,6 +20,7 @@ const BoxWithImage: React.FC<BoxWithImageProps> = ({
   topBoxHeight,
   alt,
   imageText,
+  topRightAccessory,
   bottomAccessory,
   invertible,
   id,
@@ -29,6 +31,7 @@ const BoxWithImage: React.FC<BoxWithImageProps> = ({
     width={width}
     bg="pureWhite"
   >
+    {topRightAccessory}
     <Box
       flexDirection="column"
       width="100%"

@@ -83,6 +83,12 @@ const textStyles = {
     fontSize: 16,
     lineHeight: '20px',
   },
+  bodyXLBold: {
+    fontFamily: 'HelveticaNeue-Light, Helvetica Neue',
+    fontWeight: 700,
+    fontSize: 16,
+    lineHeight: '20px',
+  },
   bodyL: {
     fontFamily: 'HelveticaNeue-Light, Helvetica Neue',
     fontWeight: 200,
@@ -197,6 +203,7 @@ const borders = {
   mediumGrey: `1px solid ${colors.mediumGrey}`,
   thickerBlue: `2px solid ${colors.pastelBlue}`,
   thinBlue: `1px solid ${colors.pastelBlue}`,
+  thickWarningRed: `2px solid ${colors.warningRed}`,
   transparent: '1px solid transparent',
 };
 

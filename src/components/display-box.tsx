@@ -22,6 +22,10 @@ export interface DisplayBoxProps extends CollectionFromDB {
   isSubmitting?: boolean;
 }
 
+interface ContentProps extends DisplayBoxProps {
+  countDown: number;
+}
+
 const TitleBox = ({ commonName }: { commonName: string }) => (
   <Box borderBottom="regularBlack" py="zeroPointEight" width="100%" pl="four">
     <Typography textAlign="center" textStyle="copyLBold">
@@ -125,9 +129,9 @@ const Content = ({
   schedule,
   notes,
   isSubmitting,
+  countDown,
   onClickWatered,
-}: DisplayBoxProps) => {
-  const countDown = getWateringCountdown(lastWateredOn, schedule);
+}: ContentProps) => {
   const isWateredToday = lastWateredOn === dayjs().format(DATE_DISPLAY_FORMAT);
   return (
     <Box flexDirection="column" width="100%">
@@ -160,6 +164,7 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
     to: { opacity: 1, x: 0 },
     delay: isMD ? 0 : 800,
   });
+  const countDown = getWateringCountdown(lastWateredOn, schedule);
 
   return (
     <AnimatedBox style={fadeInProps}>
@@ -169,6 +174,24 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
         topBoxHeight={BOX_WIDTH}
         imageUrl={imageUrl}
         alt={commonName}
+        topRightAccessory={
+          countDown < 0 ? (
+            <Box
+              position="absolute"
+              top={10}
+              right={10}
+              zIndex={1}
+              border="thickWarningRed"
+              height="25px"
+              width="25px"
+              borderRadius="25px"
+            >
+              <Typography color="warningRed" textStyle="bodyXLBold">
+                !
+              </Typography>
+            </Box>
+          ) : null
+        }
         bottomAccessory={
           <Content
             id={id}
@@ -177,6 +200,7 @@ const DisplayBox: React.FC<DisplayBoxProps> = ({
             lastWateredOn={lastWateredOn}
             notes={notes}
             isSubmitting={isSubmitting}
+            countDown={countDown}
             onClickWatered={onClickWatered}
           />
         }
