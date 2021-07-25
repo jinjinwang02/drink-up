@@ -40,7 +40,7 @@ const LogIn: React.FC<LogInProps> = ({
     validateOnChange: false,
     validateOnBlur: false,
     validationSchema: EmailSchema,
-    onSubmit: async () => {
+    onSubmit: () => {
       handleCheckEmail(emailFormik.values.email);
     },
   });
@@ -49,7 +49,7 @@ const LogIn: React.FC<LogInProps> = ({
     validateOnChange: false,
     validateOnBlur: false,
     validationSchema: PasswordSchema,
-    onSubmit: async () => {
+    onSubmit: () => {
       handleLogIn(emailFormik.values.email, passwordFormik.values.password);
     },
   });

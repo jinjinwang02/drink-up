@@ -14,7 +14,7 @@ import { Typography } from './typography';
 export const NAVBAR_HEIGHT_MD = 78;
 export const NAVBAR_HEIGHT_XS = 58;
 const ICON_HEIGHT = 28;
-const NAV_DROPDOWN_HEIGHT_MD = 130;
+const NAV_DROPDOWN_HEIGHT_MD = 120;
 const NAV_DROPDOWN_WIDTH_MD = 125;
 
 interface NavDropdownItemProps {
@@ -106,12 +106,6 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
         onClick={() => router.push('/dashboard')}
       >
         Dashboard
-      </NavDropdownItem>
-      <NavDropdownItem
-        cursorStyle={cursorStyle}
-        onClick={() => router.push('/browse')}
-      >
-        Browse all plants
       </NavDropdownItem>
       <NavDropdownItem
         cursorStyle={cursorStyle}
