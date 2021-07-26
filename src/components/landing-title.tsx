@@ -10,16 +10,16 @@ import { Typography } from './typography';
 const LandingTitle: React.FC = () => {
   const { isXS, isLG } = useMediaQuery();
   const titleFadeInProps = useSpring({
-    from: { opacity: 0, y: 40, x: isLG ? '24vw' : '0' },
+    from: { opacity: 0, y: 40, x: isLG ? '320px' : '0' },
     to: [
-      { opacity: 1, y: 0, x: isLG ? '24vw' : '0' },
+      { opacity: 1, y: 0, x: isLG ? '320px' : '0' },
       { opacity: 1, y: 0, x: '0' },
     ],
   });
   const footerFadeInProps = useSpring({
-    from: { opacity: 0, y: 30, x: isLG ? '16vw' : '0' },
+    from: { opacity: 0, y: 30, x: isLG ? '210px' : '0' },
     to: [
-      { opacity: 1, y: 0, x: isLG ? '16vw' : '0' },
+      { opacity: 1, y: 0, x: isLG ? '210px' : '0' },
       { opacity: 1, y: 0, x: '0' },
     ],
     delay: isLG ? 0 : 300,
