@@ -36,8 +36,12 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
 
   const handlePressPlant = useCallback(
     (plant: Collection) => {
-      if (selectedPlants.map((el) => el.id).includes(plant.id)) {
-        setSelctedPlants(selectedPlants.filter((el) => el.id !== plant.id));
+      if (
+        selectedPlants.map((el) => el.commonName).includes(plant.commonName)
+      ) {
+        setSelctedPlants(
+          selectedPlants.filter((el) => el.commonName !== plant.commonName)
+        );
       } else {
         setSelctedPlants((prev) => [...prev, plant]);
       }
@@ -46,9 +50,10 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
   );
 
   const handlePressNext = useCallback(() => {
+    setPlantCollection(selectedPlants);
+    setPlantCollectionWithInputs(selectedPlants);
+
     if (selectedPlants.length) {
-      setPlantCollection(selectedPlants);
-      setPlantCollectionWithInputs(selectedPlants);
       router.push('/edit-your-plants');
     } else {
       router.push('/add-your-plants');
@@ -92,7 +97,9 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
               imageUrl={plant.imageUrl}
               alt={plant.commonName}
               bottomText={plant.commonName}
-              selected={selectedPlants.map((el) => el.id).includes(plant.id)}
+              selected={selectedPlants
+                .map((el) => el.commonName)
+                .includes(plant.commonName)}
             />
           </Box>
         ))}

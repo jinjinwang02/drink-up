@@ -21,6 +21,8 @@ import { useSpring } from '@react-spring/core';
 const Index: NextPage = () => {
   const router = useRouter();
   const {
+    plantCollection,
+    plantCollectionWithInputs,
     customCollectionWithInputs,
     setCustomCollectionWithInputs,
     handleAddPlants,
@@ -45,7 +47,7 @@ const Index: NextPage = () => {
       router.push('/dashboard')
     );
   }, [customCollectionWithInputs, handleAddPlants, router]);
-
+  console.log(plantCollection, plantCollectionWithInputs);
   useEffect(() => {
     window.scrollTo({
       top: document.body.scrollHeight,

@@ -131,7 +131,6 @@ const Navbar: React.FC<NavbarProps> = ({ right }: NavbarProps) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const { isXS } = useMediaQuery();
   const handleCloseDropdown = useCallback((event: any) => {
-    console.log('clicked');
     const icon = document?.getElementById('userIcon');
     if (event.target === icon || icon?.contains(event.target)) return;
     setShowDropdown(false);
