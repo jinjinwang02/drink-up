@@ -245,6 +245,13 @@ const GlobalStyle = createGlobalStyle`
       padding: 0;
       box-sizing: border-box;
       display: flex;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      overflow-y: scroll; 
+    }
+
+    body::-webkit-scrollbar {
+      display: none;
     }
 
     /* Chrome, Safari, Edge, Opera */
