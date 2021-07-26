@@ -36,7 +36,10 @@ interface PlantContextProps {
   setCustomCollectionWithInputs: (
     value: React.SetStateAction<CustomCollectionWithInputs[]>
   ) => void;
-  handleAddPlants: (inputs: CollectionWithInputs[]) => void;
+  handleAddPlants: (
+    inputs: CollectionWithInputs[],
+    callback: () => void
+  ) => void;
   handleEditPlants: (inputs: CollectionWithInputs[], cb: () => void) => void;
   handleSetInput: (id: string | undefined, name: string, value: string) => void;
 }
@@ -128,7 +131,7 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
   );
 
   const handleAddPlants = useCallback(
-    async (plantInputs: CollectionWithInputs[]) => {
+    async (plantInputs: CollectionWithInputs[], cb: () => void) => {
       setInputErrors(null);
       let errorCount = 0;
       for (const input of plantInputs) {
@@ -146,7 +149,8 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
         }
       }
       if (!errorCount) {
-        await addPlantEntries(plantInputs);
+        addPlantEntries(plantInputs);
+        cb();
       }
     },
     [addPlantEntries]

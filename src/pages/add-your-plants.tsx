@@ -41,8 +41,9 @@ const Index: NextPage = () => {
       router.push('/dashboard');
       return;
     }
-    handleAddPlants(customCollectionWithInputs as CollectionWithInputs[]);
-    router.push('/dashboard');
+    handleAddPlants(customCollectionWithInputs as CollectionWithInputs[], () =>
+      router.push('/dashboard')
+    );
   }, [customCollectionWithInputs, handleAddPlants, router]);
 
   useEffect(() => {

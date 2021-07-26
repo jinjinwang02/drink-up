@@ -25,8 +25,6 @@ const Index: NextPage = () => {
     handleAddPlants,
   } = usePlantContext();
 
-  // if user navigates to this page directly
-  // redirect to Find your plants
   useEffect(() => {
     if (!plantCollection.length || !plantCollectionWithInputs.length) {
       router.push('/find-your-plants');
@@ -34,8 +32,9 @@ const Index: NextPage = () => {
   }, [plantCollection.length, plantCollectionWithInputs.length, router]);
 
   const handleSubmit = useCallback(() => {
-    handleAddPlants(plantCollectionWithInputs);
-    router.push('/add-your-plants');
+    handleAddPlants(plantCollectionWithInputs, () =>
+      router.push('/add-your-plants')
+    );
   }, [handleAddPlants, router, plantCollectionWithInputs]);
 
   return (
