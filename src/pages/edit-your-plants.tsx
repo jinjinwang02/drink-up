@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import nookies from 'nookies';
 import { GetServerSideProps, NextPage } from 'next';
 import { NextSeo } from 'next-seo';
@@ -18,11 +18,20 @@ import { verifyIdToken } from '../firebase/firebase-admin';
 
 const Index: NextPage = () => {
   const router = useRouter();
+
   const {
     plantCollection,
     plantCollectionWithInputs,
     handleAddPlants,
   } = usePlantContext();
+
+  // if user navigates to this page directly
+  // redirect to Find your plants
+  useEffect(() => {
+    if (!plantCollection.length || !plantCollectionWithInputs.length) {
+      router.push('/find-your-plants');
+    }
+  }, [plantCollection.length, plantCollectionWithInputs.length, router]);
 
   const handleSubmit = useCallback(() => {
     handleAddPlants(plantCollectionWithInputs);
