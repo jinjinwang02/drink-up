@@ -40,6 +40,7 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
     to: { opacity: 1, y: 0 },
     delay: 200,
   });
+
   return (
     <>
       <AnimatedBox style={primaryTitleFadeInProps}>
@@ -56,15 +57,20 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
       </AnimatedBox>
       <AnimatedBox
         style={footerFadeInProps}
+        flexDirection={['column', 'row']}
         justifyContent={['center', 'flex-start']}
         flexWrap="wrap"
       >
         {plantDueTomorrowList.length ? (
           <>
-            <Typography textStyle="bodyL" mr="zeroPointSix">
+            <Typography
+              textAlign={['center', 'left']}
+              textStyle="bodyL"
+              mr={['zero', 'zeroPointSix']}
+            >
               {getPlantNamesInSentence(plantDueTomorrowList)}
             </Typography>
-            <Typography textStyle="bodyL">
+            <Typography textAlign={['center', 'left']} textStyle="bodyL">
               {plantsDueTomorrow.length > 1 ? ' need' : 'needs'} to be
               watered&nbsp;
             </Typography>
@@ -74,10 +80,18 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
 
         {plantsDueInThePastList.length ? (
           <>
-            <Typography textStyle="bodyL" mr="zeroPointSix">
+            <Typography
+              textAlign={['center', 'left']}
+              textStyle="bodyL"
+              mr={['zero', 'zeroPointSix']}
+            >
               {getPlantNamesInSentence(plantsDueInThePastList)}
             </Typography>
-            <Typography textStyle="bodyLBold" color="warningRed">
+            <Typography
+              textAlign={['center', 'left']}
+              textStyle="bodyLBold"
+              color="warningRed"
+            >
               missed the watering date!
             </Typography>
           </>

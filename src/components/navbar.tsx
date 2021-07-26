@@ -56,7 +56,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({
       opacity: 0,
     },
     to: {
-      transformOrigin: 'bottom',
+      transformOrigin: 'right',
       x: showDropdown ? 0 : 500,
       opacity: showDropdown ? 1 : 0,
     },
