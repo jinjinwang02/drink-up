@@ -54,7 +54,7 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
     setPlantCollectionWithInputs(selectedPlants);
 
     if (selectedPlants.length) {
-      router.push('/edit-your-plants');
+      router.push('/edit-the-details');
     } else {
       router.push('/add-your-plants');
     }
