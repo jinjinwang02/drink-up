@@ -18,7 +18,7 @@ export const blockInvalidChar: (e: KeyboardEvent, type: string) => void = (
   e,
   type
 ) => {
-  if (type === 'number' && ['e', 'E', '+', '-'].includes(e.key))
+  if (type === 'number' && ['e', 'E', '+', '-', '0'].includes(e.key))
     e.preventDefault();
 };
 
