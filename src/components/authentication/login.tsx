@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import 'firebase/auth';
 import nookies from 'nookies';
 import { firebaseClient } from '../../firebase/firebase-client';
@@ -54,41 +54,35 @@ const LogIn: React.FC<LogInProps> = ({
     },
   });
 
-  const handleCheckEmail = useCallback(
-    async (email: string) => {
-      await auth.fetchSignInMethodsForEmail(email).then((res) => {
-        if (!res.length) {
-          emailFormik.setFieldError('email', 'This email is not registered.');
-        } else {
-          onPressNext();
-        }
-      });
-    },
-    [auth, emailFormik, onPressNext]
-  );
+  const handleCheckEmail = async (email: string) => {
+    await auth.fetchSignInMethodsForEmail(email).then((res) => {
+      if (!res.length) {
+        emailFormik.setFieldError('email', 'This email is not registered.');
+      } else {
+        onPressNext();
+      }
+    });
+  };
 
-  const handleLogIn = useCallback(
-    async (email: string, password: string) => {
-      try {
-        setLoading(true);
-        await auth
-          .signInWithEmailAndPassword(email, password)
-          .then(({ user }) => {
-            user?.getIdTokenResult().then(({ token }) => {
-              nookies.set(undefined, 'token', token, {
-                maxAge: 24 * 60 * 60,
-              });
+  const handleLogIn = async (email: string, password: string) => {
+    try {
+      setLoading(true);
+      await auth
+        .signInWithEmailAndPassword(email, password)
+        .then(({ user }) => {
+          user?.getIdTokenResult().then(({ token }) => {
+            nookies.set(undefined, 'token', token, {
+              maxAge: 24 * 60 * 60,
             });
           });
-      } catch (error) {
-        setLoading(false);
-        passwordFormik.setFieldError('password', error.message);
-      } finally {
-        router.push('/dashboard');
-      }
-    },
-    [auth, router, passwordFormik]
-  );
+        });
+    } catch (error) {
+      setLoading(false);
+      passwordFormik.setFieldError('password', error.message);
+    } finally {
+      router.push('/dashboard');
+    }
+  };
 
   const getCurrentFormik = (step: number) => {
     switch (step) {

@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext, useCallback } from 'react';
+import React, { useState, useContext, createContext } from 'react';
 import 'firebase/auth';
 import {
   Collection,
@@ -39,8 +39,11 @@ interface PlantContextProps {
   handleAddPlants: (
     inputs: CollectionWithInputs[],
     callback: () => void
-  ) => void;
-  handleEditPlants: (inputs: CollectionWithInputs[], cb: () => void) => void;
+  ) => Promise<any>;
+  handleEditPlants: (
+    inputs: CollectionWithInputs[],
+    cb: () => void
+  ) => Promise<any>;
   handleSetInput: (id: string | undefined, name: string, value: string) => void;
 }
 
@@ -54,8 +57,8 @@ const PlantContext = createContext<PlantContextProps>({
   setPlantCollection: () => null,
   setPlantCollectionWithInputs: () => null,
   setCustomCollectionWithInputs: () => null,
-  handleAddPlants: () => null,
-  handleEditPlants: () => null,
+  handleAddPlants: async () => null,
+  handleEditPlants: async () => null,
   handleSetInput: () => null,
 });
 
@@ -78,112 +81,107 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
     [id: string]: { name: keyof CollectionWithInputs; errorMessage: string }[];
   } | null>(null);
 
-  const handleSetInput = useCallback(
-    (plantId: string | undefined, name, value) => {
-      if (!plantId) return;
-      if (plantCollectionWithInputs.map((el) => el.id).includes(plantId)) {
-        const currentPlant = plantCollectionWithInputs.filter(
-          (el) => el.id === plantId
-        )[0];
-        setPlantCollectionWithInputs((prev) => [
-          ...prev.filter((el) => el !== currentPlant),
-          { ...currentPlant, [name]: value },
-        ]);
-      }
+  const handleSetInput = (
+    plantId: string | undefined,
+    name: string,
+    value: string
+  ) => {
+    if (!plantId) return;
+    if (plantCollectionWithInputs.map((el) => el.id).includes(plantId)) {
+      const currentPlant = plantCollectionWithInputs.filter(
+        (el) => el.id === plantId
+      )[0];
+      setPlantCollectionWithInputs((prev) => [
+        ...prev.filter((el) => el !== currentPlant),
+        { ...currentPlant, [name]: value },
+      ]);
+    }
 
-      if (customCollectionWithInputs.map((el) => el.id).includes(plantId)) {
-        const currentCustomPlant = customCollectionWithInputs.filter(
-          (el) => el.id === plantId
-        )[0];
-        setCustomCollectionWithInputs((prev) => [
-          ...prev.filter((el) => el !== currentCustomPlant),
-          { ...currentCustomPlant, [name]: value },
-        ]);
-      }
-    },
-    [customCollectionWithInputs, plantCollectionWithInputs]
-  );
+    if (customCollectionWithInputs.map((el) => el.id).includes(plantId)) {
+      const currentCustomPlant = customCollectionWithInputs.filter(
+        (el) => el.id === plantId
+      )[0];
+      setCustomCollectionWithInputs((prev) => [
+        ...prev.filter((el) => el !== currentCustomPlant),
+        { ...currentCustomPlant, [name]: value },
+      ]);
+    }
+  };
 
-  const addPlantEntries = useCallback(
-    async (plants: CollectionWithInputs[]) => {
-      const plantWithIdAsKey = plants.map((el) => ({
-        [el.id]: { ...el, createdAt: new Date().toISOString() },
-      }));
-      const plantObjects = Object.assign({}, ...plantWithIdAsKey);
-      await firestore
-        .doc(`users/${user?.uid}`)
-        ?.set({ plants: plantObjects }, { merge: true });
-    },
-    [firestore, user?.uid]
-  );
+  const addPlantEntries = async (plants: CollectionWithInputs[]) => {
+    const plantWithIdAsKey = plants.map((el) => ({
+      [el.id]: { ...el, createdAt: new Date().toISOString() },
+    }));
+    const plantObjects = Object.assign({}, ...plantWithIdAsKey);
+    await firestore
+      .doc(`users/${user?.uid}`)
+      ?.set({ plants: plantObjects }, { merge: true });
+  };
 
-  const updatePlantEntry = useCallback(
-    async (newPlantEntry: CollectionWithInputs) => {
-      await firestore.doc(`users/${user?.uid}`).update({
-        ['plants.' + newPlantEntry.id]: {
-          ...newPlantEntry,
-          createdAt: newPlantEntry.createdAt,
-          updatedAt: new Date().toISOString(),
-        },
-      });
-    },
-    [firestore, user?.uid]
-  );
+  const updatePlantEntry = async (newPlantEntry: CollectionWithInputs) => {
+    await firestore.doc(`users/${user?.uid}`).update({
+      ['plants.' + newPlantEntry.id]: {
+        ...newPlantEntry,
+        createdAt: newPlantEntry.createdAt,
+        updatedAt: new Date().toISOString(),
+      },
+    });
+  };
 
-  const handleAddPlants = useCallback(
-    async (plantInputs: CollectionWithInputs[], cb: () => void) => {
-      setInputErrors(null);
-      let errorCount = 0;
-      for (const input of plantInputs) {
-        for (const field of REQUIRED_FIELDS) {
-          if (!input[field]) {
-            errorCount += 1;
-            setInputErrors((prev: any) => ({
-              ...prev,
-              [input.id]: [
-                ...(prev && prev[input.id] ? prev[input.id] : []),
-                { name: field, errorMessage: getPlantInputErrorMessage(field) },
-              ],
-            }));
-          }
+  const handleAddPlants = async (
+    plantInputs: CollectionWithInputs[],
+    cb: () => void
+  ) => {
+    setInputErrors(null);
+    let errorCount = 0;
+    for (const input of plantInputs) {
+      for (const field of REQUIRED_FIELDS) {
+        if (!input[field]) {
+          errorCount += 1;
+          setInputErrors((prev: any) => ({
+            ...prev,
+            [input.id]: [
+              ...(prev && prev[input.id] ? prev[input.id] : []),
+              { name: field, errorMessage: getPlantInputErrorMessage(field) },
+            ],
+          }));
         }
       }
-      if (!errorCount) {
-        addPlantEntries(plantInputs);
-        cb();
-      }
-    },
-    [addPlantEntries]
-  );
+    }
+    if (!errorCount) {
+      await addPlantEntries(plantInputs);
+      cb();
+    }
+  };
 
-  const handleEditPlants = useCallback(
-    async (plantInputs: CollectionWithInputs[], cb: () => void) => {
-      setInputErrors(null);
-      let errorCount = 0;
-      for (const input of plantInputs) {
-        for (const field of REQUIRED_FIELDS) {
-          if (!input[field]) {
-            errorCount += 1;
-            setInputErrors((prev: any) => ({
-              ...prev,
-              [input.id]: [
-                ...(prev && prev[input.id] ? prev[input.id] : []),
-                { name: field, errorMessage: getPlantInputErrorMessage(field) },
-              ],
-            }));
-          }
+  const handleEditPlants = async (
+    plantInputs: CollectionWithInputs[],
+    cb: () => void
+  ) => {
+    setInputErrors(null);
+    let errorCount = 0;
+    for (const input of plantInputs) {
+      for (const field of REQUIRED_FIELDS) {
+        if (!input[field]) {
+          errorCount += 1;
+          setInputErrors((prev: any) => ({
+            ...prev,
+            [input.id]: [
+              ...(prev && prev[input.id] ? prev[input.id] : []),
+              { name: field, errorMessage: getPlantInputErrorMessage(field) },
+            ],
+          }));
         }
       }
-      if (!errorCount) {
-        await Promise.all(
-          plantInputs.map(async (plant) => await updatePlantEntry(plant))
-        )
-          .then(() => cb())
-          .catch((err) => console.log(err));
-      }
-    },
-    [updatePlantEntry]
-  );
+    }
+    if (!errorCount) {
+      await Promise.all(
+        plantInputs.map(async (plant) => await updatePlantEntry(plant))
+      )
+        .then(() => cb())
+        .catch((err) => console.log(err));
+    }
+  };
 
   return (
     <PlantContext.Provider

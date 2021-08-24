@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import nookies from 'nookies';
 import { NextSeo } from 'next-seo';
 import { GetServerSideProps, NextPage } from 'next';
@@ -21,33 +21,32 @@ import { useSpring } from '@react-spring/core';
 const Index: NextPage = () => {
   const router = useRouter();
   const {
-    plantCollection,
-    plantCollectionWithInputs,
     customCollectionWithInputs,
     setCustomCollectionWithInputs,
     handleAddPlants,
   } = usePlantContext();
 
-  const handleAddBox = useCallback(() => {
+  const handleAddBox = () => {
     setCustomCollectionWithInputs((prev) => [...prev, { id: generateId() }]);
-  }, [setCustomCollectionWithInputs]);
+  };
 
-  const handleDeleteBox = useCallback(() => {
+  const handleDeleteBox = () => {
     setCustomCollectionWithInputs((prev) =>
       prev.slice(0, customCollectionWithInputs.length - 1)
     );
-  }, [customCollectionWithInputs.length, setCustomCollectionWithInputs]);
+  };
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = async () => {
     if (!customCollectionWithInputs.length) {
       router.push('/dashboard');
       return;
     }
-    handleAddPlants(customCollectionWithInputs as CollectionWithInputs[], () =>
-      router.push('/dashboard')
+    await handleAddPlants(
+      customCollectionWithInputs as CollectionWithInputs[],
+      () => router.push('/dashboard')
     );
-  }, [customCollectionWithInputs, handleAddPlants, router]);
-  console.log(plantCollection, plantCollectionWithInputs);
+  };
+
   useEffect(() => {
     window.scrollTo({
       top: document.body.scrollHeight,

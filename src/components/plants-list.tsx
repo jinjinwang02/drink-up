@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { CollectionFromDB } from '../interfaces';
 import { theme } from '../theme';
@@ -20,28 +20,25 @@ const PlantsList: React.FC<PlantsListProps> = ({
   onClickTitle,
 }: PlantsListProps) => {
   const { isXS } = useMediaQuery();
-  const getGradientProps = useCallback(
-    (difference) => {
-      if (isXS) return undefined;
-      const sharedProps = {
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
-        transition: theme.transitions.basic.slow,
+  const getGradientProps = (difference: number) => {
+    if (isXS) return undefined;
+    const sharedProps = {
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      transition: theme.transitions.basic.slow,
+    };
+    if (difference === 3) {
+      return {
+        background: `-webkit-linear-gradient(${theme.colors.lightestGrey}, ${theme.colors.mediumGrey})`,
+        ...sharedProps,
       };
-      if (difference === 3) {
-        return {
-          background: `-webkit-linear-gradient(${theme.colors.lightestGrey}, ${theme.colors.mediumGrey})`,
-          ...sharedProps,
-        };
-      } else if (difference === -3) {
-        return {
-          background: `-webkit-linear-gradient(${theme.colors.mediumGrey}, ${theme.colors.lightestGrey})`,
-          ...sharedProps,
-        };
-      }
-    },
-    [isXS]
-  );
+    } else if (difference === -3) {
+      return {
+        background: `-webkit-linear-gradient(${theme.colors.mediumGrey}, ${theme.colors.lightestGrey})`,
+        ...sharedProps,
+      };
+    }
+  };
 
   return (
     <Box id="title" mb={['two', 'twoPointTwo']}>

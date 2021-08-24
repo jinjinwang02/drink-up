@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { useSpring } from 'react-spring';
 import nookies from 'nookies';
 import { NextSeo } from 'next-seo';
@@ -18,15 +18,15 @@ const Index: React.FC = () => {
   const { isXS, isLG } = useMediaQuery();
   const [showAuthentication, setShowAuthentication] = useState<boolean>(false);
 
-  const handleClickLogIn = useCallback(() => {
+  const handleClickLogIn = () => {
     setLogIn(true);
     setShowAuthentication(true);
-  }, [setLogIn]);
+  };
 
-  const handleClickSignUp = useCallback(() => {
+  const handleClickSignUp = () => {
     setLogIn(false);
     setShowAuthentication(true);
-  }, [setLogIn]);
+  };
 
   const authenticationBoxXSFadeInProps = useSpring({
     from: { opacity: 0, y: 100 },

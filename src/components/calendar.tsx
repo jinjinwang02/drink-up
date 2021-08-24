@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import en from 'dayjs/locale/en';
 import styled from 'styled-components';
@@ -78,28 +78,25 @@ const Calendar: React.FC<CalendarProps> = ({
     );
   }
 
-  const handleBack = useCallback(() => {
+  const handleBack = () => {
     if (allowPrevious) {
       setCurrentCalendarTime(currentCalendarTime.subtract(1, 'month'));
       setMonthDiff((prev) => prev - 1);
     }
-  }, [currentCalendarTime, allowPrevious]);
+  };
 
-  const handleNext = useCallback(() => {
+  const handleNext = () => {
     if (allowFuture) {
       setCurrentCalendarTime(currentCalendarTime.add(1, 'month'));
       setMonthDiff((prev) => prev + 1);
     }
-  }, [allowFuture, currentCalendarTime]);
+  };
 
-  const handleSelectDate = useCallback(
-    (date: dayjs.Dayjs, isFutureDate: boolean) => {
-      if (allowFuture || !isFutureDate) {
-        onSelectDate(date.format(DATE_DISPLAY_FORMAT));
-      }
-    },
-    [allowFuture, onSelectDate]
-  );
+  const handleSelectDate = (date: dayjs.Dayjs, isFutureDate: boolean) => {
+    if (allowFuture || !isFutureDate) {
+      onSelectDate(date.format(DATE_DISPLAY_FORMAT));
+    }
+  };
 
   return (
     <Box backgroundColor="pureWhite">

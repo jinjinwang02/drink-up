@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import nookies from 'nookies';
 import { GetServerSideProps, NextPage } from 'next';
 import { NextSeo } from 'next-seo';
@@ -31,11 +31,11 @@ const Index: NextPage = () => {
     }
   }, [plantCollection.length, plantCollectionWithInputs.length, router]);
 
-  const handleSubmit = useCallback(() => {
-    handleAddPlants(plantCollectionWithInputs, () =>
+  const handleSubmit = async () => {
+    await handleAddPlants(plantCollectionWithInputs, () =>
       router.push('/add-your-plants')
     );
-  }, [handleAddPlants, router, plantCollectionWithInputs]);
+  };
 
   return (
     <Layout

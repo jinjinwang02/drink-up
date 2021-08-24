@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import * as admin from 'firebase-admin';
 import { useSpring, useTrail } from 'react-spring';
 import nookies from 'nookies';
@@ -37,33 +37,21 @@ const Index: NextPage<Props> = ({ userDoc, plantDoc }: Props) => {
   const [allPlants, setAllPlants] = useState<CollectionFromDB[]>(plantDoc);
   const [showXSDisplayBox, setShowXSDisplayBox] = useState<boolean>(false);
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
-  const plantsDueTomorrow = useMemo(
-    () =>
-      allPlants.filter(
-        (el) => getWateringCountdown(el.lastWateredOn, el.schedule) === 1
-      ),
-    [allPlants]
+  const plantsDueTomorrow = allPlants.filter(
+    (el) => getWateringCountdown(el.lastWateredOn, el.schedule) === 1
   );
-  const plantsDueInThePast = useMemo(
-    () =>
-      allPlants.filter(
-        (el) => getWateringCountdown(el.lastWateredOn, el.schedule) < 0
-      ),
-    [allPlants]
-  );
-  const plantNameList = useMemo(() => allPlants.map((el) => el.commonName), [
-    allPlants,
-  ]);
 
-  const handleClickTitle = useCallback(
-    (id: string) => {
-      setCurrentPlant(
-        allPlants.filter((el: CollectionFromDB) => el.id === id)[0]
-      );
-      setShowXSDisplayBox(true);
-    },
-    [allPlants, setShowXSDisplayBox]
+  const plantsDueInThePast = allPlants.filter(
+    (el) => getWateringCountdown(el.lastWateredOn, el.schedule) < 0
   );
+  const plantNameList = allPlants.map((el) => el.commonName);
+
+  const handleClickTitle = (id: string) => {
+    setCurrentPlant(
+      allPlants.filter((el: CollectionFromDB) => el.id === id)[0]
+    );
+    setShowXSDisplayBox(true);
+  };
 
   const handleDismissDisplayBox = useCallback(
     (event: any) => {
@@ -74,47 +62,44 @@ const Index: NextPage<Props> = ({ userDoc, plantDoc }: Props) => {
     [currentPlant?.id]
   );
 
-  const handleUpdateWateredPlants = useCallback(
-    async (plant: CollectionFromDB) => {
-      try {
-        await firestore
-          .doc(`users/${user?.uid}`)
-          .get()
-          .then((res) => res.data())
-          .then((data) => {
-            console.log('data 1: ', data?.plants[plant.id].lastWateredOn);
-            setTimeout(() => {
-              setSubmitting(false);
-              setCurrentPlant(data?.plants[plant.id]);
-              console.log('data 2: ', data?.plants[plant.id].lastWateredOn);
-              setAllPlants((prev) => {
-                const rest = prev.filter((el) => el.id !== plant.id);
-                const updatedPlants = [
-                  ...rest,
-                  data?.plants[plant.id],
-                ].sort((a, b) => sortCollectionByCommonName(a, b));
-                return updatedPlants;
-              });
-            }, 800);
-          });
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    [firestore, user?.uid]
-  );
+  const handleUpdateWateredPlants = async (plant: CollectionFromDB) => {
+    try {
+      await firestore
+        .doc(`users/${user?.uid}`)
+        .get()
+        .then((res) => res.data())
+        .then((data) => {
+          console.log('data 1: ', data?.plants[plant.id].lastWateredOn);
+          setTimeout(() => {
+            setSubmitting(false);
+            setCurrentPlant(data?.plants[plant.id]);
+            console.log('data 2: ', data?.plants[plant.id].lastWateredOn);
+            setAllPlants((prev) => {
+              const rest = prev.filter((el) => el.id !== plant.id);
+              const updatedPlants = [
+                ...rest,
+                data?.plants[plant.id],
+              ].sort((a, b) => sortCollectionByCommonName(a, b));
+              return updatedPlants;
+            });
+          }, 800);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  const handleClickWatered = useCallback(
-    async (plant: CollectionFromDB) => {
-      const updatedEntry = {
-        ...plant,
-        lastWateredOn: dayjs().format(DATE_DISPLAY_FORMAT),
-      };
-      setSubmitting(true);
-      handleEditPlants([updatedEntry], () => handleUpdateWateredPlants(plant));
-    },
-    [handleEditPlants, handleUpdateWateredPlants]
-  );
+  const handleClickWatered = async (plant: CollectionFromDB) => {
+    const updatedEntry = {
+      ...plant,
+      lastWateredOn: dayjs().format(DATE_DISPLAY_FORMAT),
+    };
+    setSubmitting(true);
+    await handleEditPlants(
+      [updatedEntry],
+      async () => await handleUpdateWateredPlants(plant)
+    );
+  };
 
   const userPlantListTrails = useTrail(plantNameList.length, {
     from: { opacity: 0, y: -10, x: 40 },
@@ -198,7 +183,7 @@ const Index: NextPage<Props> = ({ userDoc, plantDoc }: Props) => {
             imageUrl={currentPlant.imageUrl}
             notes={currentPlant.notes}
             isSubmitting={isSubmitting}
-            onClickWatered={() => handleClickWatered(currentPlant)}
+            onClickWatered={async () => await handleClickWatered(currentPlant)}
           />
         ) : (
           <EmptyDisplayBox />

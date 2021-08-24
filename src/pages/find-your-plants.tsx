@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import nookies from 'nookies';
 import { GetServerSideProps, NextPage } from 'next';
 import { NextSeo } from 'next-seo';
@@ -34,22 +34,17 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
     ...plantCollection,
   ]);
 
-  const handlePressPlant = useCallback(
-    (plant: Collection) => {
-      if (
-        selectedPlants.map((el) => el.commonName).includes(plant.commonName)
-      ) {
-        setSelctedPlants(
-          selectedPlants.filter((el) => el.commonName !== plant.commonName)
-        );
-      } else {
-        setSelctedPlants((prev) => [...prev, plant]);
-      }
-    },
-    [selectedPlants]
-  );
+  const handlePressPlant = (plant: Collection) => {
+    if (selectedPlants.map((el) => el.commonName).includes(plant.commonName)) {
+      setSelctedPlants(
+        selectedPlants.filter((el) => el.commonName !== plant.commonName)
+      );
+    } else {
+      setSelctedPlants((prev) => [...prev, plant]);
+    }
+  };
 
-  const handlePressNext = useCallback(() => {
+  const handlePressNext = () => {
     setPlantCollection(selectedPlants);
     setPlantCollectionWithInputs(selectedPlants);
 
@@ -58,12 +53,7 @@ const Index: NextPage<Props> = ({ collection }: Props) => {
     } else {
       router.push('/add-your-plants');
     }
-  }, [
-    router,
-    selectedPlants,
-    setPlantCollection,
-    setPlantCollectionWithInputs,
-  ]);
+  };
 
   return (
     <Layout

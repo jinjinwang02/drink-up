@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import 'firebase/auth';
 import nookies from 'nookies';
 import { useRouter } from 'next/router';
@@ -47,7 +47,7 @@ const SignUp: React.FC<SignUpProps> = ({
     validateOnBlur: false,
     validationSchema: EmailSchema,
     onSubmit: async () => {
-      handleCheckEmail(emailFormik.values.email);
+      await handleCheckEmail(emailFormik.values.email);
     },
   });
   const displayNameFormik = useFormik({
@@ -69,9 +69,9 @@ const SignUp: React.FC<SignUpProps> = ({
     initialValues: initialValues,
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: (value) => {
+    onSubmit: async (value) => {
       if (value.passwordConfirmation === passwordFormik.values.password) {
-        handleSignUp(
+        await handleSignUp(
           emailFormik.values.email,
           passwordConfirmationFormik.values.passwordConfirmation,
           displayNameFormik.values.displayName
@@ -85,55 +85,53 @@ const SignUp: React.FC<SignUpProps> = ({
     },
   });
 
-  const handleCheckEmail = useCallback(
-    async (email: string) => {
-      await auth.fetchSignInMethodsForEmail(email).then((res) => {
-        if (res.length) {
-          emailFormik.setFieldError(
-            'email',
-            'This Email has already registered.'
-          );
-        } else {
-          onPressNext();
-        }
-      });
-    },
-    [auth, emailFormik, onPressNext]
-  );
-
-  const handleSignUp = useCallback(
-    async (email: string, password: string, displayName?: string) => {
-      try {
-        setLoading(true);
-        const { user } = await auth.createUserWithEmailAndPassword(
-          email,
-          password
+  const handleCheckEmail = async (email: string) => {
+    await auth.fetchSignInMethodsForEmail(email).then((res) => {
+      if (res.length) {
+        emailFormik.setFieldError(
+          'email',
+          'This Email has already registered.'
         );
-        user?.getIdTokenResult().then(({ token }) => {
-          nookies.set(undefined, 'token', token, {
-            maxAge: 24 * 60 * 60,
-          });
-        });
-        const userRef = await firestore.doc(`users/${user?.uid}`).get();
-        if (!userRef.exists) {
-          await firestore.collection('users').doc(user?.uid).set({
-            email,
-            displayName,
-            createdAt: new Date().toISOString(),
-          });
-        }
-      } catch (error) {
-        setLoading(false);
-        passwordConfirmationFormik.setFieldError(
-          'passwordConfirmation',
-          error.message
-        );
-      } finally {
-        router.push('/find-your-plants');
+      } else {
+        onPressNext();
       }
-    },
-    [auth, firestore, passwordConfirmationFormik, router]
-  );
+    });
+  };
+
+  const handleSignUp = async (
+    email: string,
+    password: string,
+    displayName?: string
+  ) => {
+    try {
+      setLoading(true);
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      user?.getIdTokenResult().then(({ token }) => {
+        nookies.set(undefined, 'token', token, {
+          maxAge: 24 * 60 * 60,
+        });
+      });
+      const userRef = await firestore.doc(`users/${user?.uid}`).get();
+      if (!userRef.exists) {
+        await firestore.collection('users').doc(user?.uid).set({
+          email,
+          displayName,
+          createdAt: new Date().toISOString(),
+        });
+      }
+    } catch (error) {
+      setLoading(false);
+      passwordConfirmationFormik.setFieldError(
+        'passwordConfirmation',
+        error.message
+      );
+    } finally {
+      router.push('/find-your-plants');
+    }
+  };
 
   const getCurrentFormik = (step: number) => {
     switch (step) {

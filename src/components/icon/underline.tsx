@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useSpring, animated } from 'react-spring';
 
 export interface UnderlineProps {
@@ -21,7 +21,7 @@ const Underline: React.FC<UnderlineProps> = ({
     to: { x: 0 },
     delay: 2400,
   });
-  const underline = useMemo(() => {
+  const getUnderlineVariant = () => {
     switch (variant) {
       case 'primary':
         return (
@@ -77,14 +77,9 @@ const Underline: React.FC<UnderlineProps> = ({
           </animated.svg>
         );
     }
-  }, [
-    secondaryStrokeDashOffsetProps.x,
-    tertiaryStrokeDashOffsetProps.x,
-    variant,
-    width,
-  ]);
+  };
 
-  return <>{underline}</>;
+  return <>{getUnderlineVariant}</>;
 };
 
 export { Underline };

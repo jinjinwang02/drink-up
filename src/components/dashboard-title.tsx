@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useSpring } from 'react-spring';
 import { CollectionFromDB } from '../interfaces';
 import { getPlantNamesInSentence } from '../utils';
@@ -18,14 +18,8 @@ const DashboardTitle: React.FC<DashboardTitleProps> = ({
   plantsDueInThePast,
   plantAmount,
 }: DashboardTitleProps) => {
-  const plantDueTomorrowList = useMemo(
-    () => plantsDueTomorrow.map((el) => el.commonName),
-    [plantsDueTomorrow]
-  );
-  const plantsDueInThePastList = useMemo(
-    () => plantsDueInThePast.map((el) => el.commonName),
-    [plantsDueInThePast]
-  );
+  const plantDueTomorrowList = plantsDueTomorrow.map((el) => el.commonName);
+  const plantsDueInThePastList = plantsDueInThePast.map((el) => el.commonName);
   const primaryTitleFadeInProps = useSpring({
     from: { opacity: 0, y: 40 },
     to: { opacity: 1, y: 0 },

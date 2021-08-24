@@ -23,12 +23,9 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
     handleSetInput,
   } = usePlantContext();
   const [_field, _meta, helper] = useField(name);
-  const handleOpenCalendar = useCallback(
-    (id: string) => {
-      setCurrentCalendarId(id);
-    },
-    [setCurrentCalendarId]
-  );
+  const handleOpenCalendar = (id: string) => {
+    setCurrentCalendarId(id);
+  };
 
   const handleCloseCalendar = useCallback(
     (event: any) => {
@@ -53,14 +50,11 @@ const CalendarInput: React.FC<CalendarInputProps> = ({
     };
   }, [handleCloseCalendar]);
 
-  const handleSelectDate = useCallback(
-    (lastWateredOn: string) => {
-      helper.setValue(lastWateredOn);
-      setCurrentCalendarId(null);
-      handleSetInput(plantId, 'lastWateredOn', lastWateredOn);
-    },
-    [helper, setCurrentCalendarId, handleSetInput, plantId]
-  );
+  const handleSelectDate = (lastWateredOn: string) => {
+    helper.setValue(lastWateredOn);
+    setCurrentCalendarId(null);
+    handleSetInput(plantId, 'lastWateredOn', lastWateredOn);
+  };
 
   return (
     <>
