@@ -55,30 +55,27 @@ const LogIn: React.FC<LogInProps> = ({
   });
 
   const handleCheckEmail = async (email: string) => {
-    await auth.fetchSignInMethodsForEmail(email).then((res) => {
-      if (!res.length) {
-        emailFormik.setFieldError('email', 'This email is not registered.');
-      } else {
-        onPressNext();
-      }
-    });
+    const response = await auth.fetchSignInMethodsForEmail(email);
+    if (!response.length) {
+      emailFormik.setFieldError('email', 'This email is not registered.');
+    } else {
+      onPressNext();
+    }
   };
 
   const handleLogIn = async (email: string, password: string) => {
     try {
       setLoading(true);
-      await auth
-        .signInWithEmailAndPassword(email, password)
-        .then(({ user }) => {
-          user?.getIdTokenResult().then(({ token }) => {
-            nookies.set(undefined, 'token', token, {
-              maxAge: 24 * 60 * 60,
-            });
-          });
+      const { user } = await auth.signInWithEmailAndPassword(email, password);
+      const result = await user?.getIdTokenResult();
+      if (result?.token) {
+        nookies.set(undefined, 'token', result?.token, {
+          maxAge: 24 * 60 * 60,
         });
+      }
     } catch (error) {
       setLoading(false);
-      passwordFormik.setFieldError('password', error.message);
+      passwordFormik.setFieldError('password', 'There has been an error.');
     } finally {
       router.push('/dashboard');
     }

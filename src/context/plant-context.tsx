@@ -175,11 +175,14 @@ export const PlantProvider: React.FC<PlantContextProviderProps> = ({
       }
     }
     if (!errorCount) {
-      await Promise.all(
-        plantInputs.map(async (plant) => await updatePlantEntry(plant))
-      )
-        .then(() => cb())
-        .catch((err) => console.log(err));
+      try {
+        await Promise.all(
+          plantInputs.map(async (plant) => await updatePlantEntry(plant))
+        );
+        cb();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

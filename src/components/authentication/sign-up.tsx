@@ -86,16 +86,12 @@ const SignUp: React.FC<SignUpProps> = ({
   });
 
   const handleCheckEmail = async (email: string) => {
-    await auth.fetchSignInMethodsForEmail(email).then((res) => {
-      if (res.length) {
-        emailFormik.setFieldError(
-          'email',
-          'This Email has already registered.'
-        );
-      } else {
-        onPressNext();
-      }
-    });
+    const response = await auth.fetchSignInMethodsForEmail(email);
+    if (response.length) {
+      emailFormik.setFieldError('email', 'This Email has already registered.');
+    } else {
+      onPressNext();
+    }
   };
 
   const handleSignUp = async (
@@ -109,11 +105,12 @@ const SignUp: React.FC<SignUpProps> = ({
         email,
         password
       );
-      user?.getIdTokenResult().then(({ token }) => {
-        nookies.set(undefined, 'token', token, {
+      const result = await user?.getIdTokenResult();
+      if (result?.token) {
+        nookies.set(undefined, 'token', result.token, {
           maxAge: 24 * 60 * 60,
         });
-      });
+      }
       const userRef = await firestore.doc(`users/${user?.uid}`).get();
       if (!userRef.exists) {
         await firestore.collection('users').doc(user?.uid).set({
@@ -126,7 +123,7 @@ const SignUp: React.FC<SignUpProps> = ({
       setLoading(false);
       passwordConfirmationFormik.setFieldError(
         'passwordConfirmation',
-        error.message
+        'There has been an error'
       );
     } finally {
       router.push('/find-your-plants');

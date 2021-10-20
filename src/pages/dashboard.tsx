@@ -64,26 +64,19 @@ const Index: NextPage<Props> = ({ userDoc, plantDoc }: Props) => {
 
   const handleUpdateWateredPlants = async (plant: CollectionFromDB) => {
     try {
-      await firestore
-        .doc(`users/${user?.uid}`)
-        .get()
-        .then((res) => res.data())
-        .then((data) => {
-          console.log('data 1: ', data?.plants[plant.id].lastWateredOn);
-          setTimeout(() => {
-            setSubmitting(false);
-            setCurrentPlant(data?.plants[plant.id]);
-            console.log('data 2: ', data?.plants[plant.id].lastWateredOn);
-            setAllPlants((prev) => {
-              const rest = prev.filter((el) => el.id !== plant.id);
-              const updatedPlants = [
-                ...rest,
-                data?.plants[plant.id],
-              ].sort((a, b) => sortCollectionByCommonName(a, b));
-              return updatedPlants;
-            });
-          }, 800);
+      const response = await firestore.doc(`users/${user?.uid}`).get();
+      const doc = response.data();
+      setTimeout(() => {
+        setSubmitting(false);
+        setCurrentPlant(doc?.plants[plant.id]);
+        setAllPlants((prev) => {
+          const rest = prev.filter((el) => el.id !== plant.id);
+          const updatedPlants = [...rest, doc?.plants[plant.id]].sort((a, b) =>
+            sortCollectionByCommonName(a, b)
+          );
+          return updatedPlants;
         });
+      }, 800);
     } catch (err) {
       console.log(err);
     }
@@ -229,11 +222,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     const cookies = nookies.get(ctx);
     const token = await verifyIdToken(cookies.token);
-    const userDoc = await admin
-      .firestore()
-      .doc(`users/${token.uid}`)
-      .get()
-      .then((res) => res.data());
+    const response = await admin.firestore().doc(`users/${token.uid}`).get();
+    const userDoc = response.data();
     const plantDoc = (Object.values(
       JSON.parse(JSON.stringify(userDoc?.plants))
     ) as CollectionFromDB[]).sort((a, b) => sortCollectionByCommonName(a, b));

@@ -109,13 +109,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { firestore } = firebaseClient();
     const collectionRef = firestore.collection('plants');
     const collection: Collection[] = [];
-    await collectionRef.get().then((data) =>
-      data.forEach((doc) =>
-        collection.push({
-          id: doc.id + '-' + generateId(),
-          ...(doc.data() as { commonName: string; imageUrl: string }),
-        })
-      )
+    const data = await collectionRef.get();
+    data.forEach((doc) =>
+      collection.push({
+        id: doc.id + '-' + generateId(),
+        ...(doc.data() as { commonName: string; imageUrl: string }),
+      })
     );
     return {
       props: { collection },
