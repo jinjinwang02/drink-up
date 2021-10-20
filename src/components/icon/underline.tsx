@@ -79,7 +79,7 @@ const Underline: React.FC<UnderlineProps> = ({
     }
   };
 
-  return <>{getUnderlineVariant}</>;
+  return <>{getUnderlineVariant()}</>;
 };
 
 export { Underline };
