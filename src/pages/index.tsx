@@ -62,8 +62,8 @@ const Index: React.FC = () => {
         justifyContent={isLG ? 'space-around' : 'center'}
         style={
           isXS
-            ? { ...containerXSProps }
-            : { transform: isLG ? 'translateY(80%)' : 'translateY(20%)' }
+            ? containerXSProps
+            : { transform: isLG ? 'translateY(30vh)' : 'translateY(20%)' }
         }
       >
         <LandingTitle />
