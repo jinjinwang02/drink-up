@@ -10,7 +10,6 @@ import { Box } from './box/box';
 import { BoxWithImage } from './box/box-with-image';
 import { AddButton } from './button/add-button';
 import { WaterButton } from './button/water-button';
-import { EditButton } from './button/edit-button';
 import { DATE_DISPLAY_FORMAT } from './calendar';
 import { Water } from './icon/water';
 import { Typography } from './typography';
@@ -27,11 +26,10 @@ interface ContentProps extends DisplayBoxProps {
 }
 
 const TitleBox = ({ commonName }: { commonName: string }) => (
-  <Box borderBottom="regularBlack" py="zeroPointEight" width="100%" pl="four">
+  <Box borderBottom="regularBlack" py="zeroPointEight" width="100%">
     <Typography textAlign="center" textStyle="copyLBold">
       {commonName}
     </Typography>
-    <EditButton ml="one" pr="two" mb="zeroPointThree" />
   </Box>
 );
 
