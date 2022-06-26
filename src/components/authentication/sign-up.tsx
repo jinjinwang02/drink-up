@@ -166,14 +166,14 @@ const SignUp: React.FC<SignUpProps> = ({
             isCurrentStep={step === 1}
           />
           <Content
-            text="How would you like to called?"
+            text="What's your name?"
             name="displayName"
             label="Display Name"
             step={step}
             isCurrentStep={step === 2}
           />
           <Content
-            text="Make it nice and secure"
+            text="Make your password nice and secure"
             name="password"
             label="Password"
             type="password"
